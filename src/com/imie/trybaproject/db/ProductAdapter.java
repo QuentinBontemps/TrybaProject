@@ -31,7 +31,6 @@ public class ProductAdapter implements Adapter<Product, Integer> {
 	@Override
 	public long insert(Product item) {
 		ContentValues values = new ContentValues();
-		values.put(COL_ID, item.getId());
 		values.put(COL_NAME, item.getName());
 		
 		long i = db.insert(TABLE, null, values);
@@ -42,7 +41,6 @@ public class ProductAdapter implements Adapter<Product, Integer> {
 	@Override
 	public long update(Product item) {
 		ContentValues values = new ContentValues();
-		values.put(COL_ID, item.getId());
 		values.put(COL_NAME, item.getName());
 		
 		int i = db.update(TABLE, values, COL_ID + " = ?",

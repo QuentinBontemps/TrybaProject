@@ -15,6 +15,8 @@ public class ApplicationSQLiteOpenHelper extends SQLiteOpenHelper {
 	@Override
 	public void onCreate(SQLiteDatabase db) {
 		db.execSQL(new UserAdapter(db).createTable());
+		db.execSQL(new ProductAdapter(db).createTable());
+		db.execSQL(new ClientOrderAdapter(db).createTable());
 	}
 
 	@Override

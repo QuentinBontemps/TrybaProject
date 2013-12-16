@@ -1,6 +1,6 @@
 package com.imie.trybaproject.model;
 
-public class Zone {
+public abstract class Zone {
 
 	private long id;
 	private String name;
