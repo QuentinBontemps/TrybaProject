@@ -16,6 +16,7 @@ public class ApplicationSQLiteOpenHelper extends SQLiteOpenHelper {
 	public void onCreate(SQLiteDatabase db) {
 		db.execSQL(new UserAdapter(db).createTable());
 		db.execSQL(new ProductAdapter(db).createTable());
+		db.execSQL(new OrderProductAdapter(db).createTable());
 		db.execSQL(new ClientOrderAdapter(db).createTable());
 	}
 
