@@ -4,6 +4,8 @@ public class Tampon extends Zone{
 
 	private int quantity;
 
+	public Tampon() {}
+	
 	public Tampon(String name, int quantity) {
 		super(name);
 		this.quantity = quantity;

@@ -5,6 +5,8 @@ public abstract class Zone {
 	private long id;
 	private String name;
 		
+	public Zone(){}	
+	
 	public Zone(String name) {
 		super();
 		this.name = name;
