@@ -2,23 +2,18 @@ package com.imie.trybaproject.activity;
 
 import java.util.ArrayList;
 
+import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+import android.view.Menu;
+
 import com.imie.trybaproject.R;
-import com.imie.trybaproject.R.layout;
-import com.imie.trybaproject.R.menu;
 import com.imie.trybaproject.db.ApplicationSQLiteOpenHelper;
 import com.imie.trybaproject.db.ClientOrderAdapter;
 import com.imie.trybaproject.db.ProductAdapter;
-import com.imie.trybaproject.db.UserAdapter;
 import com.imie.trybaproject.model.ClientOrder;
 import com.imie.trybaproject.model.Product;
-import com.imie.trybaproject.model.User;
 
-import android.os.Bundle;
-import android.app.Activity;
-import android.util.Log;
-import android.view.Menu;
-
-public class MainActivity extends Activity {
+public class MainActivity extends FragmentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

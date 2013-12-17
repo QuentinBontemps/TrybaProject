@@ -72,7 +72,8 @@ public class UserAdapter implements Adapter<User, Integer>{
 	@Override
 	public User get(Integer id) {
 		Cursor cursor = db.query(TABLE,
-				new String[] {COL_ID, COL_LOGIN, COL_PASSWORD, COL_FIRSTNAME, COL_LASTNAME}, 
+				new String[] {COL_ID, COL_LOGIN, COL_PASSWORD, COL_FIRSTNAME,
+																COL_LASTNAME}, 
 				COL_ID + " = ? ",
 				new String[] {String.valueOf(id)},null,null,null,null);
 		
@@ -81,18 +82,20 @@ public class UserAdapter implements Adapter<User, Integer>{
 		if(cursor != null)
 		{
 			cursor.moveToFirst();
-			
 			user = new User();
 			
-			user.setId(Integer.parseInt(cursor.getString(0)));
-			user.setLogin(cursor.getString(1));
-			user.setPassword(cursor.getString(2));
-			user.setFirstname(cursor.getString(3));
-			user.setLastname(cursor.getString(4));
+			user.setId(Integer.parseInt(cursor.getString(
+										cursor.getColumnIndex(COL_ID))));
+			user.setLogin(cursor.getString(
+										cursor.getColumnIndex(COL_LOGIN)));
+			user.setPassword(cursor.getString(
+										cursor.getColumnIndex(COL_PASSWORD)));
+			user.setFirstname(cursor.getString(
+										cursor.getColumnIndex(COL_FIRSTNAME)));
+			user.setLastname(cursor.getString(
+										cursor.getColumnIndex(COL_LASTNAME)));
 		}
-		
 		db.close();
-	
 		return user;
 	}
 
@@ -111,11 +114,16 @@ public class UserAdapter implements Adapter<User, Integer>{
 			cursor.moveToFirst();				
 			do {
 				User user = new User();
-				user.setId(Integer.parseInt(cursor.getString(0)));
-				user.setLogin(cursor.getString(1));
-				user.setPassword(cursor.getString(2));
-				user.setFirstname(cursor.getString(3));
-				user.setLastname(cursor.getString(4));
+				user.setId(Integer.parseInt(cursor.getString(
+										cursor.getColumnIndex(COL_ID))));
+				user.setLogin(cursor.getString(
+										cursor.getColumnIndex(COL_LOGIN)));
+				user.setPassword(cursor.getString(
+										cursor.getColumnIndex(COL_PASSWORD)));
+				user.setFirstname(cursor.getString(
+										cursor.getColumnIndex(COL_FIRSTNAME)));
+				user.setLastname(cursor.getString(
+										cursor.getColumnIndex(COL_LASTNAME)));
 				
 				users.add(user);
 			} while (cursor.moveToNext());
@@ -123,5 +131,32 @@ public class UserAdapter implements Adapter<User, Integer>{
 		
 		db.close();
 		return users;	
+	}
+	
+	public User getWithLogin(String login){
+		Cursor cursor = db.query(TABLE, 
+				new String[] {COL_ID, COL_LOGIN, COL_PASSWORD, COL_FIRSTNAME, 
+				COL_LASTNAME},
+				COL_LOGIN + " = ? ",
+				new String[]{login},
+				null, null, null, null);
+		
+		User user = null;
+		
+		if(cursor.getCount() > 0){
+			cursor.moveToFirst();
+			user = new User();
+			
+			user.setId(Integer.parseInt(cursor.getString(
+											cursor.getColumnIndex(COL_ID))));
+			user.setLogin(cursor.getString(cursor.getColumnIndex(COL_LOGIN)));
+			user.setPassword(cursor.getString(
+										cursor.getColumnIndex(COL_PASSWORD)));
+			user.setFirstname(cursor.getString(
+										cursor.getColumnIndex(COL_FIRSTNAME)));
+			user.setLastname(cursor.getString(
+										cursor.getColumnIndex(COL_LASTNAME)));
+		}
+		return user;		
 	}
 }
