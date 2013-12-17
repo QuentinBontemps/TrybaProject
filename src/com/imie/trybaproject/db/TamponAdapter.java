@@ -68,26 +68,23 @@ public class TamponAdapter implements Adapter<Tampon, Integer> {
 	@Override
 	public Tampon get(Integer id) {
 		Cursor cursor = db.query(TABLE,
-				new String[] {COL_ID, COL_NAME}, 
+				new String[] {COL_ID, COL_NAME, COL_QUANTITY}, 
 				COL_ID + " = ? ",
 				new String[] {String.valueOf(id)},null,null,null,null);
 		
 		Tampon tampon = null;
 		
-		if(cursor != null)
-		{
+		if(cursor.getCount() > 0){
 			cursor.moveToFirst();
-			
 			tampon = new Tampon();
 			
-			tampon.setId(Integer.parseInt(cursor.getString(0)));
-			tampon.setName(cursor.getString(1));
-			tampon.setQuantity(Integer.parseInt(cursor.getString(2)));
-
+			tampon.setId(Integer.parseInt(cursor.getString(
+											cursor.getColumnIndex(COL_ID))));
+			tampon.setName(cursor.getString(cursor.getColumnIndex(COL_NAME)));
+			tampon.setQuantity(Integer.parseInt(cursor.getString(
+										cursor.getColumnIndex(COL_QUANTITY))));
 		}
-		
 		db.close();
-	
 		return tampon;
 	}
 
@@ -95,20 +92,22 @@ public class TamponAdapter implements Adapter<Tampon, Integer> {
 	@Override
 	public ArrayList<Tampon> getAll() {
 		Cursor cursor = db.query(TABLE, 
-				new String[] {COL_ID, COL_NAME}, 
+				new String[] {COL_ID, COL_NAME, COL_QUANTITY}, 
 				null,null,null,null,null);
 		
 		ArrayList<Tampon> tampons = new ArrayList<Tampon>();
 		
-		if(cursor != null){
-			
+		if(cursor.getCount() > 0){
 			cursor.moveToFirst();				
 			do {
 				Tampon tampon = new Tampon();
 				
-				tampon.setId(Integer.parseInt(cursor.getString(0)));
-				tampon.setName(cursor.getString(1));
-				tampon.setQuantity(Integer.parseInt(cursor.getString(2)));
+				tampon.setId(Integer.parseInt(cursor.getString(
+											cursor.getColumnIndex(COL_ID))));
+				tampon.setName(cursor.getString(
+											cursor.getColumnIndex(COL_NAME)));
+				tampon.setQuantity(Integer.parseInt(cursor.getString(
+										cursor.getColumnIndex(COL_QUANTITY))));
 
 				tampons.add(tampon);
 			} while (cursor.moveToNext());

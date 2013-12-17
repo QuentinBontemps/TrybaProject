@@ -57,7 +57,12 @@ public class StationAdapter implements Adapter<Station, Integer>{
 	public void delete(Station item) {
 		db.delete(TABLE, COL_ID + " = ? ",
 				new String[]{String.valueOf(item.getId())});
-		db.close();
+		if(item.getTampon() != null){
+			TamponAdapter tamponAdapter = new TamponAdapter(db);
+			tamponAdapter.delete(item.getTampon());
+		}else{
+			db.close();
+		}
 	}
 
 	@Override
@@ -68,13 +73,16 @@ public class StationAdapter implements Adapter<Station, Integer>{
 					new String[]{String.valueOf(id)}, null, null, null);
 		
 		Station station = null;
-		if(cursor != null){
+		if(cursor.getCount() > 0){
+			cursor.moveToFirst();
 			station = new Station();
-			station.setId(Integer.parseInt(cursor.getString(0)));
-			station.setName(cursor.getString(1));
+			station.setId(Integer.parseInt(
+							cursor.getString(cursor.getColumnIndex(COL_ID))));
+			station.setName(cursor.getString(cursor.getColumnIndex(COL_NAME)));
 			TamponAdapter tamponAdapter = new TamponAdapter(db);
 			station.setTampon(tamponAdapter.get(
-										Integer.parseInt(cursor.getString(2))));	
+										Integer.parseInt(cursor.getString(
+								   	cursor.getColumnIndex(COL_TAMPON_ID)))));	
 		}
 		return station;
 	}
@@ -86,15 +94,18 @@ public class StationAdapter implements Adapter<Station, Integer>{
 				null, null, null, null, null);
 		
 		ArrayList<Station> stations = new ArrayList<Station>();
-		if(cursor != null){
+		if(cursor.getCount() > 0){
 			cursor.moveToFirst();
 			do {
 				Station station = new Station();
-				station.setId(Integer.parseInt(cursor.getString(0)));
-				station.setName(cursor.getString(1));
+				station.setId(Integer.parseInt(cursor.getString(
+											cursor.getColumnIndex(COL_ID))));
+				station.setName(cursor.getString(
+											cursor.getColumnIndex(COL_NAME)));
 				TamponAdapter tamponAdapter = new TamponAdapter(db);
 				station.setTampon(tamponAdapter.get(
-										Integer.parseInt(cursor.getString(2))));
+										Integer.parseInt(cursor.getString(
+									cursor.getColumnIndex(COL_TAMPON_ID)))));
 				stations.add(station);
 			} while (cursor.moveToNext());
 		}
