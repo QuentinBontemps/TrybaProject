@@ -72,7 +72,8 @@ public class UserAdapter implements Adapter<User, Integer>{
 	@Override
 	public User get(Integer id) {
 		Cursor cursor = db.query(TABLE,
-				new String[] {COL_ID, COL_LOGIN, COL_PASSWORD, COL_FIRSTNAME, COL_LASTNAME}, 
+				new String[] {COL_ID, COL_LOGIN, COL_PASSWORD, COL_FIRSTNAME,
+																COL_LASTNAME}, 
 				COL_ID + " = ? ",
 				new String[] {String.valueOf(id)},null,null,null,null);
 		
