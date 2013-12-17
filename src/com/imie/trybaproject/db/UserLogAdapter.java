@@ -11,7 +11,7 @@ import com.imie.trybaproject.model.UserLog;
 public class UserLogAdapter implements Adapter<UserLog, Integer>{
 
 	public static final String TABLE = "clientOrder";
-	public static final String COL_ID = "id";
+	public static final String COL_ID = "_id";
 	public static final String COL_USER_ID = "userId";
 	public static final String COL_STATION_ID = "stationId";
 	
