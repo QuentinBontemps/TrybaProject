@@ -14,97 +14,133 @@ public class ProductAdapter implements Adapter<Product, Integer> {
 	public static String TABLE = "product";
 	public static String COL_ID = "id";
 	public static String COL_NAME = "name";
+	public static String COL_ORDER_ID = "orderId";
 	
+	private ApplicationSQLiteOpenHelper helper;
 	private SQLiteDatabase db;
 	
-	public ProductAdapter(SQLiteDatabase db){
-		this.db = db;
+	public ProductAdapter(){
+	}
+	
+	public ProductAdapter(ApplicationSQLiteOpenHelper helper){
+		if(helper != null){
+			this.db = helper.getDb();
+			this.helper = helper;
+		}
 	}
 	
 	@Override
 	public String createTable() {
-		return "CREATE TABLE " + TABLE + "( "
-				+ COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-				+ COL_NAME + " TEXT NOT NULL)";
+		return "CREATE TABLE " 	+ TABLE + "( "
+				+ COL_ID 		+ " INTEGER PRIMARY KEY AUTOINCREMENT, "
+				+ COL_NAME 		+ " TEXT NOT NULL,"
+				+ COL_ORDER_ID	+ " INTEGER NOT NULL)";
 	}
 
 	@Override
 	public long insert(Product item) {
-		ContentValues values = new ContentValues();
-		values.put(COL_NAME, item.getName());
-		
-		long i = db.insert(TABLE, null, values);
-		db.close();
+		long i = -1;
+		if(this.db != null){
+			ContentValues values = new ContentValues();
+			values.put(COL_NAME, item.getName());
+			values.put(COL_ORDER_ID,item.getOrder().getId());
+			
+			i = db.insert(TABLE, null, values);
+			if(helper != null)			
+				db.close();
+		}
 		return i;
 	}
 
 	@Override
 	public long update(Product item) {
-		ContentValues values = new ContentValues();
-		values.put(COL_NAME, item.getName());
-		
-		int i = db.update(TABLE, values, COL_ID + " = ?",
-				new String[] { String.valueOf(item.getId())});
-		db.close();
+		long i = -1;
+		if(this.db != null){
+			ContentValues values = new ContentValues();
+			values.put(COL_NAME, item.getName());
+			values.put(COL_ORDER_ID,item.getOrder().getId());
+			
+			i = db.update(TABLE, values, COL_ID + " = ?",
+					new String[] { String.valueOf(item.getId())});
+			if(helper != null)			
+				db.close();
+		}
 		return i;
 	}
 
 	@Override
 	public void delete(Product item) {
-		db.delete(TABLE, COL_ID + " = ? ",
+		if(this.db != null){
+			db.delete(TABLE, COL_ID + " = ? ",
 				new String[] {String.valueOf(item.getId())});
-		db.close();
+			if(helper != null)			
+				db.close();
+		}
 	}
 
 	@Override
 	public Product get(Integer id) {
-		Cursor cursor = db.query(TABLE,
-				new String[] {COL_ID, COL_NAME}, 
-				COL_ID + " = ? ",
-				new String[] {String.valueOf(id)},null,null,null,null);
-		
 		Product product = null;
-		
-		if(cursor.getCount() > 0)
-		{
-			cursor.moveToFirst();
-			product = new Product();
-			
-			product.setId(Integer.parseInt(cursor.getString(
-											 cursor.getColumnIndex(COL_ID))));
-			product.setName(cursor.getString(cursor.getColumnIndex(COL_NAME)));
-
+		if(this.db != null){
+			Cursor cursor = db.query(TABLE,
+					new String[] {COL_ID, COL_NAME, COL_ORDER_ID}, 
+					COL_ID + " = ? ",
+					new String[] {String.valueOf(id)},null,null,null,null);
+						
+			if(cursor.getCount() > 0)
+			{
+				cursor.moveToFirst();
+				product = new Product();
+				
+				product.setId(Integer.parseInt(cursor.getString(
+											cursor.getColumnIndex(COL_ID))));
+				product.setName(cursor.getString(
+											cursor.getColumnIndex(COL_NAME)));
+				ClientOrderAdapter orderAdapter = new ClientOrderAdapter(null);
+				orderAdapter.setDatabase(db);
+				product.setOrder(orderAdapter.get(Integer.parseInt(
+					cursor.getString(cursor.getColumnIndex(COL_ORDER_ID)))));
+			}
+			if(helper != null)			
+				db.close();
 		}
-		
-		db.close();
-	
 		return product;
 	}
 
 	@Override
 	public ArrayList<Product> getAll() {
-		Cursor cursor = db.query(TABLE, 
-				new String[] {COL_ID, COL_NAME}, 
-				null,null,null,null,null);
-		
 		ArrayList<Product> products = new ArrayList<Product>();
-		
-		if(cursor.getCount() > 0){
-			
-			cursor.moveToFirst();				
-			do {
-				Product product = new Product();
-				product.setId(Integer.parseInt(cursor.getString(
+		if(this.db != null){
+				Cursor cursor = db.query(TABLE, 
+					new String[] {COL_ID, COL_NAME, COL_ORDER_ID}, 
+					null,null,null,null,null);
+						
+			if(cursor.getCount() > 0){
+				cursor.moveToFirst();				
+				do {
+					Product product = new Product();
+					product.setId(Integer.parseInt(cursor.getString(
 											cursor.getColumnIndex(COL_ID))));
-				product.setName(cursor.getString(
+					product.setName(cursor.getString(
 											cursor.getColumnIndex(COL_NAME)));
-
-				products.add(product);
-			} while (cursor.moveToNext());
+					ClientOrderAdapter orderAdapter = 
+												new ClientOrderAdapter(null);
+					orderAdapter.setDatabase(db);
+					product.setOrder(orderAdapter.get(Integer.parseInt(
+					   cursor.getString(cursor.getColumnIndex(COL_ORDER_ID)))));
+					
+					products.add(product);
+				} while (cursor.moveToNext());
+			}
+			if(helper != null)			
+				db.close();
 		}
-		
-		db.close();
 		return products;
+	}
+
+	@Override
+	public void setDatabase(SQLiteDatabase db) {
+		this.db = db;
 	}
 
 }

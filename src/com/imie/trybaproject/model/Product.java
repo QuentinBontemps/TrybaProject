@@ -4,10 +4,9 @@ public class Product {
 	
 	private long id;
 	private String name;
-	private Zone zone;
+	private ClientOrder order;
 	
 	public Product(){
-		
 	}
 	
 	public Product(String name) {
@@ -31,16 +30,12 @@ public class Product {
 		this.name = name;
 	}
 
-	public Zone getZone() {
-		return zone;
+	public ClientOrder getOrder() {
+		return order;
 	}
 
-	public void setZone(Zone zone) {
-		this.zone = zone;
+	public void setOrder(ClientOrder order) {
+		this.order = order;
 	}
-	
-	
-	
-	
-
 }
+

@@ -17,6 +17,9 @@ public class OrderProductAdapter implements Adapter<OrderProduct, Integer>{
 	
 	private SQLiteDatabase db;
 
+	public OrderProductAdapter(){
+	}
+	
 	public OrderProductAdapter(SQLiteDatabase db){
 		this.db = db;
 	}
@@ -84,7 +87,7 @@ public class OrderProductAdapter implements Adapter<OrderProduct, Integer>{
 		if(cursor.getCount() > 0){
 			cursor.moveToFirst();
 			do {
-				ProductAdapter productAdapter = new ProductAdapter(db);
+				ProductAdapter productAdapter = new ProductAdapter();
 				Product product = productAdapter.get(Integer.parseInt(
 					cursor.getString(cursor.getColumnIndex(COL_ID_PRODUCT))));
 				products.add(product);
@@ -97,6 +100,11 @@ public class OrderProductAdapter implements Adapter<OrderProduct, Integer>{
 	@Override
 	public ArrayList<OrderProduct> getAll() {
 		return null;
+	}
+
+	@Override
+	public void setDatabase(SQLiteDatabase db) {
+		this.db = db;
 	}
 	
 	

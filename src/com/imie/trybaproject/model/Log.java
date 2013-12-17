@@ -7,10 +7,10 @@ public class Log {
 	private long id;
 	private User user;
 	private Zone zone;
+	private Product product;
 	private Date date;
 	
 	public Log(){
-		
 	}
 	
 	public Log(User user, Zone zone, Date date) {
@@ -23,11 +23,9 @@ public class Log {
 	public long getId() {
 		return id;
 	}
-
 	public void setId(long id) {
 		this.id = id;
 	}
-
 	public User getUser() {
 		return user;
 	}
@@ -40,14 +38,16 @@ public class Log {
 	public void setZone(Zone zone) {
 		this.zone = zone;
 	}
+	public Product getProduct() {
+		return product;
+	}
+	public void setProduct(Product product) {
+		this.product = product;
+	}
 	public Date getDate() {
 		return date;
 	}
 	public void setDate(Date date) {
 		this.date = date;
 	}
-	
-	
-	
-	
 }

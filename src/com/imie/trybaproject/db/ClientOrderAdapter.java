@@ -19,9 +19,17 @@ public class ClientOrderAdapter implements Adapter<ClientOrder, Integer> {
 	
 	
 	private SQLiteDatabase db;
+	private ApplicationSQLiteOpenHelper helper;
 	
-	public ClientOrderAdapter(SQLiteDatabase db){
-		this.db = db;
+	public ClientOrderAdapter(){
+		
+	}
+	
+	public ClientOrderAdapter(ApplicationSQLiteOpenHelper helper){
+		if(helper != null){
+			this.db = helper.getDb();
+			this.helper = helper;
+		}
 	}
 	
 	@Override
@@ -34,126 +42,107 @@ public class ClientOrderAdapter implements Adapter<ClientOrder, Integer> {
 
 	@Override
 	public long insert(ClientOrder item) {
-		ContentValues values = new ContentValues();
-		values.put(COL_CUSTOMER, item.getCustomer());
-		values.put(COL_QUANTITY, item.getQuantity());
-		
-		long id = db.insert(TABLE, null, values);
-		
-		for (Product product : item.getProducts()) {
-			OrderProduct op = new OrderProduct(id, product.getId());
-			OrderProductAdapter orderProductAdapter = 
-												new OrderProductAdapter(db);
-			orderProductAdapter.insert(op);
+		long i = -1;
+		if(this.db != null){
+			ContentValues values = new ContentValues();
+			values.put(COL_CUSTOMER, item.getCustomer());
+			values.put(COL_QUANTITY, item.getQuantity());
+			
+			i = db.insert(TABLE, null, values);
+
+			if(helper != null)			
+				db.close();
 		}
-		
-		db.close();
-		return id;
+		return i;
 	}
 
 	@Override
 	public long update(ClientOrder item) {
-		ContentValues values = new ContentValues();
-		values.put(COL_CUSTOMER, item.getCustomer());
-		values.put(COL_QUANTITY, item.getQuantity());
+		long i = -1;
+		if(this.db != null){
+			ContentValues values = new ContentValues();
+			values.put(COL_CUSTOMER, item.getCustomer());
+			values.put(COL_QUANTITY, item.getQuantity());
 		
-		int i = db.update(TABLE, values, COL_ID + " = ?",
-				new String[] { String.valueOf(item.getId())});
-				
-		
-		
-		for (Product product : item.getProducts()) {
-			OrderProduct op = new OrderProduct(item.getId(), product.getId());
-			OrderProductAdapter orderProductAdapter = 
-												new OrderProductAdapter(db);
-			orderProductAdapter.update(op);
+			i = db.update(TABLE, values, COL_ID + " = ?",
+						new String[] { String.valueOf(item.getId())});
+			if(helper != null)			
+				db.close();
 		}
-		
-		db.close();
 		return i;
 	}
 
 	@Override
 	public void delete(ClientOrder item) {
-		db.delete(TABLE, COL_ID + " = ? ",
-				new String[] {String.valueOf(item.getId())});
-		OrderProductAdapter orderProductAdapter = new OrderProductAdapter(db);
-		orderProductAdapter.deleteAllFromOrder(item.getId());
-		db.close();
+		if(this.db != null){
+			db.delete(TABLE, COL_ID + " = ? ",
+					new String[] {String.valueOf(item.getId())});
+			OrderProductAdapter orderProductAdapter = new OrderProductAdapter(db);
+			orderProductAdapter.deleteAllFromOrder(item.getId());
+			if(helper != null)			
+				db.close();
+		}
 	}
 
 	@Override
 	public ClientOrder get(Integer id) {
-		/*
-		 * Récupération de la commande
-		 * et les IDs Products de la commande
-		 */
-		
-		Cursor cursor = db.query(TABLE,
-				new String[] {COL_ID, COL_CUSTOMER, COL_QUANTITY}, 
-				COL_ID + " = ? ",
-				new String[] {String.valueOf(id)},null,null,null,null);
-		
 		ClientOrder order = null;
+		if(this.db != null){
+			Cursor cursor = db.query(TABLE,
+					new String[] {COL_ID, COL_CUSTOMER, COL_QUANTITY}, 
+					COL_ID + " = ? ",
+					new String[] {String.valueOf(id)},null,null,null,null);
 				
-		if(cursor.getCount() > 0)
-		{
-			cursor.moveToFirst();
-			
-			order = new ClientOrder();
-			
-			order.setId(Integer.parseInt(cursor.getString(
-											cursor.getColumnIndex(COL_ID))));
-			order.setCustomer(cursor.getString(
-										cursor.getColumnIndex(COL_CUSTOMER)));
-			order.setQuantity(Integer.parseInt(cursor.getString(
-										cursor.getColumnIndex(COL_QUANTITY))));
-			OrderProductAdapter orderProductAdapter=new OrderProductAdapter(db);
-			order.setProducts(orderProductAdapter.getProducts(id));
+			if(cursor.getCount() > 0)
+			{
+				cursor.moveToFirst();		
+				order = new ClientOrder();
+				
+				order.setId(Integer.parseInt(cursor.getString(
+												cursor.getColumnIndex(COL_ID))));
+				order.setCustomer(cursor.getString(
+											cursor.getColumnIndex(COL_CUSTOMER)));
+				order.setQuantity(Integer.parseInt(cursor.getString(
+											cursor.getColumnIndex(COL_QUANTITY))));
+			}
+			if(helper != null)			
+				db.close();
 		}
-		
-		db.close();
-	
 		return order;
 	}
 
 	@Override
 	public ArrayList<ClientOrder> getAll() {
-		
-		/*
-		 * On récupére toutes les commandes
-		 */
-		
-		Cursor cursor = db.query(TABLE, 
-				new String[] {COL_ID, COL_CUSTOMER, COL_QUANTITY,}, 
-				null,null,null,null,null);
-		
 		ArrayList<ClientOrder> orders = new ArrayList<ClientOrder>();
-		
-		if(cursor.getCount() > 0){
-			cursor.moveToFirst();				
-			/*
-			 * Pour chaque commande, on recherche les ids des produits
-			 */
-			do {
-				ClientOrder order = new ClientOrder();
-				order.setId(Integer.parseInt(cursor.getString(
-											cursor.getColumnIndex(COL_ID))));
-				order.setCustomer(cursor.getString(
-										cursor.getColumnIndex(COL_CUSTOMER)));
-				order.setQuantity(Integer.getInteger(cursor.getString(
-										cursor.getColumnIndex(COL_QUANTITY))));
-				OrderProductAdapter orderProductAdapter = 
-													new OrderProductAdapter(db);
-				order.setProducts(orderProductAdapter.getProducts(
-										Integer.parseInt(cursor.getString(
-											 cursor.getColumnIndex(COL_ID)))));
-				
-				orders.add(order);
-			} while (cursor.moveToNext());
+		if(this.db != null){
+			Cursor cursor = db.query(TABLE, 
+					new String[] {COL_ID, COL_CUSTOMER, COL_QUANTITY,}, 
+					null,null,null,null,null);
+			
+			if(cursor.getCount() > 0){
+				cursor.moveToFirst();				
+				do {
+					ClientOrder order = new ClientOrder();
+					order.setId(Integer.parseInt(cursor.getString(
+												cursor.getColumnIndex(COL_ID))));
+					order.setCustomer(cursor.getString(
+											cursor.getColumnIndex(COL_CUSTOMER)));
+					order.setQuantity(Integer.getInteger(cursor.getString(
+											cursor.getColumnIndex(COL_QUANTITY))));
+					
+					orders.add(order);
+				} while (cursor.moveToNext());
+			}
+			if(helper != null)			
+				db.close();
 		}
-		
-		db.close();
 		return orders;
 	}
+	
+
+	@Override
+	public void setDatabase(SQLiteDatabase db) {
+		this.db = db;
+	}
+
 }

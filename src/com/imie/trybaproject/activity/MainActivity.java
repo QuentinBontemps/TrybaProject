@@ -15,8 +15,12 @@ public class MainActivity extends FragmentActivity {
         setContentView(R.layout.activity_main);
         
 		ApplicationSQLiteOpenHelper helper = new ApplicationSQLiteOpenHelper(
-											this, "tryba_database", null, 1
-											);
+										this,
+										this.getString(R.string.database_name),
+										null,1 );
+		
+		
+		
 		//UserAdapter u_adapter = new UserAdapter(helper.getDb());
         
         /*
