@@ -1,33 +1,11 @@
 package com.imie.trybaproject.activity;
 
-import java.util.ArrayList;
-
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 
 import com.imie.trybaproject.R;
 import com.imie.trybaproject.db.ApplicationSQLiteOpenHelper;
-import com.imie.trybaproject.db.ClientOrderAdapter;
-import com.imie.trybaproject.db.ProductAdapter;
-<<<<<<< HEAD
-import com.imie.trybaproject.model.ClientOrder;
-import com.imie.trybaproject.model.Product;
-=======
-import com.imie.trybaproject.db.StationAdapter;
-import com.imie.trybaproject.db.TamponAdapter;
-import com.imie.trybaproject.db.UserAdapter;
-import com.imie.trybaproject.model.ClientOrder;
-import com.imie.trybaproject.model.Product;
-import com.imie.trybaproject.model.Station;
-import com.imie.trybaproject.model.Tampon;
-import com.imie.trybaproject.model.User;
-
-import android.os.Bundle;
-import android.app.Activity;
-import android.util.Log;
-import android.view.Menu;
->>>>>>> 7465eca94913ee7a2e34471a17240302e843d611
 
 public class MainActivity extends FragmentActivity {
 
