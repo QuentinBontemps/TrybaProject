@@ -34,7 +34,7 @@ public class LoginFragment extends Fragment{
 		ApplicationSQLiteOpenHelper ASLOH = 
 				new ApplicationSQLiteOpenHelper(getActivity(), 
 						"tryba_database", null, 1);
-		UserAdapter userAdapt = new UserAdapter(ASLOH.getDb());
+		UserAdapter userAdapt = new UserAdapter(ASLOH);
 		
 		userAdapt.insert(new User("n1n1","tata","Antonin","Auffray"));
 		
