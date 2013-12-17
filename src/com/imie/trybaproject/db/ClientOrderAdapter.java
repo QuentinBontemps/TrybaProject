@@ -96,15 +96,18 @@ public class ClientOrderAdapter implements Adapter<ClientOrder, Integer> {
 		
 		ClientOrder order = null;
 				
-		if(cursor != null)
+		if(cursor.getCount() > 0)
 		{
 			cursor.moveToFirst();
 			
 			order = new ClientOrder();
 			
-			order.setId(Integer.parseInt(cursor.getString(0)));
-			order.setCustomer(cursor.getString(1));
-			order.setQuantity(Integer.parseInt(cursor.getString(2)));
+			order.setId(Integer.parseInt(cursor.getString(
+											cursor.getColumnIndex(COL_ID))));
+			order.setCustomer(cursor.getString(
+										cursor.getColumnIndex(COL_CUSTOMER)));
+			order.setQuantity(Integer.parseInt(cursor.getString(
+										cursor.getColumnIndex(COL_QUANTITY))));
 			OrderProductAdapter orderProductAdapter=new OrderProductAdapter(db);
 			order.setProducts(orderProductAdapter.getProducts(id));
 		}
@@ -127,20 +130,24 @@ public class ClientOrderAdapter implements Adapter<ClientOrder, Integer> {
 		
 		ArrayList<ClientOrder> orders = new ArrayList<ClientOrder>();
 		
-		if(cursor != null){
+		if(cursor.getCount() > 0){
 			cursor.moveToFirst();				
 			/*
 			 * Pour chaque commande, on recherche les ids des produits
 			 */
 			do {
 				ClientOrder order = new ClientOrder();
-				order.setId(Integer.parseInt(cursor.getString(0)));
-				order.setCustomer(cursor.getString(1));
-				order.setQuantity(Integer.getInteger(cursor.getString(2)));
+				order.setId(Integer.parseInt(cursor.getString(
+											cursor.getColumnIndex(COL_ID))));
+				order.setCustomer(cursor.getString(
+										cursor.getColumnIndex(COL_CUSTOMER)));
+				order.setQuantity(Integer.getInteger(cursor.getString(
+										cursor.getColumnIndex(COL_QUANTITY))));
 				OrderProductAdapter orderProductAdapter = 
 													new OrderProductAdapter(db);
 				order.setProducts(orderProductAdapter.getProducts(
-										Integer.parseInt(cursor.getString(0))));
+										Integer.parseInt(cursor.getString(
+											 cursor.getColumnIndex(COL_ID)))));
 				
 				orders.add(order);
 			} while (cursor.moveToNext());
@@ -149,5 +156,4 @@ public class ClientOrderAdapter implements Adapter<ClientOrder, Integer> {
 		db.close();
 		return orders;
 	}
-
 }

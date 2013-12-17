@@ -65,14 +65,14 @@ public class ProductAdapter implements Adapter<Product, Integer> {
 		
 		Product product = null;
 		
-		if(cursor != null)
+		if(cursor.getCount() > 0)
 		{
 			cursor.moveToFirst();
-			
 			product = new Product();
 			
-			product.setId(Integer.parseInt(cursor.getString(0)));
-			product.setName(cursor.getString(1));
+			product.setId(Integer.parseInt(cursor.getString(
+											 cursor.getColumnIndex(COL_ID))));
+			product.setName(cursor.getString(cursor.getColumnIndex(COL_NAME)));
 
 		}
 		
@@ -89,13 +89,15 @@ public class ProductAdapter implements Adapter<Product, Integer> {
 		
 		ArrayList<Product> products = new ArrayList<Product>();
 		
-		if(cursor != null){
+		if(cursor.getCount() > 0){
 			
 			cursor.moveToFirst();				
 			do {
 				Product product = new Product();
-				product.setId(Integer.parseInt(cursor.getString(0)));
-				product.setName(cursor.getString(1));
+				product.setId(Integer.parseInt(cursor.getString(
+											cursor.getColumnIndex(COL_ID))));
+				product.setName(cursor.getString(
+											cursor.getColumnIndex(COL_NAME)));
 
 				products.add(product);
 			} while (cursor.moveToNext());

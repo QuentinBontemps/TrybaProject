@@ -10,8 +10,24 @@ import com.imie.trybaproject.R;
 import com.imie.trybaproject.db.ApplicationSQLiteOpenHelper;
 import com.imie.trybaproject.db.ClientOrderAdapter;
 import com.imie.trybaproject.db.ProductAdapter;
+<<<<<<< HEAD
 import com.imie.trybaproject.model.ClientOrder;
 import com.imie.trybaproject.model.Product;
+=======
+import com.imie.trybaproject.db.StationAdapter;
+import com.imie.trybaproject.db.TamponAdapter;
+import com.imie.trybaproject.db.UserAdapter;
+import com.imie.trybaproject.model.ClientOrder;
+import com.imie.trybaproject.model.Product;
+import com.imie.trybaproject.model.Station;
+import com.imie.trybaproject.model.Tampon;
+import com.imie.trybaproject.model.User;
+
+import android.os.Bundle;
+import android.app.Activity;
+import android.util.Log;
+import android.view.Menu;
+>>>>>>> 7465eca94913ee7a2e34471a17240302e843d611
 
 public class MainActivity extends FragmentActivity {
 
@@ -46,6 +62,7 @@ public class MainActivity extends FragmentActivity {
          *  user.setId(1);
          *  u_adapter.delete(user);
          */
+		/*
 		ArrayList<Product> products = new ArrayList<Product>();
 		
 		ProductAdapter p_adapter1 = new ProductAdapter(helper.getDb());
@@ -65,16 +82,57 @@ public class MainActivity extends FragmentActivity {
 		Product p4 = new Product("product4");
         p_adapter4.insert(p4);
         
-        
-        
         ProductAdapter pAll = new ProductAdapter(helper.getDb());
         
         products = pAll.getAll();
         
-        
         ClientOrderAdapter o_adapter = new ClientOrderAdapter(helper.getDb());
         ClientOrder order = new ClientOrder("Hello cock sucker","acier",12, products);
         o_adapter.insert(order);
+        
+        */
+		
+		
+		/*TamponAdapter t_adapter = new TamponAdapter(helper.getDb());
+		Tampon tampon = new Tampon("tampon2", 5);
+		long id = t_adapter.insert(tampon);
+		tampon.setId(id);
+		
+		
+		StationAdapter s_adapter = new StationAdapter(helper.getDb());
+		Station station = new Station("station2");
+		station.setTampon(tampon);
+		s_adapter.insert(station);	
+		*/
+		
+		/*
+		TamponAdapter t_adapter1 = new TamponAdapter(helper.getDb());
+		Tampon t1 = t_adapter1.get(3);
+		t1.setName("tamponUpd");
+		
+		TamponAdapter t_adapter2 = new TamponAdapter(helper.getDb());
+		t_adapter2.update(t1);
+		
+		StationAdapter s_adapter1 = new StationAdapter(helper.getDb());
+		Station s = s_adapter1.get(2);
+		s.setName("stationUpd");
+		
+		StationAdapter s_adapter2 = new StationAdapter(helper.getDb());
+		s_adapter2.update(s);
+		*/
+		
+		/*
+		StationAdapter s_adapter1 = new StationAdapter(helper.getDb());
+		Station s = s_adapter1.get(2);
+		
+		StationAdapter s_adapter2 = new StationAdapter(helper.getDb());
+		s_adapter2.delete(s);
+		
+		TamponAdapter t_adapter1 = new TamponAdapter(helper.getDb());
+		Tampon t1 = t_adapter1.get(3);
+		TamponAdapter t_adapter2 = new TamponAdapter(helper.getDb());
+		t_adapter2.delete(t1);
+		*/
     }
 
 

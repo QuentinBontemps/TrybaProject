@@ -18,6 +18,8 @@ public class ApplicationSQLiteOpenHelper extends SQLiteOpenHelper {
 		db.execSQL(new ProductAdapter(db).createTable());
 		db.execSQL(new OrderProductAdapter(db).createTable());
 		db.execSQL(new ClientOrderAdapter(db).createTable());
+		db.execSQL(new TamponAdapter(db).createTable());
+		db.execSQL(new StationAdapter(db).createTable());
 	}
 
 	@Override

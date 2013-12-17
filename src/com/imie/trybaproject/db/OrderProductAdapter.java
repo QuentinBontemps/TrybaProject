@@ -81,12 +81,12 @@ public class OrderProductAdapter implements Adapter<OrderProduct, Integer>{
 		
 		ArrayList<Product> products = new ArrayList<Product>();
 		
-		if(cursor != null){
+		if(cursor.getCount() > 0){
 			cursor.moveToFirst();
 			do {
 				ProductAdapter productAdapter = new ProductAdapter(db);
-				Product product = productAdapter.get(
-										Integer.parseInt(cursor.getString(1)));
+				Product product = productAdapter.get(Integer.parseInt(
+					cursor.getString(cursor.getColumnIndex(COL_ID_PRODUCT))));
 				products.add(product);
 			} while (cursor.moveToNext());
 		}
