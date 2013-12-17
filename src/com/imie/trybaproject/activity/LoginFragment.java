@@ -3,10 +3,8 @@ package com.imie.trybaproject.activity;
 
 
 import com.imie.trybaproject.R;
-import com.imie.trybaproject.db.ApplicationSQLiteOpenHelper;
-import com.imie.trybaproject.db.UserAdapter;
-import com.imie.trybaproject.model.User;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -14,10 +12,13 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 public class LoginFragment extends Fragment{
 
+	private EditText ET_login;
+	private EditText ET_pssword;
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -27,6 +28,9 @@ public class LoginFragment extends Fragment{
 		
 		// View objects
 		Button btnValidate = (Button) frag.findViewById(R.id.log_BTN_validate);
+		ET_login = (EditText) frag.findViewById(R.id.log_ET_Login);
+		ET_pssword = (EditText) frag.findViewById(R.id.log_ET_pssword);
+		
 		
 		btnValidate.setOnClickListener(new OnClickListener() {
 			
@@ -45,7 +49,10 @@ public class LoginFragment extends Fragment{
 	{
 		Toast.makeText(getActivity(), "je suis la", 
 				Toast.LENGTH_LONG).show();
-		
+		Intent intent = new Intent(getActivity(), MainActivity.class);
+		//intent.putExtra("userB", b);
+		getActivity().startActivity(intent);
+		/*
 		// On cherche dans la base de données le client
 		User user; 
 		ApplicationSQLiteOpenHelper ASLOH = 
@@ -53,8 +60,14 @@ public class LoginFragment extends Fragment{
 						"tryba_database", null, 1);
 		UserAdapter userAdapt = new UserAdapter(ASLOH.getDb());
 		
-		userAdapt.getByLogin();
-		
+		user = userAdapt.getWithLogin(ET_login.getText().toString());
+		if (user != null)
+		{
+			
+		}else
+		{
+			
+		}*/
 	}
 	
 }
