@@ -7,6 +7,8 @@
     <string name="title_activity_login">LoginActivity</string>
     <string name="log_login">Identifiant</string>
     <string name="log_pssword">Mot de passe</string>
-    <string name="log_validateBtn">Connexion</string>
+    <string name="log_validatebtn">Connexion</string>
+    <string name="log_wrongpassword">Mauvais mdp</string>
+    <string name="log_wronglogin">Mauvais login</string>
 
 </resources>

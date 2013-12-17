@@ -3,7 +3,9 @@ package com.imie.trybaproject.activity;
 
 
 import com.imie.trybaproject.R;
-
+import com.imie.trybaproject.db.ApplicationSQLiteOpenHelper;
+import com.imie.trybaproject.db.UserAdapter;
+import com.imie.trybaproject.model.User;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -25,6 +27,14 @@ public class LoginFragment extends Fragment{
 		
 		View frag = inflater.inflate(R.layout.fragment_login,container, false);
 
+		// Add user in DB pour test
+		ApplicationSQLiteOpenHelper ASLOH = 
+				new ApplicationSQLiteOpenHelper(getActivity(), 
+						"tryba_database", null, 1);
+		UserAdapter userAdapt = new UserAdapter(ASLOH.getDb());
+		
+		userAdapt.insert(new User("n1n1","tata","Antonin","Auffray"));
+		
 		
 		// View objects
 		Button btnValidate = (Button) frag.findViewById(R.id.log_BTN_validate);
@@ -32,27 +42,27 @@ public class LoginFragment extends Fragment{
 		ET_pssword = (EditText) frag.findViewById(R.id.log_ET_pssword);
 		
 		
+		// Click event on button
 		btnValidate.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				validateCommande();
+				validateConnexion();
 			}
 		});
 		
-		// TODO Auto-generated method stub
 		return frag;
 	}
 	
-	private void validateCommande()
+	/**
+	 * Validation de la connexion. Vérification du login//mdp
+	 */
+	private void validateConnexion()
 	{
-		Toast.makeText(getActivity(), "je suis la", 
-				Toast.LENGTH_LONG).show();
+
 		Intent intent = new Intent(getActivity(), MainActivity.class);
-		//intent.putExtra("userB", b);
-		getActivity().startActivity(intent);
-		/*
+				
+		
 		// On cherche dans la base de données le client
 		User user; 
 		ApplicationSQLiteOpenHelper ASLOH = 
@@ -63,11 +73,16 @@ public class LoginFragment extends Fragment{
 		user = userAdapt.getWithLogin(ET_login.getText().toString());
 		if (user != null)
 		{
-			
+			if(user.getPassword().equals(ET_pssword.getText().toString()))
+				getActivity().startActivity(intent);
+			else
+				Toast.makeText(getActivity(), R.string.log_wrongpassword, 
+						Toast.LENGTH_LONG).show();
 		}else
 		{
-			
-		}*/
+			Toast.makeText(getActivity(), R.string.log_wronglogin, 
+					Toast.LENGTH_LONG).show();
+		}
 	}
 	
 }
