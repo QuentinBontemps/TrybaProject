@@ -7,18 +7,20 @@ public class User {
 	private String password;
 	private String firstname;
 	private String lastname;
+	private int type;
 
 	public User(){
 		
 	}
 	
 	public User(String login, String password, String firstname,
-			String lastname) {
+			String lastname, int type) {
 		super();
 		this.login = login;
 		this.password = password;
 		this.firstname = firstname;
 		this.lastname = lastname;
+		this.type = type;
 	}
 	
 	public long getId() {
@@ -51,4 +53,11 @@ public class User {
 	public void setLastname(String lastname) {
 		this.lastname = lastname;
 	}
+	public int getType() {
+		return type;
+	}
+	public void setType(int type) {
+		this.type = type;
+	}
+	
 }

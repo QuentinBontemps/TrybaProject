@@ -18,9 +18,17 @@ public class TamponAdapter implements Adapter<Tampon, Integer> {
 	public static String COL_QUANTITY = "quantity";
 	
 	private SQLiteDatabase db;
+	private ApplicationSQLiteOpenHelper helper;
 	
-	public TamponAdapter(SQLiteDatabase db){
-		this.db = db;
+	public TamponAdapter(){
+		
+	}
+	
+	public TamponAdapter(ApplicationSQLiteOpenHelper helper){
+		if(helper != null){
+			this.db = helper.getDb();
+			this.helper = helper;
+		}
 	}
 	
 	@Override
@@ -34,87 +42,107 @@ public class TamponAdapter implements Adapter<Tampon, Integer> {
 
 	@Override
 	public long insert(Tampon item) {
-		ContentValues values = new ContentValues();
-		values.put(COL_NAME, item.getName());
-		values.put(COL_QUANTITY, String.valueOf(item.getQuantity()));
-		
-		long i = db.insert(TABLE, null, values);
-		db.close();
+		long i = -1;
+		if(this.db != null){		
+			ContentValues values = new ContentValues();
+			values.put(COL_NAME, item.getName());
+			values.put(COL_QUANTITY, String.valueOf(item.getQuantity()));
+			
+			i = db.insert(TABLE, null, values);
+			if(helper != null)			
+				db.close();
+		}
 		return i;
 	}
 
 
 	@Override
 	public long update(Tampon item) {
-		ContentValues values = new ContentValues();
-		values.put(COL_NAME, item.getName());
-		values.put(COL_QUANTITY, String.valueOf(item.getQuantity()));
-		
-		int i = db.update(TABLE, values, COL_ID + " = ?",
-				new String[] { String.valueOf(item.getId())});
-		db.close();
+		long i = -1;
+		if(this.db != null){
+			ContentValues values = new ContentValues();
+			values.put(COL_NAME, item.getName());
+			values.put(COL_QUANTITY, String.valueOf(item.getQuantity()));
+			
+			i = db.update(TABLE, values, COL_ID + " = ?",
+					new String[] { String.valueOf(item.getId())});
+			if(helper != null)			
+				db.close();
+		}
 		return i;
 	}
 
 
 	@Override
 	public void delete(Tampon item) {
-		db.delete(TABLE, COL_ID + " = ? ",
-				new String[] {String.valueOf(item.getId())});
-		db.close();
+		if(this.db != null){
+			db.delete(TABLE, COL_ID + " = ? ",
+					new String[] {String.valueOf(item.getId())});
+			if(helper != null)
+				db.close();
+		}
 	}
 
 
 	@Override
 	public Tampon get(Integer id) {
-		Cursor cursor = db.query(TABLE,
-				new String[] {COL_ID, COL_NAME, COL_QUANTITY}, 
-				COL_ID + " = ? ",
-				new String[] {String.valueOf(id)},null,null,null,null);
-		
 		Tampon tampon = null;
-		
-		if(cursor.getCount() > 0){
-			cursor.moveToFirst();
-			tampon = new Tampon();
+		if(this.db != null){
+			Cursor cursor = db.query(TABLE,
+					new String[] {COL_ID, COL_NAME, COL_QUANTITY}, 
+					COL_ID + " = ? ",
+					new String[] {String.valueOf(id)},null,null,null,null);
 			
-			tampon.setId(Integer.parseInt(cursor.getString(
-											cursor.getColumnIndex(COL_ID))));
-			tampon.setName(cursor.getString(cursor.getColumnIndex(COL_NAME)));
-			tampon.setQuantity(Integer.parseInt(cursor.getString(
+			if(cursor.getCount() > 0){
+				cursor.moveToFirst();
+				tampon = new Tampon();
+				
+				tampon.setId(Integer.parseInt(cursor.getString(
+										cursor.getColumnIndex(COL_ID))));
+				tampon.setName(cursor.getString(
+										cursor.getColumnIndex(COL_NAME)));
+				tampon.setQuantity(Integer.parseInt(cursor.getString(
 										cursor.getColumnIndex(COL_QUANTITY))));
+			}
+			if(helper != null)
+				db.close();
 		}
-		db.close();
 		return tampon;
 	}
 
 
 	@Override
 	public ArrayList<Tampon> getAll() {
-		Cursor cursor = db.query(TABLE, 
-				new String[] {COL_ID, COL_NAME, COL_QUANTITY}, 
-				null,null,null,null,null);
-		
 		ArrayList<Tampon> tampons = new ArrayList<Tampon>();
-		
-		if(cursor.getCount() > 0){
-			cursor.moveToFirst();				
-			do {
-				Tampon tampon = new Tampon();
-				
-				tampon.setId(Integer.parseInt(cursor.getString(
-											cursor.getColumnIndex(COL_ID))));
-				tampon.setName(cursor.getString(
-											cursor.getColumnIndex(COL_NAME)));
-				tampon.setQuantity(Integer.parseInt(cursor.getString(
-										cursor.getColumnIndex(COL_QUANTITY))));
-
-				tampons.add(tampon);
-			} while (cursor.moveToNext());
+		if(this.db != null){
+			Cursor cursor = db.query(TABLE, 
+					new String[] {COL_ID, COL_NAME, COL_QUANTITY}, 
+					null,null,null,null,null);
+					
+			if(cursor.getCount() > 0){
+				cursor.moveToFirst();				
+				do {
+					Tampon tampon = new Tampon();
+					
+					tampon.setId(Integer.parseInt(cursor.getString(
+												cursor.getColumnIndex(COL_ID))));
+					tampon.setName(cursor.getString(
+												cursor.getColumnIndex(COL_NAME)));
+					tampon.setQuantity(Integer.parseInt(cursor.getString(
+											cursor.getColumnIndex(COL_QUANTITY))));
+	
+					tampons.add(tampon);
+				} while (cursor.moveToNext());
+			}
+			if(helper != null)
+				db.close();
 		}
-		
-		db.close();
 		return tampons;
+	}
+
+	@Override
+	public void setDatabase(SQLiteDatabase db) {
+		this.db = db;
 	}
 
 	

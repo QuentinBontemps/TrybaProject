@@ -10,7 +10,6 @@
     <string name="log_validatebtn">Connexion</string>
     <string name="log_wrongpassword">Mauvais mdp</string>
     <string name="log_wronglogin">Mauvais login</string>
-    <string name="databasename">tryba_database</string>
     <string name="title_activity_user">UserActivity</string>
     <string name="action_add_user">Ajouter un utilisateur</string>
     <string name="title_activity_add_user">AddUserActivity</string>
@@ -19,5 +18,6 @@
     <string name="add_user_login">Identifiant</string>
     <string name="add_user_password">Mot de passe</string>
     <string name="add_user_validate">Valider</string>
+    <string name="database_name">tryba_database</string>
 
 </resources>

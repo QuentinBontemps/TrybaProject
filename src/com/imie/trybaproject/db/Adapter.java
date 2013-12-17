@@ -43,4 +43,6 @@ public interface Adapter<T, U> {
 	 */
 	ArrayList<T> getAll();
 	
+	void setDatabase(SQLiteDatabase db);
+	
 }

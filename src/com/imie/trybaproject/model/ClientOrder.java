@@ -8,20 +8,16 @@ public class ClientOrder {
 	private String customer;
 	private String typeProduct;
 	private int quantity;
-	private ArrayList<Product> products;
 	
 	public ClientOrder(){
-		products = new ArrayList<Product>();
 	}
 	
 	
-	public ClientOrder(String customer, String typeProduct, int quantity,
-			ArrayList<Product> products) {
+	public ClientOrder(String customer, String typeProduct, int quantity) {
 		super();
 		this.customer = customer;
 		this.typeProduct = typeProduct;
 		this.quantity = quantity;
-		this.products = products;
 	}
 	public long getId() {
 		return id;
@@ -47,12 +43,4 @@ public class ClientOrder {
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
-	public ArrayList<Product> getProducts() {
-		return products;
-	}
-	public void setProducts(ArrayList<Product> products) {
-		this.products = products;
-	}
-	
-	
 }
