@@ -1,8 +1,12 @@
 package com.imie.trybaproject.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 
 import com.imie.trybaproject.R;
 import com.imie.trybaproject.db.ApplicationSQLiteOpenHelper;
@@ -111,8 +115,24 @@ public class MainActivity extends FragmentActivity {
 		TamponAdapter t_adapter2 = new TamponAdapter(helper.getDb());
 		t_adapter2.delete(t1);
 		*/
+		
+		// On récupere un bouton pour le test
+		Button buttonTest = (Button) this.findViewById(R.id.button1);
+		buttonTest.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				gestionUserButton();
+			}
+		});
+		
     }
-
+    private void gestionUserButton()
+    {
+    	Intent intent = new Intent(this, ListUsersActivity.class);
+		this.startActivity(intent);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

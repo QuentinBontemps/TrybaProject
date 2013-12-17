@@ -6,6 +6,8 @@ import com.imie.trybaproject.R;
 import com.imie.trybaproject.db.ApplicationSQLiteOpenHelper;
 import com.imie.trybaproject.db.UserAdapter;
 import com.imie.trybaproject.model.User;
+
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -19,6 +21,7 @@ import android.widget.Toast;
 
 public class LoginFragment extends Fragment{
 
+	
 	private EditText ET_login;
 	private EditText ET_pssword;
 	@Override
