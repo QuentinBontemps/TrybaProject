@@ -4,6 +4,7 @@ public class Product {
 	
 	private long id;
 	private String name;
+	private Zone zone;
 	
 	public Product(){
 		
@@ -28,6 +29,14 @@ public class Product {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Zone getZone() {
+		return zone;
+	}
+
+	public void setZone(Zone zone) {
+		this.zone = zone;
 	}
 	
 	
