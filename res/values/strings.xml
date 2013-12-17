@@ -10,5 +10,6 @@
     <string name="log_validatebtn">Connexion</string>
     <string name="log_wrongpassword">Mauvais mdp</string>
     <string name="log_wronglogin">Mauvais login</string>
+    <string name="databasename">tryba_database</string>
 
 </resources>
