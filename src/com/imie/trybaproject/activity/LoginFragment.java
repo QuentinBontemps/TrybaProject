@@ -45,8 +45,8 @@ public class LoginFragment extends Fragment{
 				Integer.parseInt(this.getString(R.string.database_version)));
 		UserAdapter userAdapt = new UserAdapter(ASLOH);
 
-		/*userAdapt.insert(new User("momo","yo","Quentin","Bontemps",
-					UserType.ADMINISTRATOR.getValue())); */
+		userAdapt.insert(new User("momo","yo","Quentin","Bontemps",
+					UserType.ADMINISTRATOR.getValue())); 
 		 
 		
 		StationAdapter sA = new StationAdapter(ASLOH);

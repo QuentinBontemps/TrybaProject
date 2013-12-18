@@ -25,11 +25,13 @@ public class ListUsersFragment extends Fragment{
 		
 		ApplicationSQLiteOpenHelper ASLOH = 
 				new ApplicationSQLiteOpenHelper(getActivity(), 
-						"tryba_database", null, 1);
+						getString(R.string.database_name), null, 
+						Integer.parseInt(getString(R.string.database_name)));
 		userAdapt = new UserAdapter(ASLOH);
 		
 		
-		View frag = inflater.inflate(R.layout.fragment_list_users,
+		View frag = inflater.inflate(R.layout.fragment_list_users, 
+															container, false);
 
 		this.lv = (ListView) frag.findViewById(R.id.list);
 		listCursor = new UsersCursorAdapter(getActivity(), 

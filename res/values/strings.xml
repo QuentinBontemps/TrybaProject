@@ -20,7 +20,6 @@
     <string name="add_user_login">Identifiant</string>
     <string name="add_user_password">Mot de passe</string>
     <string name="add_user_validate">Valider</string>
-    <string name="database_name">tryba_database</string>
     <string name="title_activity_add_order">AddOrderActivity</string>
     <string name="add_order_client">Ajout commande</string>
     <string name="add_order_customer">Nom client</string>
