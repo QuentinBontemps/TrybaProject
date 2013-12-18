@@ -98,12 +98,11 @@ public class ClientOrderAdapter implements Adapter<ClientOrder, Integer> {
 				cursor.moveToFirst();		
 				order = new ClientOrder();
 				
-				order.setId(Integer.parseInt(cursor.getString(
-												cursor.getColumnIndex(COL_ID))));
+				order.setId((cursor.getInt(cursor.getColumnIndex(COL_ID))));
 				order.setCustomer(cursor.getString(
-											cursor.getColumnIndex(COL_CUSTOMER)));
-				order.setQuantity(Integer.parseInt(cursor.getString(
-											cursor.getColumnIndex(COL_QUANTITY))));
+										cursor.getColumnIndex(COL_CUSTOMER)));
+				order.setQuantity(cursor.getInt(
+										cursor.getColumnIndex(COL_QUANTITY)));
 			}
 			if(helper != null)			
 				db.close();
@@ -123,12 +122,11 @@ public class ClientOrderAdapter implements Adapter<ClientOrder, Integer> {
 				cursor.moveToFirst();				
 				do {
 					ClientOrder order = new ClientOrder();
-					order.setId(Integer.parseInt(cursor.getString(
-												cursor.getColumnIndex(COL_ID))));
+					order.setId(cursor.getInt(cursor.getColumnIndex(COL_ID)));
 					order.setCustomer(cursor.getString(
-											cursor.getColumnIndex(COL_CUSTOMER)));
-					order.setQuantity(Integer.getInteger(cursor.getString(
-											cursor.getColumnIndex(COL_QUANTITY))));
+										cursor.getColumnIndex(COL_CUSTOMER)));
+					order.setQuantity(cursor.getInt(
+										cursor.getColumnIndex(COL_QUANTITY)));
 					
 					orders.add(order);
 				} while (cursor.moveToNext());

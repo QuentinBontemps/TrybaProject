@@ -92,14 +92,13 @@ public class ProductAdapter implements Adapter<Product, Integer> {
 				cursor.moveToFirst();
 				product = new Product();
 				
-				product.setId(Integer.parseInt(cursor.getString(
-											cursor.getColumnIndex(COL_ID))));
+				product.setId(cursor.getInt(cursor.getColumnIndex(COL_ID)));
 				product.setName(cursor.getString(
 											cursor.getColumnIndex(COL_NAME)));
 				ClientOrderAdapter orderAdapter = new ClientOrderAdapter(null);
 				orderAdapter.setDatabase(db);
-				product.setOrder(orderAdapter.get(Integer.parseInt(
-					cursor.getString(cursor.getColumnIndex(COL_ORDER_ID)))));
+				product.setOrder(orderAdapter.get(cursor.getInt(
+										cursor.getColumnIndex(COL_ORDER_ID))));
 			}
 			if(helper != null)			
 				db.close();
@@ -119,15 +118,15 @@ public class ProductAdapter implements Adapter<Product, Integer> {
 				cursor.moveToFirst();				
 				do {
 					Product product = new Product();
-					product.setId(Integer.parseInt(cursor.getString(
-											cursor.getColumnIndex(COL_ID))));
+					product.setId(cursor.getInt(
+											cursor.getColumnIndex(COL_ID)));
 					product.setName(cursor.getString(
 											cursor.getColumnIndex(COL_NAME)));
 					ClientOrderAdapter orderAdapter = 
 												new ClientOrderAdapter(null);
 					orderAdapter.setDatabase(db);
-					product.setOrder(orderAdapter.get(Integer.parseInt(
-					   cursor.getString(cursor.getColumnIndex(COL_ORDER_ID)))));
+					product.setOrder(orderAdapter.get(cursor.getInt(
+										cursor.getColumnIndex(COL_ORDER_ID))));
 					
 					products.add(product);
 				} while (cursor.moveToNext());

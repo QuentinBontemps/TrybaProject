@@ -106,8 +106,8 @@ public class UserAdapter implements Adapter<User, Integer>{
 				cursor.moveToFirst();
 				user = new User();
 				
-				user.setId(Integer.parseInt(cursor.getString(
-										cursor.getColumnIndex(COL_ID))));
+				user.setId(cursor.getInt(
+										cursor.getColumnIndex(COL_ID)));
 				user.setLogin(cursor.getString(
 										cursor.getColumnIndex(COL_LOGIN)));
 				user.setPassword(cursor.getString(
@@ -116,7 +116,7 @@ public class UserAdapter implements Adapter<User, Integer>{
 										cursor.getColumnIndex(COL_FIRSTNAME)));
 				user.setLastname(cursor.getString(
 										cursor.getColumnIndex(COL_LASTNAME)));
-				user.setType(Integer.parseInt(cursor.getString(
+				user.setType(cursor.getInt(
 										cursor.getColumnIndex(COL_TYPE))));
 			}
 			if(helper != null)
@@ -129,18 +129,15 @@ public class UserAdapter implements Adapter<User, Integer>{
 	public ArrayList<User> getAll() {
 		ArrayList<User> users = new ArrayList<User>();
 		if(this.db != null){
-			Cursor cursor = db.query(TABLE, 
-					new String[] {COL_ID, COL_LOGIN, COL_PASSWORD, 
-										COL_FIRSTNAME, COL_LASTNAME, COL_TYPE}, 
-					null,null,null,null,null);
+			Cursor cursor = this.getAllWithCursor();
 			
 			if(cursor != null){
 				
 				cursor.moveToFirst();				
 				do {
 					User user = new User();
-					user.setId(Integer.parseInt(cursor.getString(
-										cursor.getColumnIndex(COL_ID))));
+					user.setId(cursor.getInt(
+										cursor.getColumnIndex(COL_ID)));
 					user.setLogin(cursor.getString(
 										cursor.getColumnIndex(COL_LOGIN)));
 					user.setPassword(cursor.getString(
@@ -149,8 +146,8 @@ public class UserAdapter implements Adapter<User, Integer>{
 										cursor.getColumnIndex(COL_FIRSTNAME)));
 					user.setLastname(cursor.getString(
 										cursor.getColumnIndex(COL_LASTNAME)));
-					user.setType(Integer.parseInt(cursor.getString(
-										cursor.getColumnIndex(COL_TYPE))));
+					user.setType(cursor.getInt(
+										cursor.getColumnIndex(COL_TYPE)));
 					
 					users.add(user);
 				} while (cursor.moveToNext());
@@ -186,8 +183,8 @@ public class UserAdapter implements Adapter<User, Integer>{
 				cursor.moveToFirst();
 				user = new User();
 				
-				user.setId(Integer.parseInt(cursor.getString(
-										cursor.getColumnIndex(COL_ID))));
+				user.setId(cursor.getInt(
+										cursor.getColumnIndex(COL_ID)));
 				user.setLogin(cursor.getString(
 										cursor.getColumnIndex(COL_LOGIN)));
 				user.setPassword(cursor.getString(
@@ -196,8 +193,8 @@ public class UserAdapter implements Adapter<User, Integer>{
 										cursor.getColumnIndex(COL_FIRSTNAME)));
 				user.setLastname(cursor.getString(
 										cursor.getColumnIndex(COL_LASTNAME)));
-				user.setType(Integer.parseInt(cursor.getString(
-										cursor.getColumnIndex(COL_TYPE))));
+				user.setType(cursor.getInt(
+										cursor.getColumnIndex(COL_TYPE)));
 			}
 			
 			if(helper != null)
