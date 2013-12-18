@@ -46,6 +46,10 @@
             android:name="com.imie.trybaproject.activity.DashboardActivity"
             android:label="@string/title_activity_dashboard" >
         </activity>
+        <activity
+            android:name="com.imie.trybaproject.activity.ScanActivity"
+            android:label="@string/title_activity_scan" >
+        </activity>
     </application>
 
 </manifest>

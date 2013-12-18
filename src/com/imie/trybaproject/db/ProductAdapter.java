@@ -189,5 +189,10 @@ public class ProductAdapter implements Adapter<Product, Integer> {
 	public void setDatabase(SQLiteDatabase db) {
 		this.db = db;
 	}
+	
+	public void closeDatabase()
+	{
+		this.db.close();
+	}
 
 }
