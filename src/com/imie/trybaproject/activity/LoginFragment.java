@@ -47,7 +47,10 @@ public class LoginFragment extends Fragment{
 
 		userAdapt.insert(new User("momo","yo","Quentin","Bontemps",
 					UserType.ADMINISTRATOR.getValue())); 
-		 
+		
+		UserAdapter userAdapt1 = new UserAdapter(ASLOH);
+		userAdapt1.insert(new User("toto","yo","Toto","Albert",
+				UserType.OPERATOR.getValue())); 
 		
 		StationAdapter sA = new StationAdapter(ASLOH);
 		sA.insert(new Station("s1"));
