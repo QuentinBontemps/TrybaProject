@@ -9,6 +9,7 @@ import java.util.Locale;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.imie.trybaproject.model.Station;
 import com.imie.trybaproject.model.UserLog;
@@ -118,13 +119,21 @@ public class UserLogAdapter implements Adapter<UserLog, Integer>{
 				log.setUser(userAdapter.get(cursor.getInt(
 									cursor.getColumnIndex(COL_USER_ID))));
 				try {
-					Date startDate = new SimpleDateFormat(
-							dateFormat, Locale.FRANCE).
-							parse(cursor.getString(
-									cursor.getColumnIndex(COL_START_DATE)));
-					Date endDate = new SimpleDateFormat(
-							dateFormat,Locale.FRANCE).parse(cursor.getString(
-									cursor.getColumnIndex(COL_END_DATE)));
+					Date startDate = null;
+					Date endDate = null;
+					if(!cursor.getString(cursor.getColumnIndex(COL_START_DATE)).equals("")){
+						startDate = new SimpleDateFormat(
+								dateFormat, Locale.FRANCE).
+								parse(cursor.getString(
+										cursor.getColumnIndex(COL_START_DATE)));
+					}
+										
+					if(cursor.getString(cursor.getColumnIndex(COL_END_DATE)) != null && !cursor.getString(cursor.getColumnIndex(COL_END_DATE)).equals("")){
+						endDate = new SimpleDateFormat(
+								dateFormat,Locale.FRANCE).
+								parse(cursor.getString(
+										cursor.getColumnIndex(COL_END_DATE)));
+					}
 					log.setDateEntree(startDate);
 					log.setDateSortie(endDate);
 				} catch (ParseException e) {
@@ -204,6 +213,11 @@ public class UserLogAdapter implements Adapter<UserLog, Integer>{
 			}
 		}
 		return false;
+	}
+	
+	public void addEndDate(UserLog userLog, Date date){
+		userLog.setDateSortie(date);
+		this.update(userLog);
 	}
 	
 	@Override
