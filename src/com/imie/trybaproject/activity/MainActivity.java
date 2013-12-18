@@ -122,6 +122,7 @@ public class MainActivity extends FragmentActivity {
 		
 		// On récupere un bouton pour le test
 		Button buttonTest = (Button) this.findViewById(R.id.button1);
+		Button buttonTest1 = (Button) this.findViewById(R.id.Button01);
 		buttonTest.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -131,10 +132,25 @@ public class MainActivity extends FragmentActivity {
 			}
 		});
 		
+		buttonTest1.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				gestionAddCommandeButton();
+			}
+		});
+		
     }
     private void gestionUserButton()
     {
     	Intent intent = new Intent(this, ListUsersActivity.class);
+		this.startActivity(intent);
+    }
+    
+    public void gestionAddCommandeButton()
+    {
+    	Intent intent = new Intent(this, AddOrderActivity.class);
 		this.startActivity(intent);
     }
 

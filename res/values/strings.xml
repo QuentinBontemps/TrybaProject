@@ -24,5 +24,7 @@
     <string name="add_order_customer">Nom client</string>
     <string name="add_order_type_product">Type produit</string>
     <string name="add_order_quantity">Quantité</string>
+    <string name="add_order_type_material">Type matériel</string>
+    <string name="add_order_client_validate">Valider commande</string>
 
 </resources>

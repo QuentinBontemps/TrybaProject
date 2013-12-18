@@ -29,9 +29,11 @@ public class ListUsersFragment extends Fragment{
 		userAdapt = new UserAdapter(ASLOH);
 		
 		
-		View frag = inflater.inflate(R.layout.fragment_list_users,container, false);
+		View frag = inflater.inflate(R.layout.fragment_list_users,
+												container, false);
 		this.lv = (ListView) frag.findViewById(R.id.list);
-		listCursor = new UsersCursorAdapter(getActivity(), userAdapt.getAllWithCursor());
+		listCursor = new UsersCursorAdapter(getActivity(), 
+				userAdapt.getAllWithCursor());
 		lv.setAdapter(listCursor); // Need user adapter
 		
 
@@ -42,7 +44,8 @@ public class ListUsersFragment extends Fragment{
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
 		
-		listCursor = new UsersCursorAdapter(getActivity(), userAdapt.getAllWithCursor());
+		listCursor = new UsersCursorAdapter(getActivity(), 
+				userAdapt.getAllWithCursor());
 		lv.setAdapter(listCursor); // Need user adapter
 		this.lv.postInvalidate();
 
