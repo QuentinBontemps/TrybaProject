@@ -37,9 +37,9 @@ public class LoginFragment extends Fragment{
 						"tryba_database", null, 1);
 		UserAdapter userAdapt = new UserAdapter(ASLOH);
 
-		userAdapt.insert(new User("momo","yo","Quentin","Bontemps",
-					UserType.ADMINISTRATOR.getValue()));
-
+		/*userAdapt.insert(new User("momo","yo","Quentin","Bontemps",
+					UserType.ADMINISTRATOR.getValue())); */
+		 
 		
 		// View objects
 		Button btnValidate = (Button) frag.findViewById(R.id.log_BTN_validate);

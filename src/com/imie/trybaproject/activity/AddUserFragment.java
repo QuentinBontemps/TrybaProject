@@ -72,7 +72,12 @@ public class AddUserFragment extends Fragment {
 		UserAdapter userAdapt = new UserAdapter(ASLOH);
 		
 		long idResultatInsertion = userAdapt.insert(user);
-		Log.v("monAppli","id user : " + idResultatInsertion);
-		monActi.setResult(Activity.RESULT_OK);
+		if (idResultatInsertion > 0)
+		{
+			Log.v("monAppli","id user : " + idResultatInsertion);
+			monActi.setResult(Activity.RESULT_OK);
+			this.getActivity().finish();
+		}
+		
 	}
 }
