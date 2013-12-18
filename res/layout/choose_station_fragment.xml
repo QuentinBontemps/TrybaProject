@@ -30,5 +30,23 @@
             android:layout_height="wrap_content"
             android:text="@string/validate" 
             android:layout_weight="7"/>
-    </LinearLayout>     
+        
+        
+    </LinearLayout>   
+    <Button
+        android:id="@+id/Button01"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView1"
+        android:layout_below="@+id/textView1"
+        android:layout_marginTop="28dp"
+        android:text="Create commande" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView1"
+        android:layout_below="@+id/Button01"
+        android:text="Gestion user" />  
 </LinearLayout>

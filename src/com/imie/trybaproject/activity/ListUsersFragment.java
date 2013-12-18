@@ -26,7 +26,7 @@ public class ListUsersFragment extends Fragment{
 		ApplicationSQLiteOpenHelper ASLOH = 
 				new ApplicationSQLiteOpenHelper(getActivity(), 
 						getString(R.string.database_name), null, 
-						Integer.parseInt(getString(R.string.database_name)));
+						Integer.parseInt(getString(R.string.database_version)));
 		userAdapt = new UserAdapter(ASLOH);
 		
 		

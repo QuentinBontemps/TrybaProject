@@ -44,7 +44,28 @@ public class ChooseStationFragment extends Fragment {
 		
 		View fragment = inflater.inflate(R.layout.choose_station_fragment,
 															container, false);
-				
+		
+		// View object
+		Button buttonTest = (Button) fragment.findViewById(R.id.button1);
+		Button buttonTest1 = (Button) fragment.findViewById(R.id.Button01);
+		
+		buttonTest.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				gestionUserButton();
+			}
+		});		
+		buttonTest1.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				gestionAddCommandeButton();
+			}
+		});
+		
 		SharedPreferences preferences = getActivity().
 				getSharedPreferences("DEFAULT", Activity.MODE_PRIVATE);
 		
@@ -141,6 +162,21 @@ public class ChooseStationFragment extends Fragment {
 			stationsArrayAdapter.addAll(result);
 			progress.dismiss();
 		}
+	    
 	
 	}
+	
+	private void gestionUserButton()
+    {
+    	Intent intent = new Intent(getActivity(), ListUsersActivity.class);
+    	getActivity().startActivity(intent);
+    }
+    
+    public void gestionAddCommandeButton()
+    {
+    	Intent intent = new Intent(getActivity(), AddOrderActivity.class);
+    	getActivity().startActivity(intent);
+    }
+    
+    
 }
