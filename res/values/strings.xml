@@ -33,5 +33,7 @@
     <string name="loading">Chargement...</string>
     <string name="title_activity_dashboard">DashboardActivity</string>
     <string name="title_activity_scan">ScanActivity</string>
+    <string name="menu_users_edit">Modifier</string>
+    <string name="menu_users_delete">Supprimer</string>
 
 </resources>
