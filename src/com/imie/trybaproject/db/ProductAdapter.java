@@ -92,14 +92,13 @@ public class ProductAdapter implements Adapter<Product, Integer> {
 				cursor.moveToFirst();
 				product = new Product();
 				
-				product.setId(Integer.parseInt(cursor.getString(
-											cursor.getColumnIndex(COL_ID))));
+				product.setId(cursor.getInt(cursor.getColumnIndex(COL_ID)));
 				product.setName(cursor.getString(
 											cursor.getColumnIndex(COL_NAME)));
 				ClientOrderAdapter orderAdapter = new ClientOrderAdapter(null);
 				orderAdapter.setDatabase(db);
-				product.setOrder(orderAdapter.get(Integer.parseInt(
-					cursor.getString(cursor.getColumnIndex(COL_ORDER_ID)))));
+				product.setOrder(orderAdapter.get(cursor.getInt(
+										cursor.getColumnIndex(COL_ORDER_ID))));
 			}
 			if(helper != null)			
 				db.close();
@@ -111,23 +110,21 @@ public class ProductAdapter implements Adapter<Product, Integer> {
 	public ArrayList<Product> getAll() {
 		ArrayList<Product> products = new ArrayList<Product>();
 		if(this.db != null){
-				Cursor cursor = db.query(TABLE, 
-					new String[] {COL_ID, COL_NAME, COL_ORDER_ID}, 
-					null,null,null,null,null);
+				Cursor cursor = this.getAllWithCursor();
 						
 			if(cursor.getCount() > 0){
 				cursor.moveToFirst();				
 				do {
 					Product product = new Product();
-					product.setId(Integer.parseInt(cursor.getString(
-											cursor.getColumnIndex(COL_ID))));
+					product.setId(cursor.getInt(
+											cursor.getColumnIndex(COL_ID)));
 					product.setName(cursor.getString(
 											cursor.getColumnIndex(COL_NAME)));
 					ClientOrderAdapter orderAdapter = 
 												new ClientOrderAdapter(null);
 					orderAdapter.setDatabase(db);
-					product.setOrder(orderAdapter.get(Integer.parseInt(
-					   cursor.getString(cursor.getColumnIndex(COL_ORDER_ID)))));
+					product.setOrder(orderAdapter.get(cursor.getInt(
+										cursor.getColumnIndex(COL_ORDER_ID))));
 					
 					products.add(product);
 				} while (cursor.moveToNext());
@@ -136,6 +133,17 @@ public class ProductAdapter implements Adapter<Product, Integer> {
 				db.close();
 		}
 		return products;
+	}
+	
+	@Override
+	public Cursor getAllWithCursor() {
+		Cursor cursor = null;
+		if(this.db != null){
+			cursor = db.query(TABLE, 
+				new String[] {COL_ID, COL_NAME, COL_ORDER_ID}, 
+				null,null,null,null,null);
+		}
+		return cursor;
 	}
 
 	@Override

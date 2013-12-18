@@ -98,12 +98,11 @@ public class ClientOrderAdapter implements Adapter<ClientOrder, Integer> {
 				cursor.moveToFirst();		
 				order = new ClientOrder();
 				
-				order.setId(Integer.parseInt(cursor.getString(
-												cursor.getColumnIndex(COL_ID))));
+				order.setId((cursor.getInt(cursor.getColumnIndex(COL_ID))));
 				order.setCustomer(cursor.getString(
-											cursor.getColumnIndex(COL_CUSTOMER)));
-				order.setQuantity(Integer.parseInt(cursor.getString(
-											cursor.getColumnIndex(COL_QUANTITY))));
+										cursor.getColumnIndex(COL_CUSTOMER)));
+				order.setQuantity(cursor.getInt(
+										cursor.getColumnIndex(COL_QUANTITY)));
 			}
 			if(helper != null)			
 				db.close();
@@ -115,20 +114,17 @@ public class ClientOrderAdapter implements Adapter<ClientOrder, Integer> {
 	public ArrayList<ClientOrder> getAll() {
 		ArrayList<ClientOrder> orders = new ArrayList<ClientOrder>();
 		if(this.db != null){
-			Cursor cursor = db.query(TABLE, 
-					new String[] {COL_ID, COL_CUSTOMER, COL_QUANTITY,}, 
-					null,null,null,null,null);
+			Cursor cursor = this.getAllWithCursor();
 			
 			if(cursor.getCount() > 0){
 				cursor.moveToFirst();				
 				do {
 					ClientOrder order = new ClientOrder();
-					order.setId(Integer.parseInt(cursor.getString(
-												cursor.getColumnIndex(COL_ID))));
+					order.setId(cursor.getInt(cursor.getColumnIndex(COL_ID)));
 					order.setCustomer(cursor.getString(
-											cursor.getColumnIndex(COL_CUSTOMER)));
-					order.setQuantity(Integer.getInteger(cursor.getString(
-											cursor.getColumnIndex(COL_QUANTITY))));
+										cursor.getColumnIndex(COL_CUSTOMER)));
+					order.setQuantity(cursor.getInt(
+										cursor.getColumnIndex(COL_QUANTITY)));
 					
 					orders.add(order);
 				} while (cursor.moveToNext());
@@ -139,6 +135,16 @@ public class ClientOrderAdapter implements Adapter<ClientOrder, Integer> {
 		return orders;
 	}
 	
+	@Override
+	public Cursor getAllWithCursor() {
+		Cursor cursor = null;
+		if(this.db != null){
+			cursor = db.query(TABLE, 
+					new String[] {COL_ID, COL_CUSTOMER, COL_QUANTITY,}, 
+					null,null,null,null,null);
+		}
+		return cursor;
+	}
 
 	@Override
 	public void setDatabase(SQLiteDatabase db) {

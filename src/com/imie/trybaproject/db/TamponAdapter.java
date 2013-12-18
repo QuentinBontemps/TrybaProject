@@ -97,12 +97,12 @@ public class TamponAdapter implements Adapter<Tampon, Integer> {
 				cursor.moveToFirst();
 				tampon = new Tampon();
 				
-				tampon.setId(Integer.parseInt(cursor.getString(
-										cursor.getColumnIndex(COL_ID))));
+				tampon.setId(cursor.getInt(
+										cursor.getColumnIndex(COL_ID)));
 				tampon.setName(cursor.getString(
 										cursor.getColumnIndex(COL_NAME)));
-				tampon.setQuantity(Integer.parseInt(cursor.getString(
-										cursor.getColumnIndex(COL_QUANTITY))));
+				tampon.setQuantity(cursor.getInt(
+										cursor.getColumnIndex(COL_QUANTITY)));
 			}
 			if(helper != null)
 				db.close();
@@ -124,12 +124,12 @@ public class TamponAdapter implements Adapter<Tampon, Integer> {
 				do {
 					Tampon tampon = new Tampon();
 					
-					tampon.setId(Integer.parseInt(cursor.getString(
-												cursor.getColumnIndex(COL_ID))));
+					tampon.setId(cursor.getInt(
+										cursor.getColumnIndex(COL_ID)));
 					tampon.setName(cursor.getString(
-												cursor.getColumnIndex(COL_NAME)));
-					tampon.setQuantity(Integer.parseInt(cursor.getString(
-											cursor.getColumnIndex(COL_QUANTITY))));
+										cursor.getColumnIndex(COL_NAME)));
+					tampon.setQuantity(cursor.getInt(
+										cursor.getColumnIndex(COL_QUANTITY)));
 	
 					tampons.add(tampon);
 				} while (cursor.moveToNext());
@@ -138,6 +138,17 @@ public class TamponAdapter implements Adapter<Tampon, Integer> {
 				db.close();
 		}
 		return tampons;
+	}
+
+	@Override
+	public Cursor getAllWithCursor() {
+		Cursor cursor = null;
+		if(this.db != null){
+			cursor = db.query(TABLE, 
+					new String[] {COL_ID, COL_NAME, COL_QUANTITY}, 
+					null,null,null,null,null);
+		}
+		return cursor;
 	}
 
 	@Override

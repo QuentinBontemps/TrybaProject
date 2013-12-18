@@ -97,14 +97,13 @@ public class StationAdapter implements Adapter<Station, Integer>{
 			if(cursor.getCount() > 0){
 				cursor.moveToFirst();
 				station = new Station();
-				station.setId(Integer.parseInt(
-								cursor.getString(cursor.getColumnIndex(COL_ID))));
-				station.setName(cursor.getString(cursor.getColumnIndex(COL_NAME)));
+				station.setId(cursor.getInt(cursor.getColumnIndex(COL_ID)));
+				station.setName(cursor.getString(
+											cursor.getColumnIndex(COL_NAME)));
 				TamponAdapter tamponAdapter = new TamponAdapter(null);
 				tamponAdapter.setDatabase(db);
-				station.setTampon(tamponAdapter.get(
-											Integer.parseInt(cursor.getString(
-									   	cursor.getColumnIndex(COL_TAMPON_ID)))));	
+				station.setTampon(tamponAdapter.get(cursor.getInt(
+									   	cursor.getColumnIndex(COL_TAMPON_ID))));	
 			}
 			if(helper != null)			
 				db.close();
@@ -116,23 +115,20 @@ public class StationAdapter implements Adapter<Station, Integer>{
 	public ArrayList<Station> getAll() {
 		ArrayList<Station> stations = new ArrayList<Station>();
 		if(this.db != null){
-			Cursor cursor = db.query(TABLE,
-					new String[]{COL_ID, COL_NAME, COL_TAMPON_ID},
-					null, null, null, null, null);
+			Cursor cursor = this.getAllWithCursor();
 			
 			if(cursor.getCount() > 0){
 				cursor.moveToFirst();
 				do {
 					Station station = new Station();
-					station.setId(Integer.parseInt(cursor.getString(
-												cursor.getColumnIndex(COL_ID))));
+					station.setId(cursor.getInt(
+										cursor.getColumnIndex(COL_ID)));
 					station.setName(cursor.getString(
-												cursor.getColumnIndex(COL_NAME)));
+										cursor.getColumnIndex(COL_NAME)));
 					TamponAdapter tamponAdapter = new TamponAdapter(null);
 					tamponAdapter.setDatabase(db);
-					station.setTampon(tamponAdapter.get(
-											Integer.parseInt(cursor.getString(
-										cursor.getColumnIndex(COL_TAMPON_ID)))));
+					station.setTampon(tamponAdapter.get(cursor.getInt(
+										cursor.getColumnIndex(COL_TAMPON_ID))));
 					stations.add(station);
 				} while (cursor.moveToNext());
 			}
@@ -141,6 +137,18 @@ public class StationAdapter implements Adapter<Station, Integer>{
 		}
 		
 		return stations;
+	}
+	
+	
+	@Override
+	public Cursor getAllWithCursor() {
+		Cursor cursor = null;
+		if(db != null){
+			cursor = db.query(TABLE,
+					new String[]{COL_ID, COL_NAME, COL_TAMPON_ID},
+					null, null, null, null, null);
+		}
+		return cursor;
 	}
 
 	@Override

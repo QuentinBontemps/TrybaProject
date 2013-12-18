@@ -109,9 +109,7 @@ public class UserLogAdapter implements Adapter<UserLog, Integer>{
 	public ArrayList<UserLog> getAll() {
 		ArrayList<UserLog> logs = new ArrayList<UserLog>();
 		if(db != null){
-			Cursor cursor = db.query(TABLE,
-					new String[]{COL_ID, COL_USER_ID, COL_STATION_ID},
-					null,null, null, null, null);
+			Cursor cursor = this.getAllWithCursor();
 			
 			if(cursor.getCount() > 0){
 				cursor.moveToFirst();
@@ -133,6 +131,17 @@ public class UserLogAdapter implements Adapter<UserLog, Integer>{
 				db.close();
 		}
 		return logs;
+	}
+	
+	@Override
+	public Cursor getAllWithCursor() {
+		Cursor cursor = null;
+		if(db != null){
+			cursor = db.query(TABLE,
+					new String[]{COL_ID, COL_USER_ID, COL_STATION_ID},
+					null,null, null, null, null);
+		}
+		return cursor;
 	}
 
 	@Override

@@ -8,7 +8,6 @@ import com.imie.trybaproject.db.UserAdapter;
 import com.imie.trybaproject.model.User;
 import com.imie.trybaproject.model.UserType;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
