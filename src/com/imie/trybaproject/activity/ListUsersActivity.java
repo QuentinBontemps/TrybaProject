@@ -4,20 +4,25 @@ package com.imie.trybaproject.activity;
 import com.imie.trybaproject.R;
 
 import android.app.Activity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
 public class ListUsersActivity extends FragmentActivity {
-	final int CONST_REQUEST1 = 5001; // Code réponse pour la création
-	
+	Fragment fragUsersList;
+	ListUsersFragment test;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_list_users);
+		FragmentManager fm = getSupportFragmentManager();
+		fragUsersList = fm.findFragmentById(R.id.fragment_list_users);
+
 	}
 
 	@Override
@@ -32,7 +37,7 @@ public class ListUsersActivity extends FragmentActivity {
 		// TODO Auto-generated method stub
 		switch (item.getItemId()) {
 	        case R.id.action_add_user:
-	            clickActionAddUser();
+	            ((ListUsersFragment) fragUsersList).clickActionAddUser();
 	            return true;
 	        default:
 	            return super.onOptionsItemSelected(item);
@@ -44,11 +49,7 @@ public class ListUsersActivity extends FragmentActivity {
 	/**
 	 * Ouvre l'activity UserCreate
 	 */
-	private void clickActionAddUser()
-	{
-		Intent intent = new Intent(this, AddUserActivity.class);
-		this.startActivityForResult(intent, CONST_REQUEST1);
-	}
+	
 	
 	@Override
 	protected void onActivityResult(int arg0, int arg1, Intent arg2) {
@@ -57,10 +58,10 @@ public class ListUsersActivity extends FragmentActivity {
 		
 		switch (arg1) {
 		case Activity.RESULT_CANCELED:
-			Toast.makeText(this, "Retour faux", Toast.LENGTH_LONG).show();
+			Toast.makeText(this, "L'utilisateur n'a pas été créé", Toast.LENGTH_LONG).show();
 			break;
 		case Activity.RESULT_OK:
-			Toast.makeText(this, "Retour OK", Toast.LENGTH_LONG).show();
+			Toast.makeText(this, "L'utilisateur à été ajouté", Toast.LENGTH_LONG).show();
 			break;
 		default:
 			break;
