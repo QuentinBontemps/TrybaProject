@@ -38,6 +38,10 @@ public class ChooseStationFragment extends Fragment {
 	private Button btnValidate;
 	private User currentUser;
 	
+	public ChooseStationFragment(){
+		
+	}
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
