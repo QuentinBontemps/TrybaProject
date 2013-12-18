@@ -13,7 +13,7 @@ public class TamponAdapter implements Adapter<Tampon, Integer> {
 
 	
 	public static String TABLE = "tampon";
-	public static String COL_ID = "id";
+	public static String COL_ID = "_id";
 	public static String COL_NAME = "name";
 	public static String COL_QUANTITY = "quantity";
 	

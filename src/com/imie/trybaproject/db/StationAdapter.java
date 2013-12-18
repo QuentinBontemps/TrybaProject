@@ -11,7 +11,7 @@ import com.imie.trybaproject.model.Station;
 public class StationAdapter implements Adapter<Station, Integer>{
 
 	public static final String TABLE = "station";
-	public static final String COL_ID = "id";
+	public static final String COL_ID = "_id";
 	public static final String COL_NAME = "name";
 	public static final String COL_TAMPON_ID = "tamponId";
 	

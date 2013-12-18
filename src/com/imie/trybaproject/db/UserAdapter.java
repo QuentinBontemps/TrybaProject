@@ -11,7 +11,7 @@ import com.imie.trybaproject.model.User;
 public class UserAdapter implements Adapter<User, Integer>{
 	
 	public static final String TABLE = "user";
-	public static final String COL_ID = "id";
+	public static final String COL_ID = "_id";
 	public static final String COL_LOGIN = "login";
 	public static final String COL_PASSWORD = "password";
 	public static final String COL_FIRSTNAME = "firstname";
