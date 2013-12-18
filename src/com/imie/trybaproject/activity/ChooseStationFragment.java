@@ -6,6 +6,7 @@ import java.util.Date;
 import com.imie.trybaproject.R;
 import com.imie.trybaproject.db.ApplicationSQLiteOpenHelper;
 import com.imie.trybaproject.db.StationAdapter;
+import com.imie.trybaproject.db.UserAdapter;
 import com.imie.trybaproject.db.UserLogAdapter;
 import com.imie.trybaproject.model.Station;
 import com.imie.trybaproject.model.User;
@@ -34,12 +35,30 @@ import android.widget.Toast;
 public class ChooseStationFragment extends Fragment {
 
 	private Spinner selectStation;
+	private User currentUser = new User();
 	private ArrayAdapter<Station> stationsArrayAdapter;
 	private Button btnValidate;
-	private User currentUser;
 	
 	public ChooseStationFragment(){
 		
+	}
+	
+	public ChooseStationFragment(Context ctx,Boolean changeStation, int userLogId){
+		if(changeStation){
+				
+			ApplicationSQLiteOpenHelper helper = 
+					new ApplicationSQLiteOpenHelper(ctx,
+					ctx.getString(R.string.database_name), null,
+					Integer.parseInt(ctx.getString(R.string.database_version)));
+			
+			UserLogAdapter userLogAdapter = new UserLogAdapter(helper);
+			
+			UserLog userLog = userLogAdapter.get(userLogId);
+			
+			UserLogAdapter userLogAdapter2 = new UserLogAdapter(helper);
+			userLogAdapter2.addEndDate(userLog, new Date());
+				
+		}
 	}
 	
 	@Override
@@ -75,7 +94,6 @@ public class ChooseStationFragment extends Fragment {
 		
 		String userString = preferences.getString("CURRENT_USER", "");
 					
-		currentUser = new User();
 		if(!userString.equals("")){
 			try {
 				currentUser.setUserWithSerializableString(userString);
@@ -113,11 +131,15 @@ public class ChooseStationFragment extends Fragment {
 				   userLog.setUser(currentUser);
 				   userLog.setStation((Station)selectStation.getSelectedItem());
 				   userLog.setDateEntree(new Date());
-				   u_LogAdapter.insert(userLog);
+				   long userLogId = u_LogAdapter.insert(userLog);
 
-				   
-				   Intent intent = new Intent(getActivity(), DashboardActivity.class);
-				   startActivity(intent);
+				   SharedPreferences preferences = getActivity().
+							getSharedPreferences("DEFAULT", Activity.MODE_PRIVATE);
+					SharedPreferences.Editor editor = preferences.edit();
+					editor.putString("CURRENT_USER_LOG_ID", 
+							String.valueOf(userLogId));
+					editor.commit();
+				  
 				}else{
 					Toast.makeText(getActivity(), "Station déjà occupée", 
 							Toast.LENGTH_SHORT).show();

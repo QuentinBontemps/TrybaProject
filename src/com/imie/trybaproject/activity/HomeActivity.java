@@ -17,48 +17,68 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.imie.trybaproject.R;
 import com.imie.trybaproject.model.MenuItem;
+import com.imie.trybaproject.model.Station;
 import com.imie.trybaproject.model.User;
 import com.imie.trybaproject.model.UserType;
 
 public class HomeActivity extends FragmentActivity {
 
 	DrawerLayout drawerLayout;
+	ActionBarDrawerToggle drawerToggle;
 	ActionBarDrawerToggle drawerActionBarToggle;
 	ListView drawerList;
-	String[] titles;
+	ListMenuItemAdapter adapter;
 	ArrayList<MenuItem> items = new ArrayList<MenuItem>();
 	User currentUser = new User();
+	int userLogId;
+	MenuItem itemStationChange;
+	MenuItem itemStationSelect;
+	SharedPreferences preferences;
+	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
 		
-		SharedPreferences preferences = 
-				getSharedPreferences("DEFAULT", Activity.MODE_PRIVATE); 
+		preferences = getSharedPreferences("DEFAULT", Activity.MODE_PRIVATE);
 		
+		String userString = preferences.getString("CURRENT_USER", "");
+		userLogId = Integer.parseInt(preferences.getString("CURRENT_USER_LOG_ID", "0"));
 		
 		try {
-			currentUser.setUserWithSerializableString(
-					preferences.getString("CURRENT_USER", null));
+			if(userString != "")
+				currentUser.setUserWithSerializableString(userString);			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
-		
-		MenuItem itemStationSelect = new MenuItem(new ChooseStationFragment(),getString(R.string.station_selection));
-		MenuItem itemStationChange = new MenuItem(null,getString(R.string.station_change));
-		MenuItem itemUsersManagement = new MenuItem(new ListUsersFragment(),getString(R.string.users_management));
-		MenuItem itemOrdersManagement = new MenuItem(new AddOrderFragment(),getString(R.string.orders_management));
-		MenuItem itemProductScan = new MenuItem(null,getString(R.string.product_scan));
+		if(userLogId != 0){
+			itemStationChange = new MenuItem(
+					new ChooseStationFragment(this, true,userLogId),
+							getString(R.string.station_change));
+			items.add(itemStationChange);
+		}else{
+			itemStationSelect = new MenuItem(new ChooseStationFragment(),
+					getString(R.string.station_selection));
+			items.add(itemStationSelect);
+		}
+		MenuItem itemUsersManagement = new MenuItem(new ListUsersFragment(),
+				getString(R.string.users_management));
+		MenuItem itemOrdersManagement = new MenuItem(new AddOrderFragment(),
+				getString(R.string.orders_management));
+		MenuItem itemProductScan = new MenuItem(null,
+				getString(R.string.product_scan));
 		MenuItem itemLogout = new MenuItem(null,getString(R.string.logout));
 		
-		items.add(itemStationSelect);
-		items.add(itemStationChange);
+		
+		
 		items.add(itemUsersManagement);
 		items.add(itemOrdersManagement);
 		items.add(itemProductScan);
@@ -67,13 +87,33 @@ public class HomeActivity extends FragmentActivity {
 		drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
 		drawerList = (ListView) findViewById(R.id.left_drawer);
-		drawerList.setAdapter(new ArrayAdapter<MenuItem>(this, 
-					R.layout.drawer_list_item,items));
-			
+		//drawerList.setAdapter(new ArrayAdapter<MenuItem>(this, 
+				//	R.layout.drawer_list_item,items));
+		
+		adapter = new ListMenuItemAdapter(getApplicationContext(), items);
+		drawerList.setAdapter(adapter);
+		
 		drawerList.setOnItemClickListener(new DrawerItemClickListener());
 		
-		
-		//selectItem(0);
+	
+		 drawerToggle = new ActionBarDrawerToggle(this, drawerLayout,
+	                R.drawable.ic_drawer,
+	                R.string.app_name,
+	                R.string.app_name
+	        ) {
+	            public void onDrawerClosed(View view) {
+	                getActionBar().setTitle("Ta mere jla ferme");
+	                // calling onPrepareOptionsMenu() to show action bar icons
+	                invalidateOptionsMenu();
+	            }
+	 
+	            public void onDrawerOpened(View drawerView) {
+	                getActionBar().setTitle("Ta mere jlouvre");
+	                // calling onPrepareOptionsMenu() to hide action bar icons
+	                invalidateOptionsMenu();
+	            }
+	        };
+	        drawerLayout.setDrawerListener(drawerToggle);
 	}
 
 	@Override
@@ -89,20 +129,45 @@ public class HomeActivity extends FragmentActivity {
         	long id) {
 		
 			MenuItem item = items.get(position);
-			
-			Fragment fragment= item.getFragment();
-						
-			setTitle(item.getTitle());
-			
-			FragmentManager fragmentManager = getSupportFragmentManager();
-		    fragmentManager.beginTransaction()
-		                   .replace(R.id.choose_station_fragment, fragment)
-		                   .commit();
-		    
-		   
-		    drawerList.setItemChecked(position, true);
-		    drawerLayout.closeDrawer(drawerList);
+			SelectItem(item, position);			
         }		
+	}
+	
+	private void SelectItem(MenuItem item, int position){
+		Fragment fragment= item.getFragment();
+		
+		setTitle(item.getTitle());
+		
+		FragmentManager fragmentManager = getSupportFragmentManager();
+	    fragmentManager.beginTransaction()
+	                   .replace(R.id.choose_station_fragment, fragment)
+	                   .commit();
+	    
+	   
+	    drawerList.setItemChecked(position, true);
+	    drawerLayout.closeDrawer(drawerList);
+	    
+	    if(item.equals(itemStationSelect)){
+	    	preferences = getSharedPreferences("DEFAULT", Activity.MODE_PRIVATE);
+	    	userLogId = Integer.parseInt(preferences.getString("CURRENT_USER_LOG_ID", "0"));
+	    	if(userLogId != 0){
+	    		items.remove(itemStationSelect);
+	    		itemStationChange = new MenuItem(
+					new ChooseStationFragment(this, true,userLogId),
+							getString(R.string.station_change));
+
+				items.add(0, itemStationChange);
+				Toast.makeText(getApplicationContext(), "Ok morray", Toast.LENGTH_SHORT).show();
+	    	}
+	    }else if(item.equals(itemStationChange)){
+	    	items.remove(itemStationChange);
+	    	itemStationSelect = new MenuItem(new ChooseStationFragment(),
+					getString(R.string.station_selection));
+			items.add(0, itemStationSelect);
+			Toast.makeText(getApplicationContext(), "Ok morray2", Toast.LENGTH_SHORT).show();
+	    }
+	    	    
+	    adapter.notifyDataSetChanged();
 	}
 	
 	@Override
