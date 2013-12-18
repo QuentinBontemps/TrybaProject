@@ -12,6 +12,7 @@ import android.support.v4.app.Fragment;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,6 +28,9 @@ public class ListUsersFragment extends Fragment{
 	ListView lv;
 	UsersCursorAdapter listCursor;
 	UserAdapter userAdapt;
+	
+	
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -40,7 +44,8 @@ public class ListUsersFragment extends Fragment{
 		
 		View frag = inflater.inflate(R.layout.fragment_list_users, 
 															container, false);
-
+		
+		setHasOptionsMenu(true);
 		this.lv = (ListView) frag.findViewById(R.id.list);
 		
 		
@@ -87,11 +92,37 @@ public class ListUsersFragment extends Fragment{
 	
 	
 	
+	@Override
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+		// TODO Auto-generated method stub
+		inflater.inflate(R.menu.user, menu);
+		super.onCreateOptionsMenu(menu, inflater);
+	}
+	
 	public void clickActionAddUser()
 	{
 		Intent intent = new Intent(this.getActivity(), AddUserActivity.class);
 		this.startActivityForResult(intent, CONST_REQUEST1);
 	}
+	@Override
+	public void setHasOptionsMenu(boolean hasMenu) {
+		// TODO Auto-generated method stub
+		super.setHasOptionsMenu(hasMenu);
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// TODO Auto-generated method stub
+		switch (item.getItemId()) {
+        case R.id.action_add_user:
+            clickActionAddUser();
+            return true;
+        default:
+            return super.onOptionsItemSelected(item);
+		}
+	}
+	
+	
 	
 	
 	

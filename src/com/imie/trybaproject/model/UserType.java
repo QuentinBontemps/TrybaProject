@@ -22,19 +22,31 @@ public enum UserType {
 		  return this.value;
 	  }
 	  
-	  public void initUserTypeByValue(int i)
+	 
+	  
+	  public static UserType initUserTypeByValue(int i)
 	  {
-		  switch (i) {
-			case 1:
-				this.value = 1;
-				this.name = "operator";
-				break;
-			case 2:
-				this.value = 2;
-				this.name = "administrator";
-				break;
-			default:
-				break;
-			}
+		  UserType userType = null;
+		  
+		  
+		  for(UserType mt : UserType.values()){
+		        if (mt.getValue() == i)
+		        	userType = mt;
+		    }
+		  
+		  return userType;
+	  }
+	  
+	  public static UserType initUserTypeByString(String s)
+	  {
+		  UserType userType = null;
+		  
+		  
+		  for(UserType mt : UserType.values()){
+			  	if (mt.toString().equals(s))
+			  		userType = mt;
+		    }
+		  
+		  return userType;
 	  }
 }

@@ -7,14 +7,14 @@ public class User {
 	private String password;
 	private String firstname;
 	private String lastname;
-	private int type;
+	private String type;
 
 	public User(){
 		
 	}
 	
 	public User(String login, String password, String firstname,
-			String lastname, int type) {
+			String lastname, String type) {
 		super();
 		this.login = login;
 		this.password = password;
@@ -53,10 +53,10 @@ public class User {
 	public void setLastname(String lastname) {
 		this.lastname = lastname;
 	}
-	public int getType() {
+	public String getType() {
 		return type;
 	}
-	public void setType(int type) {
+	public void setType(String type) {
 		this.type = type;
 	}
 	
@@ -87,7 +87,7 @@ public class User {
 			this.setPassword(userStr[2]);
 			this.setFirstname(userStr[3]);
 			this.setLastname(userStr[4]);
-			this.setType(Integer.parseInt(userStr[5]));
+			this.setType(userStr[5]);
 			
 		}else{
 			throw new Exception("Il manque des paramètre dans la chaine de " +

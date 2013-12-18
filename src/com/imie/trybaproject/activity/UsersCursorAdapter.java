@@ -48,7 +48,7 @@ public class UsersCursorAdapter extends CursorAdapter{
 				c.getString(
 						c.getColumnIndex(UserAdapter.COL_FIRSTNAME)),
 				c.getString(
-						c.getColumnIndex(UserAdapter.COL_LASTNAME)),0);
+						c.getColumnIndex(UserAdapter.COL_LASTNAME)),"");
 		
 		u.setId(c.getInt(c.getColumnIndex(UserAdapter.COL_ID)));
 		
@@ -72,12 +72,15 @@ public class UsersCursorAdapter extends CursorAdapter{
 								Integer.parseInt(
 										context.getString(
 												R.string.database_version)));
-				UserAdapter userAdapter = new UserAdapter(ASLOH);
+				UserAdapter userAdapter = new UserAdapter();
+				userAdapter.setDatabase(ASLOH.getDb());
 				
 				userAdapter.delete(u);
 				Toast.makeText(context, "L'utilisateur à été supprimé", 
-						Toast.LENGTH_LONG).show();
-				notifyDataSetChanged();
+						Toast.LENGTH_LONG).show();;
+				
+				
+				
 			}
 		});
 	}

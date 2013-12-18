@@ -53,7 +53,7 @@ public class HomeActivity extends FragmentActivity {
 		MenuItem itemStationSelect = new MenuItem(new ChooseStationFragment(),getString(R.string.station_selection));
 		MenuItem itemStationChange = new MenuItem(null,getString(R.string.station_change));
 		MenuItem itemUsersManagement = new MenuItem(new ListUsersFragment(),getString(R.string.users_management));
-		MenuItem itemOrdersManagement = new MenuItem(new AddOrderFragment(),getString(R.string.orders_management));
+		MenuItem itemOrdersManagement = new MenuItem(new ListOrdersFragment(),getString(R.string.orders_management));
 		MenuItem itemProductScan = new MenuItem(null,getString(R.string.product_scan));
 		MenuItem itemLogout = new MenuItem(null,getString(R.string.logout));
 		
@@ -71,6 +71,7 @@ public class HomeActivity extends FragmentActivity {
 					R.layout.drawer_list_item,items));
 			
 		drawerList.setOnItemClickListener(new DrawerItemClickListener());
+
 		
 		
 		//selectItem(0);
@@ -83,6 +84,12 @@ public class HomeActivity extends FragmentActivity {
 		return true;
 	}
 	
+	
+	
+	
+
+
+
 	private class DrawerItemClickListener implements ListView.OnItemClickListener{
 		@Override
         public void onItemClick(AdapterView<?> parent, View view, int position, 

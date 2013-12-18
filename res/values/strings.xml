@@ -41,4 +41,12 @@
     <string name="orders_management">Gestion des commandes</string>
     <string name="station_change">Changer de station</string>
     <string name="product_scan">Scanner un produit</string>
+    <string name="title_activity_list_orders">ListOrdersActivity</string>
+    <string name="order_customer">Nom client : </string>
+    <string name="order_quantity">Quantité : </string>
+    <string name="order_type_product">Produit : </string>
+    <string name="order_type_material">Matériel :</string>
+    <string name="action_add_order">Ajouter une commande</string>
+    <string name="add_user_type">Type utilisateur</string>
+
 </resources>

@@ -50,6 +50,10 @@
             android:name="com.imie.trybaproject.activity.ScanActivity"
             android:label="@string/title_activity_scan" >
         </activity>
+        <activity
+            android:name="com.imie.trybaproject.activity.ListOrdersActivity"
+            android:label="@string/title_activity_list_orders" >
+        </activity>
     </application>
 
 </manifest>

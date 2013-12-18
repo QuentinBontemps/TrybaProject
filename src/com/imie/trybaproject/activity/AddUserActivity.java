@@ -11,7 +11,7 @@ public class AddUserActivity extends FragmentActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.dashborad_fragment);
+		setContentView(R.layout.activity_add_user);
 	}
 
 }

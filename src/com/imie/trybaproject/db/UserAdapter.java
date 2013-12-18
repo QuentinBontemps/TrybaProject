@@ -116,7 +116,7 @@ public class UserAdapter implements Adapter<User, Integer>{
 										cursor.getColumnIndex(COL_FIRSTNAME)));
 				user.setLastname(cursor.getString(
 										cursor.getColumnIndex(COL_LASTNAME)));
-				user.setType(cursor.getInt(
+				user.setType(cursor.getString(
 										cursor.getColumnIndex(COL_TYPE)));
 			}
 			if(helper != null)
@@ -146,7 +146,7 @@ public class UserAdapter implements Adapter<User, Integer>{
 										cursor.getColumnIndex(COL_FIRSTNAME)));
 					user.setLastname(cursor.getString(
 										cursor.getColumnIndex(COL_LASTNAME)));
-					user.setType(cursor.getInt(
+					user.setType(cursor.getString(
 										cursor.getColumnIndex(COL_TYPE)));
 					
 					users.add(user);
@@ -193,7 +193,7 @@ public class UserAdapter implements Adapter<User, Integer>{
 										cursor.getColumnIndex(COL_FIRSTNAME)));
 				user.setLastname(cursor.getString(
 										cursor.getColumnIndex(COL_LASTNAME)));
-				user.setType(cursor.getInt(
+				user.setType(cursor.getString(
 										cursor.getColumnIndex(COL_TYPE)));
 			}
 			
