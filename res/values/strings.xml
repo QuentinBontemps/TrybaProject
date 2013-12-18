@@ -33,5 +33,10 @@
     <string name="loading">Chargement...</string>
     <string name="title_activity_dashboard">DashboardActivity</string>
     <string name="title_activity_scan">ScanActivity</string>
-
+    <string name="logout">Déconnexion</string>
+    <string name="station_selection">Sélection d\'une station</string>
+    <string name="users_management">Gestion des utilisateurs</string>
+    <string name="orders_management">Gestion des commandes</string>
+    <string name="station_change">Changer de station</string>
+    <string name="product_scan">Scanner un produit</string>
 </resources>
