@@ -6,6 +6,7 @@ import com.imie.trybaproject.R;
 import com.imie.trybaproject.db.ApplicationSQLiteOpenHelper;
 import com.imie.trybaproject.db.UserAdapter;
 import com.imie.trybaproject.model.User;
+import com.imie.trybaproject.model.UserType;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -35,9 +36,8 @@ public class LoginFragment extends Fragment{
 				new ApplicationSQLiteOpenHelper(getActivity(), 
 						"tryba_database", null, 1);
 		UserAdapter userAdapt = new UserAdapter(ASLOH);
-		
-		//userAdapt.insert(new User("n1n1","tata","Antonin","Auffray"));
-		
+		userAdapt.insert(new User("momo","yo","Quentin","Bontemps",
+											UserType.ADMINISTRATOR.getValue()));
 		
 		// View objects
 		Button btnValidate = (Button) frag.findViewById(R.id.log_BTN_validate);
@@ -64,8 +64,7 @@ public class LoginFragment extends Fragment{
 	{
 
 		Intent intent = new Intent(getActivity(), MainActivity.class);
-				
-		
+						
 		// On cherche dans la base de données le client
 		User user; 
 		ApplicationSQLiteOpenHelper ASLOH = 

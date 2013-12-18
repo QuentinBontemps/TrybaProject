@@ -13,7 +13,7 @@ import com.imie.trybaproject.model.Product;
 public class ClientOrderAdapter implements Adapter<ClientOrder, Integer> {
 
 	public static final String TABLE = "clientOrder";
-	public static final String COL_ID = "id";
+	public static final String COL_ID = "_id";
 	public static final String COL_CUSTOMER = "customer";
 	public static final String COL_QUANTITY = "quantity";
 	

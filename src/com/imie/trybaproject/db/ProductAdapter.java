@@ -12,7 +12,7 @@ import com.imie.trybaproject.model.User;
 public class ProductAdapter implements Adapter<Product, Integer> {
 
 	public static String TABLE = "product";
-	public static String COL_ID = "id";
+	public static String COL_ID = "_id";
 	public static String COL_NAME = "name";
 	public static String COL_ORDER_ID = "orderId";
 	
