@@ -117,7 +117,7 @@ public class UserAdapter implements Adapter<User, Integer>{
 				user.setLastname(cursor.getString(
 										cursor.getColumnIndex(COL_LASTNAME)));
 				user.setType(cursor.getInt(
-										cursor.getColumnIndex(COL_TYPE))));
+										cursor.getColumnIndex(COL_TYPE)));
 			}
 			if(helper != null)
 				db.close();

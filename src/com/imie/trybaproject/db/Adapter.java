@@ -2,6 +2,7 @@ package com.imie.trybaproject.db;
 
 import java.util.ArrayList;
 
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 public interface Adapter<T, U> {
@@ -42,6 +43,8 @@ public interface Adapter<T, U> {
 	 * @return l'ensembre des objects de la table
 	 */
 	ArrayList<T> getAll();
+	
+	Cursor getAllWithCursor();
 	
 	void setDatabase(SQLiteDatabase db);
 	

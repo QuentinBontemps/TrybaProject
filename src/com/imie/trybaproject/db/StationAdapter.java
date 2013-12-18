@@ -115,9 +115,7 @@ public class StationAdapter implements Adapter<Station, Integer>{
 	public ArrayList<Station> getAll() {
 		ArrayList<Station> stations = new ArrayList<Station>();
 		if(this.db != null){
-			Cursor cursor = db.query(TABLE,
-					new String[]{COL_ID, COL_NAME, COL_TAMPON_ID},
-					null, null, null, null, null);
+			Cursor cursor = this.getAllWithCursor();
 			
 			if(cursor.getCount() > 0){
 				cursor.moveToFirst();
@@ -139,6 +137,18 @@ public class StationAdapter implements Adapter<Station, Integer>{
 		}
 		
 		return stations;
+	}
+	
+	
+	@Override
+	public Cursor getAllWithCursor() {
+		Cursor cursor = null;
+		if(db != null){
+			cursor = db.query(TABLE,
+					new String[]{COL_ID, COL_NAME, COL_TAMPON_ID},
+					null, null, null, null, null);
+		}
+		return cursor;
 	}
 
 	@Override

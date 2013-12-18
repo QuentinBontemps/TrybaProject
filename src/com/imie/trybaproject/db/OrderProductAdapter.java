@@ -101,6 +101,13 @@ public class OrderProductAdapter implements Adapter<OrderProduct, Integer>{
 	public ArrayList<OrderProduct> getAll() {
 		return null;
 	}
+	
+	
+
+	@Override
+	public Cursor getAllWithCursor() {
+		return null;
+	}
 
 	@Override
 	public void setDatabase(SQLiteDatabase db) {

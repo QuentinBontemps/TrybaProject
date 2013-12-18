@@ -141,6 +141,17 @@ public class TamponAdapter implements Adapter<Tampon, Integer> {
 	}
 
 	@Override
+	public Cursor getAllWithCursor() {
+		Cursor cursor = null;
+		if(this.db != null){
+			cursor = db.query(TABLE, 
+					new String[] {COL_ID, COL_NAME, COL_QUANTITY}, 
+					null,null,null,null,null);
+		}
+		return cursor;
+	}
+
+	@Override
 	public void setDatabase(SQLiteDatabase db) {
 		this.db = db;
 	}

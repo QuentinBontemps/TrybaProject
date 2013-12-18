@@ -110,9 +110,7 @@ public class ProductAdapter implements Adapter<Product, Integer> {
 	public ArrayList<Product> getAll() {
 		ArrayList<Product> products = new ArrayList<Product>();
 		if(this.db != null){
-				Cursor cursor = db.query(TABLE, 
-					new String[] {COL_ID, COL_NAME, COL_ORDER_ID}, 
-					null,null,null,null,null);
+				Cursor cursor = this.getAllWithCursor();
 						
 			if(cursor.getCount() > 0){
 				cursor.moveToFirst();				
@@ -135,6 +133,17 @@ public class ProductAdapter implements Adapter<Product, Integer> {
 				db.close();
 		}
 		return products;
+	}
+	
+	@Override
+	public Cursor getAllWithCursor() {
+		Cursor cursor = null;
+		if(this.db != null){
+			cursor = db.query(TABLE, 
+				new String[] {COL_ID, COL_NAME, COL_ORDER_ID}, 
+				null,null,null,null,null);
+		}
+		return cursor;
 	}
 
 	@Override

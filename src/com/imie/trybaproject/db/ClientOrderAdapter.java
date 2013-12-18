@@ -114,9 +114,7 @@ public class ClientOrderAdapter implements Adapter<ClientOrder, Integer> {
 	public ArrayList<ClientOrder> getAll() {
 		ArrayList<ClientOrder> orders = new ArrayList<ClientOrder>();
 		if(this.db != null){
-			Cursor cursor = db.query(TABLE, 
-					new String[] {COL_ID, COL_CUSTOMER, COL_QUANTITY,}, 
-					null,null,null,null,null);
+			Cursor cursor = this.getAllWithCursor();
 			
 			if(cursor.getCount() > 0){
 				cursor.moveToFirst();				
@@ -137,6 +135,16 @@ public class ClientOrderAdapter implements Adapter<ClientOrder, Integer> {
 		return orders;
 	}
 	
+	@Override
+	public Cursor getAllWithCursor() {
+		Cursor cursor = null;
+		if(this.db != null){
+			cursor = db.query(TABLE, 
+					new String[] {COL_ID, COL_CUSTOMER, COL_QUANTITY,}, 
+					null,null,null,null,null);
+		}
+		return cursor;
+	}
 
 	@Override
 	public void setDatabase(SQLiteDatabase db) {
