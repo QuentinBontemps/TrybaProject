@@ -33,20 +33,16 @@
     <string name="loading">Chargement...</string>
     <string name="title_activity_dashboard">DashboardActivity</string>
     <string name="title_activity_scan">ScanActivity</string>
+<<<<<<< HEAD
     <string name="menu_users_edit">Modifier</string>
     <string name="menu_users_delete">Supprimer</string>
+
+=======
     <string name="logout">Déconnexion</string>
     <string name="station_selection">Sélection d\'une station</string>
     <string name="users_management">Gestion des utilisateurs</string>
     <string name="orders_management">Gestion des commandes</string>
     <string name="station_change">Changer de station</string>
     <string name="product_scan">Scanner un produit</string>
-    <string name="title_activity_list_orders">ListOrdersActivity</string>
-    <string name="order_customer">Nom client : </string>
-    <string name="order_quantity">Quantité : </string>
-    <string name="order_type_product">Produit : </string>
-    <string name="order_type_material">Matériel :</string>
-    <string name="action_add_order">Ajouter une commande</string>
-    <string name="add_user_type">Type utilisateur</string>
-
+>>>>>>> master
 </resources>

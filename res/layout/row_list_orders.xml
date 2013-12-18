@@ -13,37 +13,32 @@
     android:layout_weight="3">
     
     <TextView
-        android:id="@+id/row_user_login"
+        android:id="@+id/row_orders_customer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="#D10023"
         android:text="text1" />
 
     <TextView 
-        android:id="@+id/row_user_lastname"
+        android:id="@+id/row_orders_type_product"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:text="lastname"/>
     
     <TextView 
-        android:id="@+id/row_user_firstname"
+        android:id="@+id/row_orders_type_material"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:text="text2"/>
     
     <TextView 
-        android:id="@+id/row_user_password"
+        android:id="@+id/row_orders_quantity"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:text="text3"/>
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btn_suppression_user"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="7"
-        android:text="sup" />
+    
 
 </LinearLayout>
 

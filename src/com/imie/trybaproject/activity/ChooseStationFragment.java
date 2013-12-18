@@ -200,7 +200,7 @@ public class ChooseStationFragment extends Fragment {
     
     public void gestionAddCommandeButton()
     {
-    	Intent intent = new Intent(getActivity(), AddOrderActivity.class);
+    	Intent intent = new Intent(getActivity(), ListOrdersActivity.class);
     	getActivity().startActivity(intent);
     }
     

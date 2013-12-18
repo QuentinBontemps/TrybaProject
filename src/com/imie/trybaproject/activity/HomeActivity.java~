@@ -59,7 +59,7 @@ public class HomeActivity extends FragmentActivity {
 			e.printStackTrace();
 		}
 		
-
+<<<<<<< HEAD
 		if(userLogId != 0){
 			itemStationChange = new MenuItem(
 					new ChooseStationFragment(this, true,userLogId),
@@ -72,10 +72,18 @@ public class HomeActivity extends FragmentActivity {
 		}
 		MenuItem itemUsersManagement = new MenuItem(new ListUsersFragment(),
 				getString(R.string.users_management));
-		MenuItem itemOrdersManagement = new MenuItem(new ListOrdersFragment(),
+		MenuItem itemOrdersManagement = new MenuItem(new AddOrderFragment(),
 				getString(R.string.orders_management));
 		MenuItem itemProductScan = new MenuItem(null,
 				getString(R.string.product_scan));
+=======
+		
+		MenuItem itemStationSelect = new MenuItem(new ChooseStationFragment(),getString(R.string.station_selection));
+		MenuItem itemStationChange = new MenuItem(null,getString(R.string.station_change));
+		MenuItem itemUsersManagement = new MenuItem(new ListUsersFragment(),getString(R.string.users_management));
+		MenuItem itemOrdersManagement = new MenuItem(new ListOrdersFragment(),getString(R.string.orders_management));
+		MenuItem itemProductScan = new MenuItem(null,getString(R.string.product_scan));
+>>>>>>> antonin
 		MenuItem itemLogout = new MenuItem(null,getString(R.string.logout));
 		
 		
@@ -88,13 +96,19 @@ public class HomeActivity extends FragmentActivity {
 		drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
 		drawerList = (ListView) findViewById(R.id.left_drawer);
-
+<<<<<<< HEAD
 		//drawerList.setAdapter(new ArrayAdapter<MenuItem>(this, 
 				//	R.layout.drawer_list_item,items));
 		
 		adapter = new ListMenuItemAdapter(getApplicationContext(), items);
 		drawerList.setAdapter(adapter);
-		
+=======
+		drawerList.setAdapter(new ArrayAdapter<MenuItem>(this, 
+					R.layout.drawer_list_item,items));
+			
+		drawerList.setOnItemClickListener(new DrawerItemClickListener());
+
+>>>>>>> antonin
 		
 		drawerList.setOnItemClickListener(new DrawerItemClickListener());
 		
