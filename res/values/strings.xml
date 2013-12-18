@@ -32,5 +32,6 @@
     <string name="validate">Valider</string>
     <string name="loading">Chargement...</string>
     <string name="title_activity_dashboard">DashboardActivity</string>
+    <string name="title_activity_scan">ScanActivity</string>
 
 </resources>

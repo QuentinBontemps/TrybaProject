@@ -5,12 +5,15 @@ import java.util.List;
 import com.imie.trybaproject.R;
 import com.imie.trybaproject.db.ApplicationSQLiteOpenHelper;
 import com.imie.trybaproject.db.ClientOrderAdapter;
+import com.imie.trybaproject.db.ProductAdapter;
 import com.imie.trybaproject.db.UserAdapter;
 import com.imie.trybaproject.model.ClientOrder;
 import com.imie.trybaproject.model.MaterialType;
+import com.imie.trybaproject.model.Product;
 import com.imie.trybaproject.model.ProductType;
 import com.imie.trybaproject.model.User;
 
+import android.R.integer;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -110,10 +113,35 @@ public class AddOrderFragment extends Fragment {
 
 		ApplicationSQLiteOpenHelper ASLOH = 
 				new ApplicationSQLiteOpenHelper(getActivity(), 
-						"tryba_database", null, 1);
-		ClientOrderAdapter clientOrderAdapt = new ClientOrderAdapter(ASLOH);
+						getString(R.string.database_name), null, 
+						Integer.parseInt(getString(R.string.database_version)));
+		ClientOrderAdapter clientOrderAdapt = new ClientOrderAdapter();
+		ProductAdapter productAdapt = new ProductAdapter();
+		clientOrderAdapt.setDatabase(ASLOH.getDb());
+		productAdapt.setDatabase(ASLOH.getDb());
 		
 		long idResultatInsertion = clientOrderAdapt.insert(clientOrder);
+		
+		
+		
+		
+		// Une fois la commande créé on peut créé les produits associés
+		
+		Product product = new Product();
+		for (int i = 0; i < clientOrder.getQuantity(); i++) {
+			// On créé autant de produit que nécessaire
+			product.setName(clientOrder.getCustomer() + " - " + 
+					clientOrder.getTypeProduct() + " - " + 
+					clientOrder.getTypeMaterial());
+			
+			product.setOrder(clientOrder);
+			idResultatInsertion = productAdapt.insert(product);
+			Log.v("MonAppli","id produit ajouté : " + String.valueOf(idResultatInsertion));
+		}
+		
+		productAdapt.closeDatabase();
+		
+		
 		
 		Toast.makeText(getActivity(), "Création de la commande",
 											Toast.LENGTH_LONG).show();
