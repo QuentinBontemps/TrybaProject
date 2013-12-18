@@ -36,7 +36,7 @@ public class LoginFragment extends Fragment{
 						"tryba_database", null, 1);
 		UserAdapter userAdapt = new UserAdapter(ASLOH);
 		
-		//userAdapt.insert(new User("n1n1","tata","Antonin","Auffray"));
+		userAdapt.insert(new User("n1n1","tata","Antonin","Auffray",1));
 		
 		
 		// View objects

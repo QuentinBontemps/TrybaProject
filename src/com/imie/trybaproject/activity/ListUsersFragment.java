@@ -26,7 +26,7 @@ public class ListUsersFragment extends Fragment{
 		
 		View frag = inflater.inflate(R.layout.fragment_list_users,container, false);
 		this.lv = (ListView) frag.findViewById(R.id.list);
-		//lv.setAdapter(new UsersCursorAdapter(getActivity(), userAdapt.getAllCursor())); // Need user adapter
+		lv.setAdapter(new UsersCursorAdapter(getActivity(), userAdapt.getAllWithCursor())); // Need user adapter
 		
 
 		return frag;
