@@ -30,7 +30,7 @@ public class ListUsersFragment extends Fragment{
 		
 		
 		View frag = inflater.inflate(R.layout.fragment_list_users,
-												container, false);
+
 		this.lv = (ListView) frag.findViewById(R.id.list);
 		listCursor = new UsersCursorAdapter(getActivity(), 
 				userAdapt.getAllWithCursor());

@@ -38,6 +38,14 @@
             android:name="com.imie.trybaproject.activity.AddOrderActivity"
             android:label="@string/title_activity_add_order" >
         </activity>
+        <activity
+            android:name="com.imie.trybaproject.activity.HomeActivity"
+            android:label="@string/title_activity_home" >
+        </activity>
+        <activity
+            android:name="com.imie.trybaproject.activity.DashboardActivity"
+            android:label="@string/title_activity_dashboard" >
+        </activity>
     </application>
 
 </manifest>

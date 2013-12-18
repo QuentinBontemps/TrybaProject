@@ -4,13 +4,21 @@ package com.imie.trybaproject.activity;
 
 import com.imie.trybaproject.R;
 import com.imie.trybaproject.db.ApplicationSQLiteOpenHelper;
+import com.imie.trybaproject.db.StationAdapter;
 import com.imie.trybaproject.db.UserAdapter;
+import com.imie.trybaproject.model.Station;
 import com.imie.trybaproject.model.User;
 import com.imie.trybaproject.model.UserType;
 
+import android.R.integer;
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.Preference;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -33,12 +41,20 @@ public class LoginFragment extends Fragment{
 		// Add user in DB pour test
 		ApplicationSQLiteOpenHelper ASLOH = 
 				new ApplicationSQLiteOpenHelper(getActivity(), 
-						"tryba_database", null, 1);
+				this.getString(R.string.database_name), null, 
+				Integer.parseInt(this.getString(R.string.database_version)));
 		UserAdapter userAdapt = new UserAdapter(ASLOH);
 
 		/*userAdapt.insert(new User("momo","yo","Quentin","Bontemps",
 					UserType.ADMINISTRATOR.getValue())); */
 		 
+		
+		StationAdapter sA = new StationAdapter(ASLOH);
+		sA.insert(new Station("s1"));
+		StationAdapter sA2 = new StationAdapter(ASLOH);
+		sA2.insert(new Station("s2"));
+		StationAdapter sA3 = new StationAdapter(ASLOH);
+		sA3.insert(new Station("s3"));
 		
 		// View objects
 		Button btnValidate = (Button) frag.findViewById(R.id.log_BTN_validate);
@@ -61,26 +77,35 @@ public class LoginFragment extends Fragment{
 	/**
 	 * Validation de la connexion. Vérification du login//mdp
 	 */
+
 	private void validateConnexion()
 	{
 
-		Intent intent = new Intent(getActivity(), MainActivity.class);
+		Intent intent = new Intent(getActivity(), HomeActivity.class);
 						
 		// On cherche dans la base de données le client
 		User user; 
 		ApplicationSQLiteOpenHelper ASLOH = 
 				new ApplicationSQLiteOpenHelper(getActivity(), 
-						"tryba_database", null, 1);
+						this.getString(R.string.database_name), null, 1);
 		UserAdapter userAdapt = new UserAdapter(ASLOH);
 		
 		user = userAdapt.getWithLogin(ET_login.getText().toString());
 		if (user != null)
 		{
-			if(user.getPassword().equals(ET_pssword.getText().toString()))
+			if(user.getPassword().equals(ET_pssword.getText().toString())){
+				
+				SharedPreferences preferences = getActivity().
+						getSharedPreferences("DEFAULT", Activity.MODE_PRIVATE);
+				SharedPreferences.Editor editor = preferences.edit();
+				editor.putString("CURRENT_USER", user.getSerializableString());
+				editor.commit();
+				
 				getActivity().startActivity(intent);
-			else
+			}else{
 				Toast.makeText(getActivity(), R.string.log_wrongpassword, 
-						Toast.LENGTH_LONG).show();
+				Toast.LENGTH_LONG).show();
+			}
 		}else
 		{
 			Toast.makeText(getActivity(), R.string.log_wronglogin, 
