@@ -60,4 +60,42 @@ public class User {
 		this.type = type;
 	}
 	
+	public String getSerializableString(){
+		StringBuilder sb = new StringBuilder();
+		String separator = "~";
+		
+		sb.append(getId());
+		sb.append(separator);
+		sb.append(getLogin());
+		sb.append(separator);
+		sb.append(getPassword());
+		sb.append(separator);
+		sb.append(getFirstname());
+		sb.append(separator);
+		sb.append(getLastname());
+		sb.append(separator);
+		sb.append(getType());
+		
+		return sb.toString();
+	}
+	
+	public void setUserWithSerializableString(String str) throws Exception{
+		String[] userStr = str.split("~");
+		if(userStr.length == 6 ){
+			this.setId(Integer.parseInt(userStr[0]));
+			this.setLogin(userStr[1]);
+			this.setPassword(userStr[2]);
+			this.setFirstname(userStr[3]);
+			this.setLastname(userStr[4]);
+			this.setType(Integer.parseInt(userStr[5]));
+			
+		}else{
+			throw new Exception("Il manque des paramètre dans la chaine de " +
+					"l'utilisateur");
+		}
+	}
+	
+	public String toString(){
+		return getFirstname() + " " + getLastname();
+	}
 }

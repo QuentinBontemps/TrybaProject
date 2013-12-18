@@ -20,6 +20,9 @@ public class Station extends Zone{
 		this.tampon = tampon;
 	}
 	
-	
+	public String toString(){
+		return this.getName();
+		
+	}
 	
 }

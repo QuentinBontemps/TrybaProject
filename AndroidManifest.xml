@@ -34,6 +34,14 @@
             android:name="com.imie.trybaproject.activity.AddUserActivity"
             android:label="@string/title_activity_add_user" >
         </activity>
+        <activity
+            android:name="com.imie.trybaproject.activity.HomeActivity"
+            android:label="@string/title_activity_home" >
+        </activity>
+        <activity
+            android:name="com.imie.trybaproject.activity.DashboardActivity"
+            android:label="@string/title_activity_dashboard" >
+        </activity>
     </application>
 
 </manifest>

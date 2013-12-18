@@ -1,19 +1,30 @@
 package com.imie.trybaproject.db;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.imie.trybaproject.model.Station;
 import com.imie.trybaproject.model.UserLog;
 
 public class UserLogAdapter implements Adapter<UserLog, Integer>{
 
-	public static final String TABLE = "clientOrder";
+	public static final String TABLE = "userLog";
 	public static final String COL_ID = "_id";
 	public static final String COL_USER_ID = "userId";
 	public static final String COL_STATION_ID = "stationId";
+	public static final String COL_START_DATE = "startDate";
+	public static final String COL_END_DATE = "endDate";
+	
+	private String dateFormat = "yyyy-MM-dd'T'HH:mm";
+	private SimpleDateFormat sdf = 
+								new SimpleDateFormat(dateFormat, Locale.FRANCE);
 	
 	private ApplicationSQLiteOpenHelper helper;
 	private SQLiteDatabase db;
@@ -23,9 +34,9 @@ public class UserLogAdapter implements Adapter<UserLog, Integer>{
 	
 	public UserLogAdapter(ApplicationSQLiteOpenHelper helper){
 		if(helper != null){
-			this.db = db;
+			this.db = helper.getDb();
 			this.helper = helper;
-		}
+		}		
 	}
 	
 	@Override
@@ -33,7 +44,9 @@ public class UserLogAdapter implements Adapter<UserLog, Integer>{
 		return "CREATE TABLE " 	+ TABLE + "("
 				+ COL_ID 		+ " INTEGER PRIMARY KEY AUTOINCREMENT, "
 				+ COL_USER_ID 	+ " INTEGER NOT NULL, "
-				+ COL_STATION_ID+ " INTEGER NOT NULL); ";
+				+ COL_STATION_ID+ " INTEGER NOT NULL, " 
+				+ COL_START_DATE+ " DATETIME NOT NULL,"
+				+ COL_END_DATE	+ " DATETIME); ";
 	}
 
 	@Override
@@ -43,7 +56,10 @@ public class UserLogAdapter implements Adapter<UserLog, Integer>{
 			ContentValues values = new ContentValues();
 			values.put(COL_USER_ID, item.getUser().getId());
 			values.put(COL_STATION_ID, item.getStation().getId());
-			
+			if(item.getDateEntree() != null)
+				values.put(COL_START_DATE, sdf.format(item.getDateEntree()));
+			if(item.getDateSortie() != null)
+				values.put(COL_END_DATE, sdf.format(item.getDateSortie()));
 			i = db.insert(TABLE, null, values);
 
 			if(helper != null)			
@@ -59,7 +75,9 @@ public class UserLogAdapter implements Adapter<UserLog, Integer>{
 			ContentValues values = new ContentValues();
 			values.put(COL_USER_ID, item.getUser().getId());
 			values.put(COL_STATION_ID, item.getStation().getId());
-		
+			values.put(COL_START_DATE, sdf.format(item.getDateEntree()));
+			values.put(COL_END_DATE, sdf.format(item.getDateSortie()));
+			
 			i = db.update(TABLE, values, COL_ID + " = ?",
 						new String[] { String.valueOf(item.getId())});
 			if(helper != null)			
@@ -82,7 +100,8 @@ public class UserLogAdapter implements Adapter<UserLog, Integer>{
 		UserLog log = null;
 		if(db != null){
 			Cursor cursor = db.query(TABLE,
-					new String[]{COL_ID, COL_USER_ID, COL_STATION_ID},
+					new String[]{COL_ID, COL_USER_ID, COL_STATION_ID, 
+												COL_START_DATE, COL_END_DATE},
 					COL_ID + " = ? ",
 					new String[]{String.valueOf(id)}, null, null, null);
 			
@@ -98,6 +117,19 @@ public class UserLogAdapter implements Adapter<UserLog, Integer>{
 				userAdapter.setDatabase(db);
 				log.setUser(userAdapter.get(cursor.getInt(
 									cursor.getColumnIndex(COL_USER_ID))));
+				try {
+					Date startDate = new SimpleDateFormat(
+							dateFormat, Locale.FRANCE).
+							parse(cursor.getString(
+									cursor.getColumnIndex(COL_START_DATE)));
+					Date endDate = new SimpleDateFormat(
+							dateFormat,Locale.FRANCE).parse(cursor.getString(
+									cursor.getColumnIndex(COL_END_DATE)));
+					log.setDateEntree(startDate);
+					log.setDateSortie(endDate);
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
 			}
 			if(helper != null)			
 				db.close();
@@ -124,6 +156,19 @@ public class UserLogAdapter implements Adapter<UserLog, Integer>{
 					userAdapter.setDatabase(db);
 					log.setUser(userAdapter.get(cursor.getInt(
 									cursor.getColumnIndex(COL_USER_ID))));
+					try {
+						Date startDate = new SimpleDateFormat(
+								dateFormat, Locale.FRANCE).
+								parse(cursor.getString(
+										cursor.getColumnIndex(COL_START_DATE)));
+						Date endDate = new SimpleDateFormat(
+							dateFormat,Locale.FRANCE).parse(cursor.getString(
+										cursor.getColumnIndex(COL_END_DATE)));
+						log.setDateEntree(startDate);
+						log.setDateSortie(endDate);
+					} catch (ParseException e) {
+						e.printStackTrace();
+					}
 					logs.add(log);
 				} while (cursor.moveToNext());
 			}
@@ -138,12 +183,29 @@ public class UserLogAdapter implements Adapter<UserLog, Integer>{
 		Cursor cursor = null;
 		if(db != null){
 			cursor = db.query(TABLE,
-					new String[]{COL_ID, COL_USER_ID, COL_STATION_ID},
+					new String[]{COL_ID, COL_USER_ID, COL_STATION_ID, 
+												COL_START_DATE, COL_END_DATE},
 					null,null, null, null, null);
 		}
 		return cursor;
 	}
 
+	public Boolean isFreeStation(Station station){
+		if(db != null){
+			Cursor cursor = db.query(TABLE,
+				new String[]{COL_ID, COL_STATION_ID, COL_USER_ID, 
+					COL_START_DATE, COL_END_DATE},
+				COL_STATION_ID + " = ? AND " + COL_END_DATE + " IS NULL",
+				new String[]{String.valueOf(station.getId())},
+				null, null, COL_ID + " DESC", String.valueOf(1));
+		
+			if(cursor.getCount() <=  0){
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	@Override
 	public void setDatabase(SQLiteDatabase db) {
 		this.db = db;
