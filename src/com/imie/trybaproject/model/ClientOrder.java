@@ -1,22 +1,23 @@
 package com.imie.trybaproject.model;
 
-import java.util.ArrayList;
 
 public class ClientOrder {
 
 	private long id;
 	private String customer;
 	private String typeProduct;
+	private String typeMaterial;
 	private int quantity;
 	
 	public ClientOrder(){
 	}
 	
 	
-	public ClientOrder(String customer, String typeProduct, int quantity) {
+	public ClientOrder(String customer, String typeProduct, String typeMaterial, int quantity) {
 		super();
 		this.customer = customer;
 		this.typeProduct = typeProduct;
+		this.typeMaterial = typeMaterial;
 		this.quantity = quantity;
 	}
 	public long getId() {
@@ -43,4 +44,11 @@ public class ClientOrder {
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
+	public String getTypeMaterial() {
+		return typeMaterial;
+	}
+	public void setTypeMaterial(String typeMaterial) {
+		this.typeMaterial = typeMaterial;
+	}
+	
 }

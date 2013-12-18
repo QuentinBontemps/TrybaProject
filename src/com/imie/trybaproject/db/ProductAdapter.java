@@ -145,6 +145,45 @@ public class ProductAdapter implements Adapter<Product, Integer> {
 		}
 		return cursor;
 	}
+	
+	public Cursor getByOrderIdWithCursor(int orderId) {
+		Cursor cursor = null;
+		if(this.db != null){
+			cursor = db.query(TABLE, 
+				new String[] {COL_ID, COL_NAME, COL_ORDER_ID},
+				COL_ORDER_ID + " = ? ", new String[] {String.valueOf(orderId)},
+				null,null,null,null);
+		}
+		return cursor;
+	}
+	
+	public ArrayList<Product> getByOrderId(int orderId) {
+		ArrayList<Product> products = new ArrayList<Product>();
+		if(this.db != null){
+				Cursor cursor = this.getByOrderIdWithCursor(orderId);
+						
+			if(cursor.getCount() > 0){
+				cursor.moveToFirst();				
+				do {
+					Product product = new Product();
+					product.setId(cursor.getInt(
+											cursor.getColumnIndex(COL_ID)));
+					product.setName(cursor.getString(
+											cursor.getColumnIndex(COL_NAME)));
+					ClientOrderAdapter orderAdapter = 
+												new ClientOrderAdapter(null);
+					orderAdapter.setDatabase(db);
+					product.setOrder(orderAdapter.get(cursor.getInt(
+										cursor.getColumnIndex(COL_ORDER_ID))));
+					
+					products.add(product);
+				} while (cursor.moveToNext());
+			}
+			if(helper != null)			
+				db.close();
+		}
+		return products;
+	}
 
 	@Override
 	public void setDatabase(SQLiteDatabase db) {

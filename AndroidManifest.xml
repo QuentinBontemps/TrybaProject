@@ -34,6 +34,10 @@
             android:name="com.imie.trybaproject.activity.AddUserActivity"
             android:label="@string/title_activity_add_user" >
         </activity>
+        <activity
+            android:name="com.imie.trybaproject.activity.AddOrderActivity"
+            android:label="@string/title_activity_add_order" >
+        </activity>
     </application>
 
 </manifest>
