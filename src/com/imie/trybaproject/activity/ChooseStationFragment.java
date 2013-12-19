@@ -195,13 +195,18 @@ public class ChooseStationFragment extends Fragment {
 	
 	private void updateMenuList(){
 		HomeActivity activity = (HomeActivity) getActivity();
-		activity.getItems().remove(0);
 		
-		activity.getItems().add(0, activity.getProductScan());
-		activity.getItems().add(1, activity.getStationChange());
-		activity.getStationChange().setFragment(new ChooseStationFragment(activity, true, (int) userLogId));
-		activity.setItemCheck(1);
-		activity.getAdapter().notifyDataSetChanged();
+		
+		
+		if(!activity.getItems().contains(activity.getStationChange())){
+			activity.getItems().remove(0);
+			activity.getItems().add(0, activity.getProductScan());
+			activity.getItems().add(1, activity.getStationChange());
+			activity.getStationChange().setFragment(new ChooseStationFragment(activity, true, (int) userLogId));
+			activity.setItemCheck(1);
+			activity.getAdapter().notifyDataSetChanged();
+		}
+		
 	}
  
     

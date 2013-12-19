@@ -11,6 +11,7 @@ import com.imie.trybaproject.model.Product;
 import com.imie.trybaproject.model.UserLog;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -38,6 +39,17 @@ public class ScanFragment extends Fragment {
 		// View objects
 		et_idProduct = (EditText) fragment.findViewById(R.id.scan_ET_idProduit);
 		btn_validate = (Button) fragment.findViewById(R.id.scan_btn_validate);
+		
+		Button btnScan = (Button) fragment.findViewById(R.id.to_scan_activity);
+		btnScan.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(getActivity(), ScanActivity.class);
+				getActivity().startActivity(intent);
+				
+			}
+		});
 		
 		// Binding action
 		btn_validate.setOnClickListener(new OnClickListener() {

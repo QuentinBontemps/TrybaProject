@@ -7,8 +7,10 @@
     <uses-sdk
         android:minSdkVersion="9"
         android:targetSdkVersion="18" />
-    
-    <uses-permission android:name="android.permission.READ_CONTACTS"></uses-permission>
+
+    <uses-permission android:name="android.permission.READ_CONTACTS" >
+    </uses-permission>
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -45,16 +47,35 @@
             android:label="@string/title_activity_home" >
         </activity>
         <activity
-            android:name="com.imie.trybaproject.activity.DashboardActivity"
-            android:label="@string/title_activity_dashboard" >
-        </activity>
-        <activity
             android:name="com.imie.trybaproject.activity.ScanActivity"
             android:label="@string/title_activity_scan" >
         </activity>
         <activity
             android:name="com.imie.trybaproject.activity.ListOrdersActivity"
             android:label="@string/title_activity_list_orders" >
+        </activity>
+        <activity
+            android:name="com.google.zxing.client.android.CaptureActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            android:windowSoftInputMode="stateAlwaysHidden" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.google.zxing.client.android.SCAN" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity android:name="com.google.zxing.client.android.HelpActivity" >
+        </activity>
+        <activity
+            android:name="com.imie.trybaproject.activity.DetailOrderActivity"
+            android:label="@string/title_activity_detail_order" >
         </activity>
     </application>
 

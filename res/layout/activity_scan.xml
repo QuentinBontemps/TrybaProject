@@ -8,12 +8,16 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".AddOrderActivity" 
     android:orientation="vertical">
-    <fragment
-        android:id="@+id/fragment_scan"
-        android:name="com.imie.trybaproject.activity.ScanFragment"
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"
-    ></fragment>
     
+    <Button 
+        android:id="@+id/btnScan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="SCAN"/>
+    
+    <TextView 
+        android:id="@+id/txtResult"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>
