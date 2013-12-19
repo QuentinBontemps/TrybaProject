@@ -29,7 +29,7 @@ public class ListOrdersFragment extends Fragment{
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		
-		Toast.makeText(getActivity(), "Je suis là",Toast.LENGTH_LONG).show();
+		
 		View fragment = inflater.inflate(R.layout.fragment_list_orders, 
 				container, false);
 		

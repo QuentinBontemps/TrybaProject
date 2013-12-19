@@ -1,5 +1,7 @@
 package com.imie.trybaproject.db;
 
+import com.imie.trybaproject.R;
+
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
@@ -20,7 +22,8 @@ public class ApplicationSQLiteOpenHelper extends SQLiteOpenHelper {
 		db.execSQL(new TamponAdapter().createTable());
 		db.execSQL(new StationAdapter().createTable());
 		db.execSQL(new UserLogAdapter().createTable());
-		//db.execSQL(new LogAdapter().createTable());
+		
+		
 	}
 
 	@Override

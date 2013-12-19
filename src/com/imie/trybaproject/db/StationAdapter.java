@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.imie.trybaproject.model.Station;
+import com.imie.trybaproject.model.Tampon;
 
 public class StationAdapter implements Adapter<Station, Integer>{
 
@@ -124,6 +125,39 @@ public class StationAdapter implements Adapter<Station, Integer>{
 		}
 		return station;
 	}
+	
+	public Station getByOrder(Integer id) {
+		Station station = null;
+		if(this.db != null){
+			Cursor cursor = db.query(TABLE,
+						new String[]{COL_ID, COL_NAME, 
+						COL_ORDER, COL_VISIBLE, COL_TAMPON_ID},
+						COL_ORDER + " = ? ", 
+						new String[]{String.valueOf(id)}, 
+						null, null, null);
+			
+			if(cursor.getCount() > 0){
+				cursor.moveToFirst();
+				station = new Station();
+				station.setId(cursor.getInt(cursor.getColumnIndex(COL_ID)));
+				station.setName(cursor.getString(
+											cursor.getColumnIndex(COL_NAME)));
+				station.setOrder(cursor.getInt(
+											cursor.getColumnIndex(COL_ORDER)));
+				station.setVisible(cursor.getInt(
+						cursor.getColumnIndex(COL_VISIBLE)));
+				TamponAdapter tamponAdapter = new TamponAdapter(null);
+				tamponAdapter.setDatabase(db);
+				station.setTampon(tamponAdapter.get(cursor.getInt(
+									   	cursor.getColumnIndex(COL_TAMPON_ID))));	
+				
+			}
+			if(helper != null)			
+				db.close();
+		}
+		return station;
+	}
+	
 
 	@Override
 	public ArrayList<Station> getAll() {
@@ -171,6 +205,38 @@ public class StationAdapter implements Adapter<Station, Integer>{
 	@Override
 	public void setDatabase(SQLiteDatabase db) {
 		this.db = db;
+	}
+	
+	public Station getByTampon(Tampon tampon) {
+		Station station = null;
+		if(this.db != null){
+			Cursor cursor = db.query(TABLE,
+						new String[]{COL_ID, COL_NAME, 
+						COL_ORDER, COL_VISIBLE, COL_TAMPON_ID},
+						COL_TAMPON_ID + " = ? ", 
+						new String[]{String.valueOf(tampon.getId())}, 
+						null, null, null);
+			
+			if(cursor.getCount() > 0){
+				cursor.moveToFirst();
+				station = new Station();
+				station.setId(cursor.getInt(cursor.getColumnIndex(COL_ID)));
+				station.setName(cursor.getString(
+											cursor.getColumnIndex(COL_NAME)));
+				station.setOrder(cursor.getInt(
+											cursor.getColumnIndex(COL_ORDER)));
+				station.setVisible(cursor.getInt(
+						cursor.getColumnIndex(COL_VISIBLE)));
+				TamponAdapter tamponAdapter = new TamponAdapter(null);
+				tamponAdapter.setDatabase(db);
+				station.setTampon(tamponAdapter.get(cursor.getInt(
+									   	cursor.getColumnIndex(COL_TAMPON_ID))));	
+				
+			}
+			if(helper != null)			
+				db.close();
+		}
+		return station;
 	}
 
 }

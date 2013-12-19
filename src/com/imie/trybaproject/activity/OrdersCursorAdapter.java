@@ -25,7 +25,6 @@ public class OrdersCursorAdapter extends CursorAdapter {
 	public OrdersCursorAdapter(Context c, Cursor cursor) {
 		super(c, cursor);
 		context = c;
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

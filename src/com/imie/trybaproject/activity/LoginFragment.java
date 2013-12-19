@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.imie.trybaproject.R;
 import com.imie.trybaproject.db.ApplicationSQLiteOpenHelper;
+import com.imie.trybaproject.db.Datasets;
 import com.imie.trybaproject.db.StationAdapter;
 import com.imie.trybaproject.db.TamponAdapter;
 import com.imie.trybaproject.db.UserAdapter;
@@ -30,7 +31,8 @@ import com.imie.trybaproject.model.User;
 import com.imie.trybaproject.model.UserType;
 
 public class LoginFragment extends Fragment{
-
+	
+	private final static String firstLaunch= "FIRST_LAUNCH";
 	
 	private EditText ET_login;
 	private EditText ET_pssword;
@@ -38,47 +40,30 @@ public class LoginFragment extends Fragment{
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		
+		
+		SharedPreferences preferences = getActivity().
+				getSharedPreferences("DEFAULT", Activity.MODE_PRIVATE);
+		
+		
+		Boolean firstlaunch = preferences.getBoolean(firstLaunch, true);
+		if (firstlaunch == true)
+		{
+
+			ApplicationSQLiteOpenHelper ASLOH = 
+					new ApplicationSQLiteOpenHelper(getActivity(), 
+							getString(R.string.database_name), null, 
+							Integer.parseInt(getString(R.string.database_version)));
+			Datasets.initData(ASLOH.getDb());
+			
+			SharedPreferences.Editor editor = preferences.edit();
+			editor.putBoolean(firstLaunch, false);
+			editor.commit();			
+
+		}
+		
+				
 		View frag = inflater.inflate(R.layout.fragment_login,container, false);
 
-		// Add user in DB pour test
-		ApplicationSQLiteOpenHelper ASLOH = 
-				new ApplicationSQLiteOpenHelper(getActivity(), 
-				this.getString(R.string.database_name), null, 
-				Integer.parseInt(this.getString(R.string.database_version)));
-		UserAdapter userAdapt = new UserAdapter(ASLOH);
-
-		userAdapt.insert(new User("momo","yo","Quentin","Bontemps",
-					UserType.ADMINISTRATOR.name())); 
-		
-		UserAdapter userAdapt1 = new UserAdapter(ASLOH);
-		userAdapt1.insert(new User("toto","yo","Toto","Albert",
-				UserType.OPERATOR.name())); 
-		
-		StationAdapter sA = new StationAdapter(ASLOH);
-		sA.insert(new Station("s1",1));
-		StationAdapter sA2 = new StationAdapter(ASLOH);
-		sA2.insert(new Station("s2",1));
-		StationAdapter sA3 = new StationAdapter(ASLOH);
-		sA3.insert(new Station("s3",1));
-		
-		TamponAdapter tAd = new TamponAdapter(ASLOH);
-		tAd.insert(new Tampon("t1",15));
-
-		UserAdapter userAdapt2 = new UserAdapter(ASLOH);
-		User u = userAdapt2.get(1);
-		
-		StationAdapter sA4 = new StationAdapter(ASLOH);
-		Station s = sA4.get(1);
-		
-		TamponAdapter tAd1 = new TamponAdapter(ASLOH);
-		Tampon t = tAd1.get(1);
-		
-		Log.i("TEST", u.getSerializableString());
-		u.setCurrentStation(s);
-		Log.i("TEST", u.getSerializableString());
-		s.setTampon(t);
-		u.setCurrentStation(s);
-		Log.i("TEST", u.getSerializableString());
 		
 		
 		// View objects

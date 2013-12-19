@@ -109,6 +109,7 @@ public class TamponAdapter implements Adapter<Tampon, Integer> {
 		}
 		return tampon;
 	}
+	
 
 
 	@Override

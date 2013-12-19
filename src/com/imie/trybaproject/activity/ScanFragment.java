@@ -87,8 +87,7 @@ public class ScanFragment extends Fragment {
 		{
 			// on test si le product est bien dans une station, et pas en attente dans un tampon
 			if (product.getCurrentTypeZone() == ZoneType.STATION)
-			{
-				
+			{				
 				preferences = getActivity().getSharedPreferences("DEFAULT", Activity.MODE_PRIVATE);
 				
 				 userId = 
@@ -99,31 +98,24 @@ public class ScanFragment extends Fragment {
 						if(userString != "")
 							user.setWithSerializableString(userString);			
 					
-					int resultatChangement = product.goToNextStation(
-												user.getCurrentStation());
-					/*Station s = new Station("maStation", 2);
-					s.setId(1);
-					int resultatChangement = product.goToNextStation(s);*/
+					int resultatChangement = product.goToNextTampon(
+												user.getCurrentStation(),ASLOH, user);
+					
 					switch (resultatChangement) {
 					case 0: 
 						Toast.makeText(getActivity(), 
-								"Le produit est dans un tampon", 
-								Toast.LENGTH_LONG).show();
+						"Le produit n'est pas dans la station correspondante", 
+													Toast.LENGTH_LONG).show();
 						break;
 					case 1:
 						ProductAdapter productAdapt = new ProductAdapter(ASLOH);
 						productAdapt.update(product);
 						
 						Toast.makeText(getActivity(), 
-						"Le produit est passé dans la prochaine station", 
-												Toast.LENGTH_LONG).show();						
-						break;
-					case 2:
-						Toast.makeText(getActivity(), 
 						"Le produit est passé dans le prochain tampon", 
 												Toast.LENGTH_LONG).show();						
 						break;
-					case 3:
+					case 2:
 						Toast.makeText(getActivity(), 
 								"Le produit n'est pas dans la bonne station", 
 								Toast.LENGTH_LONG).show();

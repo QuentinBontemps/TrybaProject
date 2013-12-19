@@ -6,6 +6,7 @@ import com.imie.trybaproject.R;
 import com.imie.trybaproject.db.ApplicationSQLiteOpenHelper;
 import com.imie.trybaproject.db.ClientOrderAdapter;
 import com.imie.trybaproject.db.ProductAdapter;
+import com.imie.trybaproject.db.StationAdapter;
 import com.imie.trybaproject.db.UserAdapter;
 import com.imie.trybaproject.model.ClientOrder;
 import com.imie.trybaproject.model.MaterialType;
@@ -120,6 +121,8 @@ public class AddOrderFragment extends Fragment {
 						Integer.parseInt(getString(R.string.database_version)));
 		ClientOrderAdapter clientOrderAdapt = new ClientOrderAdapter();
 		ProductAdapter productAdapt = new ProductAdapter();
+		StationAdapter stationAdapter = new StationAdapter();
+		stationAdapter.setDatabase(ASLOH.getDb());
 		clientOrderAdapt.setDatabase(ASLOH.getDb());
 		productAdapt.setDatabase(ASLOH.getDb());
 		
@@ -139,9 +142,8 @@ public class AddOrderFragment extends Fragment {
 			
 			product.setOrder(clientOrder);
 			product.setCurrentTypeZone(ZoneType.STATION);
-			Station z = new Station("mastation",1);
-			z.setId(1);
 			
+			Zone z = stationAdapter.getByOrder(1).getTampon();
 			product.setCurrentZone(z);
 			
 
@@ -154,8 +156,10 @@ public class AddOrderFragment extends Fragment {
 		
 		
 		
-		Toast.makeText(getActivity(), "Création de la commande",
+		Toast.makeText(getActivity(), "Commande créée",
 											Toast.LENGTH_LONG).show();
+		
+		getActivity().finish();
 		
 	}
 	
