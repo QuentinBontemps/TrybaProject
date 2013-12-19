@@ -11,7 +11,10 @@ import com.imie.trybaproject.model.ClientOrder;
 import com.imie.trybaproject.model.MaterialType;
 import com.imie.trybaproject.model.Product;
 import com.imie.trybaproject.model.ProductType;
+import com.imie.trybaproject.model.Station;
 import com.imie.trybaproject.model.User;
+import com.imie.trybaproject.model.Zone;
+import com.imie.trybaproject.model.ZoneType;
 
 import android.R.integer;
 import android.app.Activity;
@@ -135,8 +138,16 @@ public class AddOrderFragment extends Fragment {
 					clientOrder.getTypeMaterial());
 			
 			product.setOrder(clientOrder);
+			product.setCurrentTypeZone(ZoneType.STATION);
+			Station z = new Station("mastation");
+			z.setId(1);
+			
+			product.setCurrentZone(z);
+			
+
 			idResultatInsertion = productAdapt.insert(product);
-			Log.v("MonAppli","id produit ajouté : " + String.valueOf(idResultatInsertion));
+			Log.v("MonAppli","id produit ajouté : " + 
+						String.valueOf(idResultatInsertion));
 		}
 		
 		productAdapt.closeDatabase();

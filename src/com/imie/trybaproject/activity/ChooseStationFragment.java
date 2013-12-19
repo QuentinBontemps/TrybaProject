@@ -69,7 +69,7 @@ public class ChooseStationFragment extends Fragment {
 															container, false);
 		
 		// View object
-		Button buttonTest = (Button) fragment.findViewById(R.id.button1);
+		Button buttonTest = (Button) fragment.findViewById(R.id.scan_btn_validate);
 		Button buttonTest1 = (Button) fragment.findViewById(R.id.Button01);
 		
 		buttonTest.setOnClickListener(new OnClickListener() {
