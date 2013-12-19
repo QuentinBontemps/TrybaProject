@@ -139,6 +139,8 @@ public class ChooseStationFragment extends Fragment {
 					editor.putString("CURRENT_USER_LOG_ID", 
 							String.valueOf(userLogId));
 					editor.commit();
+					
+					updateMenuList();
 				  
 				}else{
 					Toast.makeText(getActivity(), "Station déjà occupée", 
@@ -190,6 +192,13 @@ public class ChooseStationFragment extends Fragment {
 		}
 	    
 	
+	}
+	
+	private void updateMenuList(){
+		HomeActivity activity = (HomeActivity) getActivity();
+		activity.getItems().remove(activity.getStationSelect());
+		activity.getItems().add(0, activity.getStationChange());
+		activity.getAdapter().notifyDataSetChanged();
 	}
 	
 	private void gestionUserButton()
