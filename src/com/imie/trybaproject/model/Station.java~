@@ -130,6 +130,7 @@ public class Station extends Zone{
 		}
 	}
 	
+<<<<<<< HEAD
 	public void setVisible(int i)
 	{
 		if (i == 1)
@@ -138,6 +139,7 @@ public class Station extends Zone{
 		}else
 			this.visible = false;
 	}
+=======
 	public void setWithSerializableArray(ArrayList<Object> str) throws Exception
 	{
 		if(str.size() == 3){
@@ -152,4 +154,5 @@ public class Station extends Zone{
 	
 	
 	
+>>>>>>> master
 }

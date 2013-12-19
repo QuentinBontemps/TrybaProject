@@ -40,6 +40,7 @@ public class HomeActivity extends FragmentActivity {
 	MenuItem itemStationChange = new MenuItem();
 	MenuItem itemStationSelect = new MenuItem();
 	MenuItem itemLogout = new MenuItem();
+	MenuItem itemProductScan = new MenuItem();
 	SharedPreferences preferences;
 	
 	
@@ -53,9 +54,12 @@ public class HomeActivity extends FragmentActivity {
 		String userString = preferences.getString("CURRENT_USER", "");
 		userLogId = Integer.parseInt(preferences.getString("CURRENT_USER_LOG_ID", "0"));
 		
+		itemProductScan = new MenuItem(new ScanFragment(),
+				getString(R.string.product_scan));
+		
 		try {
 			if(userString != "")
-				currentUser.setUserWithSerializableString(userString);			
+				currentUser.setWithSerializableString(userString);			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -65,7 +69,8 @@ public class HomeActivity extends FragmentActivity {
 		
 		if(userLogId != 0){
 			itemStationChange.setFragment(new ChooseStationFragment(this, true,userLogId));
-			items.add(itemStationChange);
+			items.add(itemProductScan);
+			items.add(itemStationChange);			
 		}else{
 			itemStationSelect.setFragment(new ChooseStationFragment());
 			items.add(itemStationSelect);
@@ -74,23 +79,17 @@ public class HomeActivity extends FragmentActivity {
 				getString(R.string.users_management));
 		MenuItem itemOrdersManagement = new MenuItem(new ListOrdersFragment(),
 				getString(R.string.orders_management));
-		MenuItem itemProductScan = new MenuItem(new ScanFragment(),
-				getString(R.string.product_scan));
 		itemLogout = new MenuItem(new LogoutFragment(this),getString(R.string.logout));
-		
-		
-		
-		items.add(itemUsersManagement);
-		items.add(itemOrdersManagement);
-		items.add(itemProductScan);
+			
+		if(currentUser.getType().equals(UserType.ADMINISTRATOR.name())){
+			items.add(itemUsersManagement);
+			items.add(itemOrdersManagement);
+		}
 		items.add(itemLogout);
 		
 		drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
 		drawerList = (ListView) findViewById(R.id.left_drawer);
-
-		//drawerList.setAdapter(new ArrayAdapter<MenuItem>(this, 
-				//	R.layout.drawer_list_item,items));
 		
 		adapter = new ListMenuItemAdapter(getApplicationContext(), items);
 		drawerList.setAdapter(adapter);
@@ -104,15 +103,11 @@ public class HomeActivity extends FragmentActivity {
 	                R.string.app_name,
 	                R.string.app_name
 	        ) {
-	            public void onDrawerClosed(View view) {
-	                getActionBar().setTitle("Ta mere jla ferme");
-	                // calling onPrepareOptionsMenu() to show action bar icons
+	            public void onDrawerClosed(View view) { 
 	                invalidateOptionsMenu();
 	            }
 	 
 	            public void onDrawerOpened(View drawerView) {
-	                getActionBar().setTitle("Ta mere jlouvre");
-	                // calling onPrepareOptionsMenu() to hide action bar icons
 	                invalidateOptionsMenu();
 	            }
 	        };
@@ -122,15 +117,9 @@ public class HomeActivity extends FragmentActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.home, menu);
-		return true;
+		//getMenuInflater().inflate(R.menu.home, menu);
+		return false;
 	}
-	
-	
-	
-	
-
-
 
 	private class DrawerItemClickListener implements ListView.OnItemClickListener{
 		@Override
@@ -157,23 +146,27 @@ public class HomeActivity extends FragmentActivity {
 	    drawerLayout.closeDrawer(drawerList);
 	    
 	    if(item.equals(itemStationSelect)){
-	    	preferences = getSharedPreferences("DEFAULT", Activity.MODE_PRIVATE);
-	    	userLogId = Integer.parseInt(preferences.getString("CURRENT_USER_LOG_ID", "0"));
-	    	if(userLogId != 0){
-	    		items.remove(itemStationSelect);
-	    		itemStationChange = new MenuItem(
-					new ChooseStationFragment(this, true,userLogId),
-							getString(R.string.station_change));
-
-				items.add(0, itemStationChange);
-				Toast.makeText(getApplicationContext(), "Ok morray", Toast.LENGTH_SHORT).show();
+	    	if(items.contains(itemStationSelect)){
+		    	preferences = getSharedPreferences("DEFAULT", Activity.MODE_PRIVATE);
+		    	userLogId = Integer.parseInt(preferences.getString("CURRENT_USER_LOG_ID", "0"));
+		    	
+		    	if(userLogId != 0){
+		    		items.remove(itemStationSelect);
+		    		itemStationChange.setFragment(new ChooseStationFragment(this, true,userLogId));
+		    		
+					items.add(0, itemProductScan);
+					items.add(1, itemStationChange);
+					drawerList.setItemChecked(1, true);
+		    	}
 	    	}
 	    }else if(item.equals(itemStationChange)){
-	    	items.remove(itemStationChange);
-	    	itemStationSelect = new MenuItem(new ChooseStationFragment(),
-					getString(R.string.station_selection));
-			items.add(0, itemStationSelect);
-			Toast.makeText(getApplicationContext(), "Ok morray2", Toast.LENGTH_SHORT).show();
+	    	if(items.contains(itemStationChange)){
+		    	items.remove(itemProductScan);
+	    		items.remove(itemStationChange);
+		    	itemStationSelect.setFragment(new ChooseStationFragment());
+				items.add(0, itemStationSelect);
+				drawerList.setItemChecked(0, true);
+	    	}
 	    }else if(item.equals(itemLogout)){
 			
 	    	SharedPreferences preferences =
@@ -217,6 +210,12 @@ public class HomeActivity extends FragmentActivity {
 		return this.adapter;
 	}
 	
+	public MenuItem getProductScan(){
+		return this.itemProductScan;
+	}
 	
+	public void setItemCheck(int position){
+		this.drawerList.setItemChecked(position, true);
+	}
 	
 }

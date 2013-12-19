@@ -8,6 +8,7 @@ import com.imie.trybaproject.db.ApplicationSQLiteOpenHelper;
 import com.imie.trybaproject.db.StationAdapter;
 import com.imie.trybaproject.db.UserAdapter;
 import com.imie.trybaproject.db.UserLogAdapter;
+import com.imie.trybaproject.model.MenuItem;
 import com.imie.trybaproject.model.Station;
 import com.imie.trybaproject.model.User;
 import com.imie.trybaproject.model.UserLog;
@@ -38,6 +39,7 @@ public class ChooseStationFragment extends Fragment {
 	private User currentUser = new User();
 	private ArrayAdapter<Station> stationsArrayAdapter;
 	private Button btnValidate;
+	   long userLogId;
 	
 	public ChooseStationFragment(){
 		
@@ -68,27 +70,6 @@ public class ChooseStationFragment extends Fragment {
 		View fragment = inflater.inflate(R.layout.choose_station_fragment,
 															container, false);
 		
-		// View object
-		Button buttonTest = (Button) fragment.findViewById(R.id.scan_btn_validate);
-		Button buttonTest1 = (Button) fragment.findViewById(R.id.Button01);
-		
-		buttonTest.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				gestionUserButton();
-			}
-		});		
-		buttonTest1.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				gestionAddCommandeButton();
-			}
-		});
-		
 		SharedPreferences preferences = getActivity().
 				getSharedPreferences("DEFAULT", Activity.MODE_PRIVATE);
 		
@@ -96,7 +77,7 @@ public class ChooseStationFragment extends Fragment {
 					
 		if(!userString.equals("")){
 			try {
-				currentUser.setUserWithSerializableString(userString);
+				currentUser.setWithSerializableString(userString);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -131,11 +112,33 @@ public class ChooseStationFragment extends Fragment {
 				   userLog.setUser(currentUser);
 				   userLog.setStation((Station)selectStation.getSelectedItem());
 				   userLog.setDateEntree(new Date());
-				   long userLogId = u_LogAdapter.insert(userLog);
+				   userLogId = u_LogAdapter.insert(userLog);
 
 				   SharedPreferences preferences = getActivity().
 							getSharedPreferences("DEFAULT", Activity.MODE_PRIVATE);
 					SharedPreferences.Editor editor = preferences.edit();
+					
+					
+					String currentUserString = 
+							preferences.getString("CURRENT_USER", "");
+					
+					if(!currentUserString.equals("")){
+						try {
+							Station currentStation = 
+									(Station)selectStation.getSelectedItem();
+							currentUser.setWithSerializableString(
+									currentUserString);
+							currentUser.setCurrentStation(currentStation);									
+							editor.putString("CURRENT_USER", 
+									currentUser.getSerializableString());
+							Toast.makeText(getActivity(), "Station " + 
+									currentStation.getName() + " sélectionnée",
+									Toast.LENGTH_SHORT).show();
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+										
 					editor.putString("CURRENT_USER_LOG_ID", 
 							String.valueOf(userLogId));
 					editor.commit();
@@ -146,8 +149,6 @@ public class ChooseStationFragment extends Fragment {
 					Toast.makeText(getActivity(), "Station déjà occupée", 
 							Toast.LENGTH_SHORT).show();
 				}
-				
-				
 			}
 		});
 		
@@ -189,29 +190,19 @@ public class ChooseStationFragment extends Fragment {
 			super.onPostExecute(result);
 			stationsArrayAdapter.addAll(result);
 			progress.dismiss();
-		}
-	    
-	
+		}	
 	}
 	
 	private void updateMenuList(){
 		HomeActivity activity = (HomeActivity) getActivity();
-		activity.getItems().remove(activity.getStationSelect());
-		activity.getItems().add(0, activity.getStationChange());
+		activity.getItems().remove(0);
+		
+		activity.getItems().add(0, activity.getProductScan());
+		activity.getItems().add(1, activity.getStationChange());
+		activity.getStationChange().setFragment(new ChooseStationFragment(activity, true, (int) userLogId));
+		activity.setItemCheck(1);
 		activity.getAdapter().notifyDataSetChanged();
 	}
-	
-	private void gestionUserButton()
-    {
-    	Intent intent = new Intent(getActivity(), ListUsersActivity.class);
-    	getActivity().startActivity(intent);
-    }
-    
-    public void gestionAddCommandeButton()
-    {
-    	Intent intent = new Intent(getActivity(), ListOrdersActivity.class);
-    	getActivity().startActivity(intent);
-    }
-    
+ 
     
 }

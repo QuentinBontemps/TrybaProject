@@ -6,6 +6,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.imie.trybaproject.model.Station;
 import com.imie.trybaproject.model.User;
 
 public class UserAdapter implements Adapter<User, Integer>{
@@ -17,6 +18,7 @@ public class UserAdapter implements Adapter<User, Integer>{
 	public static final String COL_FIRSTNAME = "firstname";
 	public static final String COL_LASTNAME = "lastname";
 	public static final String COL_TYPE = "type";
+	public static final String COL_CURRENT_STATION_ID = "currentStationId";
 	
 	private SQLiteDatabase db;
 	private ApplicationSQLiteOpenHelper helper;
@@ -41,7 +43,8 @@ public class UserAdapter implements Adapter<User, Integer>{
 				+ COL_PASSWORD 	+ " TEXT NOT NULL,"
 				+ COL_FIRSTNAME + " TEXT NOT NULL," 
 				+ COL_LASTNAME 	+ " TEXT NOT NULL,"
-				+ COL_TYPE 		+ " INTEGER NOT NULL)";
+				+ COL_TYPE 		+ " INTEGER NOT NULL,"
+				+ COL_CURRENT_STATION_ID + 	" INTEGER )";
 	}
 
 	@Override
@@ -54,6 +57,8 @@ public class UserAdapter implements Adapter<User, Integer>{
 			values.put(COL_FIRSTNAME, item.getFirstname());
 			values.put(COL_LASTNAME, item.getLastname());
 			values.put(COL_TYPE, item.getType());
+			if(item.getCurrentStation() != null)
+			values.put(COL_CURRENT_STATION_ID, item.getCurrentStation().getId());
 			
 			i = db.insert(TABLE, null, values);
 			if(helper != null)			
@@ -72,6 +77,8 @@ public class UserAdapter implements Adapter<User, Integer>{
 			values.put(COL_FIRSTNAME, item.getFirstname());
 			values.put(COL_LASTNAME, item.getLastname());
 			values.put(COL_TYPE, item.getType());
+			if(item.getCurrentStation() != null)
+			values.put(COL_CURRENT_STATION_ID, item.getCurrentStation().getId());
 			
 			i = db.update(TABLE, values, COL_ID + " = ?",
 					new String[] { String.valueOf(item.getId())});
@@ -96,12 +103,12 @@ public class UserAdapter implements Adapter<User, Integer>{
 		User user = null;
 		if(this.db != null){
 			Cursor cursor = db.query(TABLE,
-					new String[] {COL_ID, COL_LOGIN, COL_PASSWORD, 
-										COL_FIRSTNAME, COL_LASTNAME, COL_TYPE}, 
+					new String[] {COL_ID, COL_LOGIN, COL_PASSWORD,COL_FIRSTNAME,
+								COL_LASTNAME, COL_TYPE, COL_CURRENT_STATION_ID}, 
 					COL_ID + " = ? ",
 					new String[] {String.valueOf(id)},null,null,null,null);
 					
-			if(cursor != null)
+			if(cursor.getCount() > 0)
 			{
 				cursor.moveToFirst();
 				user = new User();
@@ -118,6 +125,16 @@ public class UserAdapter implements Adapter<User, Integer>{
 										cursor.getColumnIndex(COL_LASTNAME)));
 				user.setType(cursor.getString(
 										cursor.getColumnIndex(COL_TYPE)));
+				
+				if(cursor.getString(
+						cursor.getColumnIndex(COL_CURRENT_STATION_ID)) != null){
+					StationAdapter stationAdapter = new StationAdapter(null);
+					stationAdapter.setDatabase(db);
+					
+					user.setCurrentStation(stationAdapter.get(
+							Integer.parseInt(cursor.getString(
+							cursor.getColumnIndex(COL_CURRENT_STATION_ID)))));
+				}
 			}
 			if(helper != null)
 				db.close();
@@ -131,7 +148,7 @@ public class UserAdapter implements Adapter<User, Integer>{
 		if(this.db != null){
 			Cursor cursor = this.getAllWithCursor();
 			
-			if(cursor != null){
+			if(cursor.getCount() > 0){
 				
 				cursor.moveToFirst();				
 				do {
@@ -149,6 +166,17 @@ public class UserAdapter implements Adapter<User, Integer>{
 					user.setType(cursor.getString(
 										cursor.getColumnIndex(COL_TYPE)));
 					
+					if(cursor.getString(
+						cursor.getColumnIndex(COL_CURRENT_STATION_ID)) != null){
+						StationAdapter stationAdapter =
+								new StationAdapter(null);
+						stationAdapter.setDatabase(db);
+						
+						user.setCurrentStation(stationAdapter.get(
+							Integer.parseInt(cursor.getString(
+							cursor.getColumnIndex(COL_CURRENT_STATION_ID)))));
+					}
+					
 					users.add(user);
 				} while (cursor.moveToNext());
 			}
@@ -163,7 +191,7 @@ public class UserAdapter implements Adapter<User, Integer>{
 		if(this.db != null){
 			cursor = db.query(TABLE, 
 				new String[] {COL_ID, COL_LOGIN, COL_PASSWORD, COL_FIRSTNAME, 
-				COL_LASTNAME, COL_TYPE}, 
+				COL_LASTNAME, COL_TYPE, COL_CURRENT_STATION_ID}, 
 				null,null,null,null,null);
 		}
 		return cursor;
@@ -174,7 +202,7 @@ public class UserAdapter implements Adapter<User, Integer>{
 		if(this.db != null){
 			Cursor cursor = db.query(TABLE, 
 				new String[] {COL_ID, COL_LOGIN, COL_PASSWORD, COL_FIRSTNAME, 
-				COL_LASTNAME, COL_TYPE},
+				COL_LASTNAME, COL_TYPE, COL_CURRENT_STATION_ID},
 				COL_LOGIN + " = ? ",
 				new String[]{login},
 				null, null, null, null);
@@ -195,6 +223,17 @@ public class UserAdapter implements Adapter<User, Integer>{
 										cursor.getColumnIndex(COL_LASTNAME)));
 				user.setType(cursor.getString(
 										cursor.getColumnIndex(COL_TYPE)));
+				
+				if(cursor.getString(
+						cursor.getColumnIndex(COL_CURRENT_STATION_ID)) != null){
+						StationAdapter stationAdapter =
+								new StationAdapter(null);
+						stationAdapter.setDatabase(db);
+						
+						user.setCurrentStation(stationAdapter.get(
+							Integer.parseInt(cursor.getString(
+							cursor.getColumnIndex(COL_CURRENT_STATION_ID)))));
+					}
 			}
 			
 			if(helper != null)
