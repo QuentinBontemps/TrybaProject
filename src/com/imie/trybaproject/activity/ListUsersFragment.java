@@ -48,6 +48,7 @@ public class ListUsersFragment extends Fragment{
 		setHasOptionsMenu(true);
 		this.lv = (ListView) frag.findViewById(R.id.list);
 		
+		//getLoaderManager().restartLoader(0, null, getActivity());
 		
 		// Associated context menu
 		registerForContextMenu(lv);

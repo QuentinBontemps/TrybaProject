@@ -5,10 +5,14 @@ import com.imie.trybaproject.R.layout;
 import com.imie.trybaproject.db.ApplicationSQLiteOpenHelper;
 import com.imie.trybaproject.db.LogAdapter;
 import com.imie.trybaproject.db.ProductAdapter;
+import com.imie.trybaproject.db.UserAdapter;
 import com.imie.trybaproject.db.UserLogAdapter;
 import com.imie.trybaproject.model.Log;
 import com.imie.trybaproject.model.Product;
+import com.imie.trybaproject.model.Station;
+import com.imie.trybaproject.model.User;
 import com.imie.trybaproject.model.UserLog;
+import com.imie.trybaproject.model.ZoneType;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
@@ -73,7 +77,7 @@ public class ScanFragment extends Fragment {
 		
 		
 		Product product = new Product();
-		
+		int userId;
 		
 		// On récupère l'id
 		int idProductScan = Integer.valueOf(et_idProduct.getText().toString());
@@ -81,31 +85,61 @@ public class ScanFragment extends Fragment {
 		product = productAdapter.get(idProductScan);
 		if (product != null) // On a bien récupèré le produit
 		{
-			// On test ensuite si la version courrante est la bonnepreferences = getSharedPreferences("DEFAULT", Activity.MODE_PRIVATE);
-			
-			preferences = getActivity().getSharedPreferences("DEFAULT", Activity.MODE_PRIVATE);
-			int userLogId = 
-					Integer.parseInt(preferences.getString("CURRENT_USER_LOG_ID", "0"));
-			
-				if (userLogId == 0)
-				{
-					Toast.makeText(getActivity(), "User log Id = 0", 
-							Toast.LENGTH_LONG).show();
-				}else{
-					UserLogAdapter useLogAdapter = new UserLogAdapter(ASLOH);
-					UserLog userlog = useLogAdapter.get(userLogId);
-					
-					/*if (log != null)
+			// on test si le product est bien dans une station, et pas en attente dans un tampon
+			if (product.getCurrentTypeZone() == ZoneType.STATION)
+			{
+				
+				preferences = getActivity().getSharedPreferences("DEFAULT", Activity.MODE_PRIVATE);
+				
+				/* userId = 
+						Integer.parseInt(preferences.getString("CURRENT_USER_LOG_ID", "0"));*/
+				userId = 4;
+					if (userId == 0)
 					{
-						Toast.makeText(getActivity(), log.getZone().toString(), 
+						Toast.makeText(getActivity(), "User Id = 0", 
 								Toast.LENGTH_LONG).show();
 					}else{
-						Toast.makeText(getActivity(), "Cet id log n'existe pas ", 
-								Toast.LENGTH_LONG).show();
-					}	*/
-				}
+						UserAdapter userAdapter = new UserAdapter(ASLOH);
+						User user = userAdapter.get(userId);
+						
+						/*int resultatChangement = product.goToNextStation(
+													user.getCurrentStation());*/
+						Station s = new Station("maStation", 2);
+						s.setId(1);
+						int resultatChangement = product.goToNextStation(s);
+						switch (resultatChangement) {
+						case 0: 
+							Toast.makeText(getActivity(), 
+									"Le produit est dans un tampon", 
+									Toast.LENGTH_LONG).show();
+							break;
+						case 1:
+							ProductAdapter productAdapt = new ProductAdapter(ASLOH);
+							productAdapt.update(product);
+							
+							Toast.makeText(getActivity(), 
+							"Le produit est passé dans la prochaine station", 
+													Toast.LENGTH_LONG).show();						
+							break;
+						case 2:
+							Toast.makeText(getActivity(), 
+							"Le produit est passé dans le prochain tampon", 
+													Toast.LENGTH_LONG).show();						
+							break;
+						case 3:
+							Toast.makeText(getActivity(), 
+									"Le produit n'est pas dans la bonne station", 
+									Toast.LENGTH_LONG).show();
+							break;
+						default:
+							break;
+						}
+					}
+			}else{
+				Toast.makeText(getActivity(), "Le produit est dans un tampon", 
+						Toast.LENGTH_LONG).show();
+			}
 		
-			
 		}else{
 			Toast.makeText(getActivity(), "Cet id n'existe pas ", 
 					Toast.LENGTH_LONG).show();

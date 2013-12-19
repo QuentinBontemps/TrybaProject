@@ -1,5 +1,9 @@
 package com.imie.trybaproject.model;
 
+import android.app.Application;
+
+import com.imie.trybaproject.db.ApplicationSQLiteOpenHelper;
+
 public class Product {
 	
 	private long id;
@@ -54,6 +58,35 @@ public class Product {
 
 	public void setCurrentZone(Zone currentZone) {
 		this.currentZone = currentZone;
+	}
+	
+	
+	public int goToNextStation(Station station)
+	{
+		int result = 0;
+		Station myStation;
+		int nextOrder = 0;
+		
+		// On va vérifier que la station passé en paramètre est bien la prochaine dans l'ordre
+		if (this.currentTypeZone == ZoneType.STATION)
+		{
+			
+			myStation = (Station) this.currentZone;
+			nextOrder = myStation.getOrder() + 1;
+			if (nextOrder == station.getOrder())
+			{
+				// On peut passer la station dans la prochaine station
+				this.setCurrentZone(station);
+				return 1;
+			}else{
+				return 2;
+			}
+			
+			
+		}
+		
+		return result;
+		
 	}
 	
 }

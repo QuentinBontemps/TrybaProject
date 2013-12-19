@@ -50,7 +50,7 @@ public class ProductAdapter implements Adapter<Product, Integer> {
 			values.put(COL_NAME, item.getName());
 			values.put(COL_ORDER_ID,item.getOrder().getId());
 			values.put(COL_CURRENT_ZONE_ID,item.getCurrentZone().getId());
-			values.put(COL_CURRENT_TYPE_ZONE,item.getCurrentTypeZone().name());
+			values.put(COL_CURRENT_TYPE_ZONE,item.getCurrentTypeZone().toString());
 			
 			i = db.insert(TABLE, null, values);
 			if(helper != null)			
@@ -67,7 +67,7 @@ public class ProductAdapter implements Adapter<Product, Integer> {
 			values.put(COL_NAME, item.getName());
 			values.put(COL_ORDER_ID,item.getOrder().getId());
 			values.put(COL_CURRENT_ZONE_ID,item.getCurrentZone().getId());
-			values.put(COL_CURRENT_TYPE_ZONE,item.getCurrentTypeZone().name());
+			values.put(COL_CURRENT_TYPE_ZONE,item.getCurrentTypeZone().toString());
 			
 			i = db.update(TABLE, values, COL_ID + " = ?",
 					new String[] { String.valueOf(item.getId())});
@@ -92,7 +92,7 @@ public class ProductAdapter implements Adapter<Product, Integer> {
 		Product product = null;
 		if(this.db != null){
 			Cursor cursor = db.query(TABLE,
-					new String[] {COL_ID, COL_NAME, COL_ORDER_ID}, 
+					new String[] {COL_ID, COL_NAME, COL_CURRENT_TYPE_ZONE, COL_CURRENT_ZONE_ID,COL_ORDER_ID}, 
 					COL_ID + " = ? ",
 					new String[] {String.valueOf(id)},null,null,null,null);
 						
@@ -106,6 +106,7 @@ public class ProductAdapter implements Adapter<Product, Integer> {
 											cursor.getColumnIndex(COL_NAME)));
 				ClientOrderAdapter orderAdapter = new ClientOrderAdapter(null);
 				orderAdapter.setDatabase(db);
+				
 				product.setOrder(orderAdapter.get(cursor.getInt(
 										cursor.getColumnIndex(COL_ORDER_ID))));
 				product.setCurrentTypeZone(
@@ -119,7 +120,7 @@ public class ProductAdapter implements Adapter<Product, Integer> {
 						stationAdapter.setDatabase(db);
 						product.setCurrentZone(stationAdapter.get(
 								cursor.getInt(
-								cursor.getColumnIndex(COL_CURRENT_ZONE_ID))));
+								cursor.getColumnIndex(COL_CURRENT_ZONE_ID)))); // récupère 0
 						break;
 					case TAMPON : // On recherche le tampon
 						TamponAdapter tamponAdapter = new TamponAdapter(null);

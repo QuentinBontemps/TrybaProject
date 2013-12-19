@@ -124,7 +124,7 @@ public class AddOrderFragment extends Fragment {
 		productAdapt.setDatabase(ASLOH.getDb());
 		
 		long idResultatInsertion = clientOrderAdapt.insert(clientOrder);
-		
+		clientOrder.setId(idResultatInsertion);
 		
 		
 		
@@ -139,7 +139,7 @@ public class AddOrderFragment extends Fragment {
 			
 			product.setOrder(clientOrder);
 			product.setCurrentTypeZone(ZoneType.STATION);
-			Station z = new Station("mastation");
+			Station z = new Station("mastation",1);
 			z.setId(1);
 			
 			product.setCurrentZone(z);

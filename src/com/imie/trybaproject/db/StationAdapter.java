@@ -13,7 +13,7 @@ public class StationAdapter implements Adapter<Station, Integer>{
 	public static final String TABLE = "station";
 	public static final String COL_ID = "_id";
 	public static final String COL_NAME = "name";
-	public static final String COL_ORDRE = "ordre";
+	public static final String COL_ORDER = "stationOrder";
 	public static final String COL_VISIBLE = "visible";
 	public static final String COL_TAMPON_ID = "tamponId";
 	
@@ -36,7 +36,7 @@ public class StationAdapter implements Adapter<Station, Integer>{
 		return "CREATE TABLE " + TABLE + "( "
 				+ COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
 				+ COL_NAME + " TEXT NOT NULL,"
-				+ COL_ORDRE + " INTEGER NOT NULL,"
+				+ COL_ORDER + " INTEGER NOT NULL,"
 				+ COL_VISIBLE + " BOOLEAN NOT NULL,"
 				+ COL_TAMPON_ID + " INTEGER)";
 	}
@@ -47,7 +47,7 @@ public class StationAdapter implements Adapter<Station, Integer>{
 		if(this.db != null){
 			ContentValues values = new ContentValues();
 			values.put(COL_NAME, item.getName());
-			values.put(COL_ORDRE, item.getOrdre());
+			values.put(COL_ORDER, item.getOrder());
 			values.put(COL_VISIBLE, item.isVisible());
 			if(item.getTampon() != null){
 				values.put(COL_TAMPON_ID, item.getTampon().getId());
@@ -65,7 +65,8 @@ public class StationAdapter implements Adapter<Station, Integer>{
 		if(this.db != null){
 			ContentValues values = new ContentValues();
 			values.put(COL_NAME, item.getName());
-			values.put(COL_ORDRE, item.getOrdre());
+			values.put(COL_ORDER, item.getOrder());
+			values.put(COL_VISIBLE, item.isVisible());
 			if(item.getTampon() != null){
 				values.put(COL_TAMPON_ID, item.getTampon().getId());
 			}
@@ -97,7 +98,8 @@ public class StationAdapter implements Adapter<Station, Integer>{
 		Station station = null;
 		if(this.db != null){
 			Cursor cursor = db.query(TABLE,
-						new String[]{COL_ID, COL_NAME, COL_TAMPON_ID}, 
+						new String[]{COL_ID, COL_NAME, 
+						COL_ORDER, COL_VISIBLE, COL_TAMPON_ID}, 
 						COL_ID + " = ? ", 
 						new String[]{String.valueOf(id)}, null, null, null);
 			
@@ -107,8 +109,10 @@ public class StationAdapter implements Adapter<Station, Integer>{
 				station.setId(cursor.getInt(cursor.getColumnIndex(COL_ID)));
 				station.setName(cursor.getString(
 											cursor.getColumnIndex(COL_NAME)));
-				station.setOrdre(cursor.getInt(
-											cursor.getColumnIndex(COL_ORDRE)));
+				station.setOrder(cursor.getInt(
+											cursor.getColumnIndex(COL_ORDER)));
+				station.setVisible(cursor.getInt(
+						cursor.getColumnIndex(COL_VISIBLE)));
 				TamponAdapter tamponAdapter = new TamponAdapter(null);
 				tamponAdapter.setDatabase(db);
 				station.setTampon(tamponAdapter.get(cursor.getInt(
@@ -135,8 +139,8 @@ public class StationAdapter implements Adapter<Station, Integer>{
 										cursor.getColumnIndex(COL_ID)));
 					station.setName(cursor.getString(
 										cursor.getColumnIndex(COL_NAME)));
-					station.setOrdre(cursor.getInt(
-										cursor.getColumnIndex(COL_ORDRE)));
+					station.setOrder(cursor.getInt(
+										cursor.getColumnIndex(COL_ORDER)));
 					TamponAdapter tamponAdapter = new TamponAdapter(null);
 					tamponAdapter.setDatabase(db);
 					station.setTampon(tamponAdapter.get(cursor.getInt(
@@ -157,7 +161,7 @@ public class StationAdapter implements Adapter<Station, Integer>{
 		Cursor cursor = null;
 		if(db != null){
 			cursor = db.query(TABLE,
-					new String[]{COL_ID, COL_NAME, COL_TAMPON_ID},
+					new String[]{COL_ID, COL_NAME, COL_ORDER, COL_VISIBLE, COL_TAMPON_ID},
 					null, null, null, null, null);
 		}
 		return cursor;

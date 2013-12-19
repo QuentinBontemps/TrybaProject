@@ -4,7 +4,7 @@ public class Station extends Zone{
 
 	private Tampon tampon;
 	private boolean visible;
-	private int ordre;
+	private int order;
 	
 	
 
@@ -19,7 +19,7 @@ public class Station extends Zone{
 	
 	public Station(String name, int ordre) {
 		super(name);
-		this.ordre = ordre;
+		this.order = ordre;
 		this.visible = true;
 	}
 
@@ -33,12 +33,12 @@ public class Station extends Zone{
 		return visible;
 	}
 	
-	public int getOrdre() {
-		return ordre;
+	public int getOrder() {
+		return order;
 	}
 
-	public void setOrdre(int ordre) {
-		this.ordre = ordre;
+	public void setOrder(int order) {
+		this.order = order;
 	}
 
 	public void setVisible(boolean visible) {
@@ -86,5 +86,14 @@ public class Station extends Zone{
 			throw new Exception("Il manque des paramètre dans la chaine de " +
 					"la station");
 		}
+	}
+	
+	public void setVisible(int i)
+	{
+		if (i == 1)
+		{
+			this.visible = true;
+		}else
+			this.visible = false;
 	}
 }
