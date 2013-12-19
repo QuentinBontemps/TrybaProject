@@ -8,6 +8,7 @@ public class User {
 	private String firstname;
 	private String lastname;
 	private String type;
+	private Zone currentStation;
 
 	public User(){
 		
@@ -60,6 +61,14 @@ public class User {
 		this.type = type;
 	}
 	
+	public Zone getCurrentStation() {
+		return currentStation;
+	}
+
+	public void setCurrentStation(Station currentStation) {
+		this.currentStation = currentStation;
+	}
+
 	public String getSerializableString(){
 		StringBuilder sb = new StringBuilder();
 		String separator = "~";
@@ -75,19 +84,24 @@ public class User {
 		sb.append(getLastname());
 		sb.append(separator);
 		sb.append(getType());
+		sb.append(separator);
+		sb.append(currentStation.getSerializableString());
 		
 		return sb.toString();
 	}
 	
-	public void setUserWithSerializableString(String str) throws Exception{
+	public void setWithSerializableString(String str) throws Exception{
 		String[] userStr = str.split("~");
-		if(userStr.length == 6 ){
+		if(userStr.length == 8 ){
 			this.setId(Integer.parseInt(userStr[0]));
 			this.setLogin(userStr[1]);
 			this.setPassword(userStr[2]);
 			this.setFirstname(userStr[3]);
 			this.setLastname(userStr[4]);
 			this.setType(userStr[5]);
+			
+			
+			
 			
 		}else{
 			throw new Exception("Il manque des paramètre dans la chaine de " +

@@ -55,7 +55,7 @@ public class HomeActivity extends FragmentActivity {
 		
 		try {
 			if(userString != "")
-				currentUser.setUserWithSerializableString(userString);			
+				currentUser.setWithSerializableString(userString);			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

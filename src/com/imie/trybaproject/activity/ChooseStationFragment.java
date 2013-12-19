@@ -68,27 +68,6 @@ public class ChooseStationFragment extends Fragment {
 		View fragment = inflater.inflate(R.layout.choose_station_fragment,
 															container, false);
 		
-		// View object
-		Button buttonTest = (Button) fragment.findViewById(R.id.button1);
-		Button buttonTest1 = (Button) fragment.findViewById(R.id.Button01);
-		
-		buttonTest.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				gestionUserButton();
-			}
-		});		
-		buttonTest1.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				gestionAddCommandeButton();
-			}
-		});
-		
 		SharedPreferences preferences = getActivity().
 				getSharedPreferences("DEFAULT", Activity.MODE_PRIVATE);
 		
@@ -96,7 +75,7 @@ public class ChooseStationFragment extends Fragment {
 					
 		if(!userString.equals("")){
 			try {
-				currentUser.setUserWithSerializableString(userString);
+				currentUser.setWithSerializableString(userString);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -136,6 +115,24 @@ public class ChooseStationFragment extends Fragment {
 				   SharedPreferences preferences = getActivity().
 							getSharedPreferences("DEFAULT", Activity.MODE_PRIVATE);
 					SharedPreferences.Editor editor = preferences.edit();
+					
+					
+					String currentUserString = 
+							preferences.getString("CURRENT_USER", "");
+					
+					if(!currentUserString.equals("")){
+						try {
+							currentUser.setWithSerializableString(
+									currentUserString);
+							currentUser.setCurrentStation(
+									(Station)selectStation.getSelectedItem());
+							editor.putString("CURRENT_USER", 
+									currentUser.getSerializableString());
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					}
+										
 					editor.putString("CURRENT_USER_LOG_ID", 
 							String.valueOf(userLogId));
 					editor.commit();
@@ -146,8 +143,6 @@ public class ChooseStationFragment extends Fragment {
 					Toast.makeText(getActivity(), "Station déjà occupée", 
 							Toast.LENGTH_SHORT).show();
 				}
-				
-				
 			}
 		});
 		
@@ -189,9 +184,7 @@ public class ChooseStationFragment extends Fragment {
 			super.onPostExecute(result);
 			stationsArrayAdapter.addAll(result);
 			progress.dismiss();
-		}
-	    
-	
+		}	
 	}
 	
 	private void updateMenuList(){
@@ -200,18 +193,6 @@ public class ChooseStationFragment extends Fragment {
 		activity.getItems().add(0, activity.getStationChange());
 		activity.getAdapter().notifyDataSetChanged();
 	}
-	
-	private void gestionUserButton()
-    {
-    	Intent intent = new Intent(getActivity(), ListUsersActivity.class);
-    	getActivity().startActivity(intent);
-    }
-    
-    public void gestionAddCommandeButton()
-    {
-    	Intent intent = new Intent(getActivity(), ListOrdersActivity.class);
-    	getActivity().startActivity(intent);
-    }
-    
+ 
     
 }
