@@ -161,11 +161,8 @@ public class StationAdapter implements Adapter<Station, Integer>{
 		Cursor cursor = null;
 		if(db != null){
 			cursor = db.query(TABLE,
-<<<<<<< HEAD
-					new String[]{COL_ID, COL_NAME, COL_ORDER, COL_VISIBLE, COL_TAMPON_ID},
-=======
-					new String[]{COL_ID, COL_NAME, COL_ORDRE, COL_VISIBLE, COL_TAMPON_ID},
->>>>>>> master
+					new String[]{COL_ID, COL_NAME, COL_ORDER, 
+					COL_VISIBLE, COL_TAMPON_ID},
 					null, null, null, null, null);
 		}
 		return cursor;

@@ -91,50 +91,50 @@ public class ScanFragment extends Fragment {
 				
 				preferences = getActivity().getSharedPreferences("DEFAULT", Activity.MODE_PRIVATE);
 				
-				/* userId = 
-						Integer.parseInt(preferences.getString("CURRENT_USER_LOG_ID", "0"));*/
-				userId = 4;
-					if (userId == 0)
-					{
-						Toast.makeText(getActivity(), "User Id = 0", 
+				 userId = 
+						Integer.parseInt(preferences.getString("CURRENT_USER_LOG_ID", "0"));
+				 User user = new User();
+				 String userString = preferences.getString("CURRENT_USER","");
+				 try {
+						if(userString != "")
+							user.setWithSerializableString(userString);			
+					
+					int resultatChangement = product.goToNextStation(
+												user.getCurrentStation());
+					/*Station s = new Station("maStation", 2);
+					s.setId(1);
+					int resultatChangement = product.goToNextStation(s);*/
+					switch (resultatChangement) {
+					case 0: 
+						Toast.makeText(getActivity(), 
+								"Le produit est dans un tampon", 
 								Toast.LENGTH_LONG).show();
-					}else{
-						UserAdapter userAdapter = new UserAdapter(ASLOH);
-						User user = userAdapter.get(userId);
+						break;
+					case 1:
+						ProductAdapter productAdapt = new ProductAdapter(ASLOH);
+						productAdapt.update(product);
 						
-						/*int resultatChangement = product.goToNextStation(
-													user.getCurrentStation());*/
-						Station s = new Station("maStation", 2);
-						s.setId(1);
-						int resultatChangement = product.goToNextStation(s);
-						switch (resultatChangement) {
-						case 0: 
-							Toast.makeText(getActivity(), 
-									"Le produit est dans un tampon", 
-									Toast.LENGTH_LONG).show();
-							break;
-						case 1:
-							ProductAdapter productAdapt = new ProductAdapter(ASLOH);
-							productAdapt.update(product);
-							
-							Toast.makeText(getActivity(), 
-							"Le produit est passé dans la prochaine station", 
-													Toast.LENGTH_LONG).show();						
-							break;
-						case 2:
-							Toast.makeText(getActivity(), 
-							"Le produit est passé dans le prochain tampon", 
-													Toast.LENGTH_LONG).show();						
-							break;
-						case 3:
-							Toast.makeText(getActivity(), 
-									"Le produit n'est pas dans la bonne station", 
-									Toast.LENGTH_LONG).show();
-							break;
-						default:
-							break;
-						}
+						Toast.makeText(getActivity(), 
+						"Le produit est passé dans la prochaine station", 
+												Toast.LENGTH_LONG).show();						
+						break;
+					case 2:
+						Toast.makeText(getActivity(), 
+						"Le produit est passé dans le prochain tampon", 
+												Toast.LENGTH_LONG).show();						
+						break;
+					case 3:
+						Toast.makeText(getActivity(), 
+								"Le produit n'est pas dans la bonne station", 
+								Toast.LENGTH_LONG).show();
+						break;
+					default:
+						break;
 					}
+				 } catch (Exception e) {
+					e.printStackTrace();
+				}
+					
 			}else{
 				Toast.makeText(getActivity(), "Le produit est dans un tampon", 
 						Toast.LENGTH_LONG).show();

@@ -79,7 +79,7 @@ public class Product {
 				this.setCurrentZone(station);
 				return 1;
 			}else{
-				return 2;
+				return 3;
 			}
 			
 			

@@ -81,7 +81,7 @@ public class Station extends Zone{
 		
 		sb.append(super.getSerializableString());
 		sb.append(separator);
-		sb.append(getOrdre());
+		sb.append(getOrder());
 		sb.append(separator);
 		sb.append(isVisible());
 		if(getTampon() != null){
@@ -106,7 +106,7 @@ public class Station extends Zone{
 		if(stationStr.length >= this.getSerializableStringLength()){
 			if(stationStr.length >= this.getSerializableStringLength()){
 				super.setWithSerializableString(str);
-				setOrdre(Integer.parseInt(stationStr[2]));
+				setOrder(Integer.parseInt(stationStr[2]));
 				setVisible(Boolean.parseBoolean(stationStr[3]));
 			}
 			
