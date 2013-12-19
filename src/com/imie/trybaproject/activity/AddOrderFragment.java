@@ -136,12 +136,11 @@ public class AddOrderFragment extends Fragment {
 		Product product = new Product();
 		for (int i = 0; i < clientOrder.getQuantity(); i++) {
 			// On créé autant de produit que nécessaire
-			product.setName(clientOrder.getCustomer() + " - " + 
-					clientOrder.getTypeProduct() + " - " + 
+			product.setName(clientOrder.getTypeProduct() + " - " + 
 					clientOrder.getTypeMaterial());
 			
 			product.setOrder(clientOrder);
-			product.setCurrentTypeZone(ZoneType.STATION);
+			product.setCurrentTypeZone(ZoneType.TAMPON);
 			
 			Zone z = stationAdapter.getByOrder(1).getTampon();
 			product.setCurrentZone(z);

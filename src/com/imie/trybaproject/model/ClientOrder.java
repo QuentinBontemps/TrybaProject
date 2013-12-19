@@ -1,8 +1,15 @@
 package com.imie.trybaproject.model;
 
+import java.io.Serializable;
 
-public class ClientOrder {
 
+public class ClientOrder implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8441716286864623409L;
+	
 	private long id;
 	private String customer;
 	private String typeProduct;

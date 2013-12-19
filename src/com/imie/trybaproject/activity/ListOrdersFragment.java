@@ -4,8 +4,10 @@ import com.imie.trybaproject.R;
 import com.imie.trybaproject.db.ApplicationSQLiteOpenHelper;
 import com.imie.trybaproject.db.ClientOrderAdapter;
 import com.imie.trybaproject.db.UserAdapter;
+import com.imie.trybaproject.model.ClientOrder;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -14,6 +16,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -23,6 +27,7 @@ public class ListOrdersFragment extends Fragment{
 	ListView lv;
 	OrdersCursorAdapter listCursor;
 	ClientOrderAdapter clientOrderAdapt;
+	Cursor orders;
 	
 	
 	@Override
@@ -39,13 +44,45 @@ public class ListOrdersFragment extends Fragment{
 						Integer.parseInt(getString(R.string.database_version)));
 		clientOrderAdapt = new ClientOrderAdapter(ASLOH);
 		
-		this.lv = (ListView) fragment.findViewById(R.id.list_orders);
-		listCursor = new OrdersCursorAdapter(getActivity(), 
-				clientOrderAdapt.getAllWithCursor());
+		lv = (ListView) fragment.findViewById(R.id.list_orders);
+	
+		orders = clientOrderAdapt.getAllWithCursor();
+		
+		listCursor = new OrdersCursorAdapter(getActivity(), orders);
 		
 		setHasOptionsMenu(true);
 		lv.setAdapter(listCursor); 
-		
+		lv.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> adapterView, View view, 
+					int position, long id) {
+				orders.moveToFirst();
+				orders.moveToPosition(position);
+				
+				ClientOrder order = new ClientOrder();
+				
+				order.setId(orders.getInt(
+				  orders.getColumnIndex(ClientOrderAdapter.COL_ID)));
+				order.setCustomer(orders.getString(
+				  orders.getColumnIndex(ClientOrderAdapter.COL_CUSTOMER)));
+				order.setTypeProduct(orders.getString(
+				  orders.getColumnIndex(ClientOrderAdapter.COL_TYPE_PRODUCT)));
+				order.setTypeMaterial(orders.getString(
+				  orders.getColumnIndex(ClientOrderAdapter.COL_TYPE_MATERIAL)));
+				order.setQuantity(orders.getInt(
+				  orders.getColumnIndex(ClientOrderAdapter.COL_QUANTITY)));
+				
+				Intent intent = new Intent(getActivity(), 
+						DetailOrderActivity.class);
+				
+				Bundle b = new Bundle();
+				b.putSerializable("order", order);
+				intent.putExtras(b);
+				
+				getActivity().startActivity(intent);
+			}
+		});
 		
 		return fragment;
 		
@@ -85,9 +122,8 @@ public class ListOrdersFragment extends Fragment{
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
-		
-		listCursor = new OrdersCursorAdapter(getActivity(), 
-				clientOrderAdapt.getAllWithCursor());
+		orders = clientOrderAdapt.getAllWithCursor();
+		listCursor = new OrdersCursorAdapter(getActivity(), orders);
 		lv.setAdapter(listCursor);
 		this.lv.postInvalidate();
 

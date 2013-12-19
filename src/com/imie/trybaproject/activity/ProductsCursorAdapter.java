@@ -1,7 +1,9 @@
 package com.imie.trybaproject.activity;
 
 import com.imie.trybaproject.R;
+import com.imie.trybaproject.db.ApplicationSQLiteOpenHelper;
 import com.imie.trybaproject.db.ProductAdapter;
+import com.imie.trybaproject.model.Product;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -22,8 +24,17 @@ public class ProductsCursorAdapter extends CursorAdapter {
 		TextView txtName = (TextView) view.findViewById(R.id.txtName);
 		TextView txtStatus = (TextView) view.findViewById(R.id.txtStatus);
 		
-		txtName.setText(c.getString(c.getColumnIndex(ProductAdapter.COL_NAME)));
-		
+		ApplicationSQLiteOpenHelper helper = new ApplicationSQLiteOpenHelper(
+				ctx, ctx.getString(R.string.database_name), null,
+				Integer.parseInt(ctx.getString(R.string.database_version)));
+		ProductAdapter productAdapter = new ProductAdapter(helper);
+
+		Product p = productAdapter.get(c.getInt(c
+				.getColumnIndex(ProductAdapter.COL_ID)));
+
+		txtName.setText(p.getName() + "   REF : " + p.getId());
+		txtStatus.setText("Emplacement : " + p.getCurrentZone().getName());
+
 	}
 
 	@Override
