@@ -13,6 +13,8 @@ public class StationAdapter implements Adapter<Station, Integer>{
 	public static final String TABLE = "station";
 	public static final String COL_ID = "_id";
 	public static final String COL_NAME = "name";
+	public static final String COL_ORDRE = "ordre";
+	public static final String COL_VISIBLE = "visible";
 	public static final String COL_TAMPON_ID = "tamponId";
 	
 	private SQLiteDatabase db;
@@ -34,6 +36,8 @@ public class StationAdapter implements Adapter<Station, Integer>{
 		return "CREATE TABLE " + TABLE + "( "
 				+ COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
 				+ COL_NAME + " TEXT NOT NULL,"
+				+ COL_ORDRE + " INTEGER NOT NULL,"
+				+ COL_VISIBLE + " BOOLEAN NOT NULL,"
 				+ COL_TAMPON_ID + " INTEGER)";
 	}
 
@@ -43,6 +47,8 @@ public class StationAdapter implements Adapter<Station, Integer>{
 		if(this.db != null){
 			ContentValues values = new ContentValues();
 			values.put(COL_NAME, item.getName());
+			values.put(COL_ORDRE, item.getOrdre());
+			values.put(COL_VISIBLE, item.isVisible());
 			if(item.getTampon() != null){
 				values.put(COL_TAMPON_ID, item.getTampon().getId());
 			}
@@ -59,6 +65,7 @@ public class StationAdapter implements Adapter<Station, Integer>{
 		if(this.db != null){
 			ContentValues values = new ContentValues();
 			values.put(COL_NAME, item.getName());
+			values.put(COL_ORDRE, item.getOrdre());
 			if(item.getTampon() != null){
 				values.put(COL_TAMPON_ID, item.getTampon().getId());
 			}
@@ -100,10 +107,13 @@ public class StationAdapter implements Adapter<Station, Integer>{
 				station.setId(cursor.getInt(cursor.getColumnIndex(COL_ID)));
 				station.setName(cursor.getString(
 											cursor.getColumnIndex(COL_NAME)));
+				station.setOrdre(cursor.getInt(
+											cursor.getColumnIndex(COL_ORDRE)));
 				TamponAdapter tamponAdapter = new TamponAdapter(null);
 				tamponAdapter.setDatabase(db);
 				station.setTampon(tamponAdapter.get(cursor.getInt(
 									   	cursor.getColumnIndex(COL_TAMPON_ID))));	
+				
 			}
 			if(helper != null)			
 				db.close();
@@ -125,6 +135,8 @@ public class StationAdapter implements Adapter<Station, Integer>{
 										cursor.getColumnIndex(COL_ID)));
 					station.setName(cursor.getString(
 										cursor.getColumnIndex(COL_NAME)));
+					station.setOrdre(cursor.getInt(
+										cursor.getColumnIndex(COL_ORDRE)));
 					TamponAdapter tamponAdapter = new TamponAdapter(null);
 					tamponAdapter.setDatabase(db);
 					station.setTampon(tamponAdapter.get(cursor.getInt(

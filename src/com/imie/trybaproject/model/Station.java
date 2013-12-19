@@ -5,21 +5,46 @@ import java.util.ArrayList;
 public class Station extends Zone{
 
 	private Tampon tampon;
+	private boolean visible;
+	private int ordre;
 	
+	
+
 	public Station(){
 		
 	}
 	
 	public Station(String name) {
 		super(name);
+		this.visible = true;
+	}
+	
+	public Station(String name, int ordre) {
+		super(name);
+		this.ordre = ordre;
+		this.visible = true;
 	}
 
 	public Tampon getTampon() {
 		return tampon;
 	}
-
 	public void setTampon(Tampon tampon) {
 		this.tampon = tampon;
+	}
+	public boolean isVisible() {
+		return visible;
+	}
+	
+	public int getOrdre() {
+		return ordre;
+	}
+
+	public void setOrdre(int ordre) {
+		this.ordre = ordre;
+	}
+
+	public void setVisible(boolean visible) {
+		this.visible = visible;
 	}
 	
 	public void setTamponWithSerializableString(String str) throws Exception{

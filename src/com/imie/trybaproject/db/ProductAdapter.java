@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.imie.trybaproject.model.Product;
 import com.imie.trybaproject.model.User;
+import com.imie.trybaproject.model.ZoneType;
 
 public class ProductAdapter implements Adapter<Product, Integer> {
 
@@ -15,6 +16,8 @@ public class ProductAdapter implements Adapter<Product, Integer> {
 	public static String COL_ID = "_id";
 	public static String COL_NAME = "name";
 	public static String COL_ORDER_ID = "orderId";
+	public static String COL_CURRENT_ZONE_ID = "currentZone";
+	public static String COL_CURRENT_TYPE_ZONE = "currentTypeZone";
 	
 	private ApplicationSQLiteOpenHelper helper;
 	private SQLiteDatabase db;
@@ -34,7 +37,9 @@ public class ProductAdapter implements Adapter<Product, Integer> {
 		return "CREATE TABLE " 	+ TABLE + "( "
 				+ COL_ID 		+ " INTEGER PRIMARY KEY AUTOINCREMENT, "
 				+ COL_NAME 		+ " TEXT NOT NULL,"
-				+ COL_ORDER_ID	+ " INTEGER NOT NULL)";
+				+ COL_ORDER_ID	+ " INTEGER NOT NULL,"
+				+ COL_CURRENT_ZONE_ID	+ " INTEGER NOT NULL,"
+				+ COL_CURRENT_TYPE_ZONE	+ " TEXT NOT NULL)";
 	}
 
 	@Override
@@ -44,6 +49,8 @@ public class ProductAdapter implements Adapter<Product, Integer> {
 			ContentValues values = new ContentValues();
 			values.put(COL_NAME, item.getName());
 			values.put(COL_ORDER_ID,item.getOrder().getId());
+			values.put(COL_CURRENT_ZONE_ID,item.getCurrentZone().getId());
+			values.put(COL_CURRENT_TYPE_ZONE,item.getCurrentTypeZone().name());
 			
 			i = db.insert(TABLE, null, values);
 			if(helper != null)			
@@ -59,6 +66,8 @@ public class ProductAdapter implements Adapter<Product, Integer> {
 			ContentValues values = new ContentValues();
 			values.put(COL_NAME, item.getName());
 			values.put(COL_ORDER_ID,item.getOrder().getId());
+			values.put(COL_CURRENT_ZONE_ID,item.getCurrentZone().getId());
+			values.put(COL_CURRENT_TYPE_ZONE,item.getCurrentTypeZone().name());
 			
 			i = db.update(TABLE, values, COL_ID + " = ?",
 					new String[] { String.valueOf(item.getId())});
@@ -99,6 +108,33 @@ public class ProductAdapter implements Adapter<Product, Integer> {
 				orderAdapter.setDatabase(db);
 				product.setOrder(orderAdapter.get(cursor.getInt(
 										cursor.getColumnIndex(COL_ORDER_ID))));
+				product.setCurrentTypeZone(
+						ZoneType.initProductTypeByString(cursor.getString(
+						cursor.getColumnIndex(COL_CURRENT_TYPE_ZONE))));
+				
+				switch (product.getCurrentTypeZone()) {
+					case STATION : // On recherche la station
+						StationAdapter stationAdapter = 
+													new StationAdapter(null);
+						stationAdapter.setDatabase(db);
+						product.setCurrentZone(stationAdapter.get(
+								cursor.getInt(
+								cursor.getColumnIndex(COL_CURRENT_ZONE_ID))));
+						break;
+					case TAMPON : // On recherche le tampon
+						TamponAdapter tamponAdapter = new TamponAdapter(null);
+						tamponAdapter.setDatabase(db);
+						product.setCurrentZone(tamponAdapter.get(
+								cursor.getInt(
+								cursor.getColumnIndex(COL_CURRENT_ZONE_ID))));
+						break;
+					default:
+						break;
+					
+				}
+					
+						
+				
 			}
 			if(helper != null)			
 				db.close();
@@ -125,7 +161,30 @@ public class ProductAdapter implements Adapter<Product, Integer> {
 					orderAdapter.setDatabase(db);
 					product.setOrder(orderAdapter.get(cursor.getInt(
 										cursor.getColumnIndex(COL_ORDER_ID))));
+					product.setCurrentTypeZone(
+							ZoneType.initProductTypeByString(cursor.getString(
+							cursor.getColumnIndex(COL_CURRENT_TYPE_ZONE))));
 					
+					switch (product.getCurrentTypeZone()) {
+					case STATION : // On recherche la station
+						StationAdapter stationAdapter = 
+													new StationAdapter(null);
+						stationAdapter.setDatabase(db);
+						product.setCurrentZone(stationAdapter.get(
+								cursor.getInt(
+								cursor.getColumnIndex(COL_CURRENT_ZONE_ID))));
+						break;
+					case TAMPON : // On recherche le tampon
+						TamponAdapter tamponAdapter = new TamponAdapter(null);
+						tamponAdapter.setDatabase(db);
+						product.setCurrentZone(tamponAdapter.get(
+								cursor.getInt(
+								cursor.getColumnIndex(COL_CURRENT_ZONE_ID))));
+						break;
+					default:
+						break;
+					
+				}
 					products.add(product);
 				} while (cursor.moveToNext());
 			}
@@ -175,7 +234,30 @@ public class ProductAdapter implements Adapter<Product, Integer> {
 					orderAdapter.setDatabase(db);
 					product.setOrder(orderAdapter.get(cursor.getInt(
 										cursor.getColumnIndex(COL_ORDER_ID))));
+					product.setCurrentTypeZone(
+							ZoneType.initProductTypeByString(cursor.getString(
+							cursor.getColumnIndex(COL_CURRENT_TYPE_ZONE))));
 					
+					switch (product.getCurrentTypeZone()) {
+					case STATION : // On recherche la station
+						StationAdapter stationAdapter = 
+													new StationAdapter(null);
+						stationAdapter.setDatabase(db);
+						product.setCurrentZone(stationAdapter.get(
+								cursor.getInt(
+								cursor.getColumnIndex(COL_CURRENT_ZONE_ID))));
+						break;
+					case TAMPON : // On recherche le tampon
+						TamponAdapter tamponAdapter = new TamponAdapter(null);
+						tamponAdapter.setDatabase(db);
+						product.setCurrentZone(tamponAdapter.get(
+								cursor.getInt(
+								cursor.getColumnIndex(COL_CURRENT_ZONE_ID))));
+						break;
+					default:
+						break;
+					
+				}
 					products.add(product);
 				} while (cursor.moveToNext());
 			}

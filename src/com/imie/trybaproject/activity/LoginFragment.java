@@ -53,11 +53,11 @@ public class LoginFragment extends Fragment{
 				UserType.OPERATOR.name())); 
 		
 		StationAdapter sA = new StationAdapter(ASLOH);
-		sA.insert(new Station("s1"));
+		sA.insert(new Station("s1",1));
 		StationAdapter sA2 = new StationAdapter(ASLOH);
-		sA2.insert(new Station("s2"));
+		sA2.insert(new Station("s2",1));
 		StationAdapter sA3 = new StationAdapter(ASLOH);
-		sA3.insert(new Station("s3"));
+		sA3.insert(new Station("s3",1));
 		
 		// View objects
 		Button btnValidate = (Button) frag.findViewById(R.id.log_BTN_validate);

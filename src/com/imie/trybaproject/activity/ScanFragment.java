@@ -2,23 +2,116 @@ package com.imie.trybaproject.activity;
 
 import com.imie.trybaproject.R;
 import com.imie.trybaproject.R.layout;
+import com.imie.trybaproject.db.ApplicationSQLiteOpenHelper;
+import com.imie.trybaproject.db.LogAdapter;
+import com.imie.trybaproject.db.ProductAdapter;
+import com.imie.trybaproject.db.UserLogAdapter;
+import com.imie.trybaproject.model.Log;
+import com.imie.trybaproject.model.Product;
+import com.imie.trybaproject.model.UserLog;
 
+import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 public class ScanFragment extends Fragment {
 
+	EditText et_idProduct;
+	Button btn_validate;
+	SharedPreferences preferences;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		
 		View fragment = inflater.inflate(R.layout.
 				fragment_scan,container, false);
-		// TODO Auto-generated method stub
+		
+		// View objects
+		et_idProduct = (EditText) fragment.findViewById(R.id.scan_ET_idProduit);
+		btn_validate = (Button) fragment.findViewById(R.id.scan_btn_validate);
+		
+		// Binding action
+		btn_validate.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				validateAction();
+				
+			}
+		});
+		
 		return fragment;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	private int validateAction()
+	{
+		int result = 0;
+		// On test si le produit existe
+		// On récupère sa station courrante
+		// On vérifie si sa station courrante permet de passer dans la station en cours
+		// si oui on passe dans la bonne station
+		
+		ApplicationSQLiteOpenHelper ASLOH = 
+				new ApplicationSQLiteOpenHelper(getActivity(), 
+				getString(R.string.database_name), null, Integer.valueOf(
+				getString(R.string.database_version)));
+		
+		ProductAdapter productAdapter = new ProductAdapter(ASLOH);
+		
+		
+		Product product = new Product();
+		
+		
+		// On récupère l'id
+		int idProductScan = Integer.valueOf(et_idProduct.getText().toString());
+		
+		product = productAdapter.get(idProductScan);
+		if (product != null) // On a bien récupèré le produit
+		{
+			// On test ensuite si la version courrante est la bonnepreferences = getSharedPreferences("DEFAULT", Activity.MODE_PRIVATE);
+			
+			preferences = getActivity().getSharedPreferences("DEFAULT", Activity.MODE_PRIVATE);
+			int userLogId = 
+					Integer.parseInt(preferences.getString("CURRENT_USER_LOG_ID", "0"));
+			
+				if (userLogId == 0)
+				{
+					Toast.makeText(getActivity(), "User log Id = 0", 
+							Toast.LENGTH_LONG).show();
+				}else{
+					UserLogAdapter useLogAdapter = new UserLogAdapter(ASLOH);
+					UserLog userlog = useLogAdapter.get(userLogId);
+					
+					/*if (log != null)
+					{
+						Toast.makeText(getActivity(), log.getZone().toString(), 
+								Toast.LENGTH_LONG).show();
+					}else{
+						Toast.makeText(getActivity(), "Cet id log n'existe pas ", 
+								Toast.LENGTH_LONG).show();
+					}	*/
+				}
+		
+			
+		}else{
+			Toast.makeText(getActivity(), "Cet id n'existe pas ", 
+					Toast.LENGTH_LONG).show();
+		}
+		
+		return result;
 	}
 	
 }
