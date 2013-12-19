@@ -74,7 +74,7 @@ public class HomeActivity extends FragmentActivity {
 				getString(R.string.users_management));
 		MenuItem itemOrdersManagement = new MenuItem(new ListOrdersFragment(),
 				getString(R.string.orders_management));
-		MenuItem itemProductScan = new MenuItem(null,
+		MenuItem itemProductScan = new MenuItem(new ScanFragment(),
 				getString(R.string.product_scan));
 		MenuItem itemLogout = new MenuItem(null,getString(R.string.logout));
 		

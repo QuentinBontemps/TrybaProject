@@ -13,6 +13,7 @@ public class StationAdapter implements Adapter<Station, Integer>{
 	public static final String TABLE = "station";
 	public static final String COL_ID = "_id";
 	public static final String COL_NAME = "name";
+	public static final String COL_VISIBLE = "visible";
 	public static final String COL_TAMPON_ID = "tamponId";
 	
 	private SQLiteDatabase db;
@@ -34,6 +35,7 @@ public class StationAdapter implements Adapter<Station, Integer>{
 		return "CREATE TABLE " + TABLE + "( "
 				+ COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
 				+ COL_NAME + " TEXT NOT NULL,"
+				+ COL_VISIBLE + " BOOLEAN NOT NULL,"
 				+ COL_TAMPON_ID + " INTEGER)";
 	}
 
@@ -42,7 +44,8 @@ public class StationAdapter implements Adapter<Station, Integer>{
 		long i = -1;
 		if(this.db != null){
 			ContentValues values = new ContentValues();
-			values.put(COL_NAME, item.getName());
+			values.put(COL_NAME, item.getName());;
+			values.put(COL_VISIBLE, item.isVisible());
 			if(item.getTampon() != null){
 				values.put(COL_TAMPON_ID, item.getTampon().getId());
 			}

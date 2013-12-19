@@ -3,6 +3,7 @@ package com.imie.trybaproject.model;
 public class Station extends Zone{
 
 	private Tampon tampon;
+	private boolean visible;
 	
 	public Station(){
 		
@@ -10,14 +11,21 @@ public class Station extends Zone{
 	
 	public Station(String name) {
 		super(name);
+		this.visible = true;
 	}
 
 	public Tampon getTampon() {
 		return tampon;
 	}
-
 	public void setTampon(Tampon tampon) {
 		this.tampon = tampon;
+	}
+	public boolean isVisible() {
+		return visible;
+	}
+
+	public void setVisible(boolean visible) {
+		this.visible = visible;
 	}
 	
 	public void setTamponWithSerializableString(String str) throws Exception{

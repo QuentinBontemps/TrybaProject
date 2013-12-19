@@ -3,6 +3,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-    
+
+    <EditText
+        android:id="@+id/scan_ET_idProduit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="number" >
+
+        <requestFocus />
+    </EditText>
+
+    <Button
+        android:id="@+id/scan_btn_validate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Changer station" />
 
 </LinearLayout>

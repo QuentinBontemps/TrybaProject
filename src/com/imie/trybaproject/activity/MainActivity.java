@@ -121,7 +121,7 @@ public class MainActivity extends FragmentActivity {
 		*/
 		
 		// On récupere un bouton pour le test
-		Button buttonTest = (Button) this.findViewById(R.id.button1);
+		Button buttonTest = (Button) this.findViewById(R.id.scan_btn_validate);
 		Button buttonTest1 = (Button) this.findViewById(R.id.Button01);
 		buttonTest.setOnClickListener(new OnClickListener() {
 			
