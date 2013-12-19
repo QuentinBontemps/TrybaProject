@@ -41,22 +41,22 @@ public final class Datasets {
 		
 		
 		// init station data
-		stationDecoupe.setName("StationDecoupe");
+		stationDecoupe.setName("Station Découpe");
 		stationDecoupe.setOrder(1);
 		stationDecoupe.setTampon(tamponDecoupe);
 		stationDecoupe.setVisible(true);
 
-		stationFaconnage.setName("StationFaconnage");
+		stationFaconnage.setName("Station Faconnage");
 		stationFaconnage.setOrder(2);
 		stationFaconnage.setTampon(tamponFaconnage);
 		stationFaconnage.setVisible(true);
 
-		stationPeinture.setName("StationPeinture");
+		stationPeinture.setName("Station Peinture");
 		stationPeinture.setOrder(3);
 		stationPeinture.setTampon(tamponPeinture);
 		stationPeinture.setVisible(true);
 
-		stationAssemblage.setName("StationAssemblage");
+		stationAssemblage.setName("Station Assemblage");
 		stationAssemblage.setOrder(4);
 		stationAssemblage.setTampon(tamponAssemblage);
 		stationAssemblage.setVisible(true);
@@ -76,11 +76,11 @@ public final class Datasets {
 		
 		
 		// Init tampon data
-		tamponDecoupe = new Tampon("DecoupeTampon",50);
-		tamponFaconnage = new Tampon("FaconnageTampon",5);
-		tamponPeinture = new Tampon("PeintureTampon",5);
-		tamponAssemblage = new Tampon("AssemblageTampon",5);
-		tamponProduction = new Tampon("ProductionTampon",1000);
+		tamponDecoupe = new Tampon("Stock",50);
+		tamponFaconnage = new Tampon("Tampon Faconnage",5);
+		tamponPeinture = new Tampon("Tampon Peinture",5);
+		tamponAssemblage = new Tampon("Tampon Assemblage",5);
+		tamponProduction = new Tampon("Production",1000);
 		
 
 		

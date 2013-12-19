@@ -36,18 +36,7 @@ public class ListProductsFragment extends Fragment{
 		
 		Cursor products = productAdapter.getByOrderIdWithCursor((int)order.getId());
 		lv.setAdapter(new ProductsCursorAdapter(getActivity(), products));
-		lv.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> adapterView, View view, 
-					int position, long id) {
 				
-			
-				
-			}
-		});
-		
-		
 		return fragment;
 	}
 

@@ -29,7 +29,7 @@ public class DetailOrderFragment extends Fragment{
 		txtCustomer.setText(order.getCustomer());
 		txtProductType.setText(order.getTypeProduct());
 		txtMaterialType.setText(order.getTypeMaterial());
-		txtQuantity.setText(order.getQuantity());
+		txtQuantity.setText(String.valueOf(order.getQuantity()));
 		
 		return fragment;
 	}

@@ -1,13 +1,10 @@
 package com.imie.trybaproject.activity;
 
-import com.imie.trybaproject.R;
-import com.imie.trybaproject.R.layout;
-import com.imie.trybaproject.R.menu;
-
 import android.os.Bundle;
-import android.app.Activity;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
+
+import com.imie.trybaproject.R;
 
 public class DetailOrderActivity extends FragmentActivity {
 
@@ -20,8 +17,8 @@ public class DetailOrderActivity extends FragmentActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.detail_order, menu);
-		return true;
+		//getMenuInflater().inflate(R.menu.detail_order, menu);
+		return false;
 	}
 
 }
