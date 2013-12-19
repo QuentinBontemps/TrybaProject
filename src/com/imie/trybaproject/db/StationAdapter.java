@@ -97,7 +97,7 @@ public class StationAdapter implements Adapter<Station, Integer>{
 		Station station = null;
 		if(this.db != null){
 			Cursor cursor = db.query(TABLE,
-						new String[]{COL_ID, COL_NAME, COL_TAMPON_ID}, 
+						new String[]{COL_ID, COL_NAME, COL_ORDRE, COL_VISIBLE, COL_TAMPON_ID}, 
 						COL_ID + " = ? ", 
 						new String[]{String.valueOf(id)}, null, null, null);
 			
@@ -157,7 +157,7 @@ public class StationAdapter implements Adapter<Station, Integer>{
 		Cursor cursor = null;
 		if(db != null){
 			cursor = db.query(TABLE,
-					new String[]{COL_ID, COL_NAME, COL_TAMPON_ID},
+					new String[]{COL_ID, COL_NAME, COL_ORDRE, COL_VISIBLE, COL_TAMPON_ID},
 					null, null, null, null, null);
 		}
 		return cursor;

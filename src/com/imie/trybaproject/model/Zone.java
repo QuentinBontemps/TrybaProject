@@ -26,6 +26,10 @@ public abstract class Zone {
 		this.name = name;
 	}
 	
+	public int getSerializableStringLength(){
+		return 2;
+	}
+	
 	public String getSerializableString(){
 		StringBuilder sb = new StringBuilder();
 		String separator = "~";
@@ -58,7 +62,7 @@ public abstract class Zone {
 	
 	public void setWithSerializableArray(ArrayList<Object> str) throws Exception
 	{
-		if(str.size() >= 2){
+		if(str.size() >= this.getSerializableStringLength()){
 			this.setId(Integer.parseInt((String)str.get(0)));
 			this.setName((String)str.get(1));
 		}else{

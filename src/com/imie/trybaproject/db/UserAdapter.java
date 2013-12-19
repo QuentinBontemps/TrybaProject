@@ -108,7 +108,7 @@ public class UserAdapter implements Adapter<User, Integer>{
 					COL_ID + " = ? ",
 					new String[] {String.valueOf(id)},null,null,null,null);
 					
-			if(cursor != null)
+			if(cursor.getCount() > 0)
 			{
 				cursor.moveToFirst();
 				user = new User();
@@ -148,7 +148,7 @@ public class UserAdapter implements Adapter<User, Integer>{
 		if(this.db != null){
 			Cursor cursor = this.getAllWithCursor();
 			
-			if(cursor != null){
+			if(cursor.getCount() > 0){
 				
 				cursor.moveToFirst();				
 				do {

@@ -8,6 +8,7 @@ import com.imie.trybaproject.db.ApplicationSQLiteOpenHelper;
 import com.imie.trybaproject.db.StationAdapter;
 import com.imie.trybaproject.db.UserAdapter;
 import com.imie.trybaproject.db.UserLogAdapter;
+import com.imie.trybaproject.model.MenuItem;
 import com.imie.trybaproject.model.Station;
 import com.imie.trybaproject.model.User;
 import com.imie.trybaproject.model.UserLog;
@@ -38,6 +39,7 @@ public class ChooseStationFragment extends Fragment {
 	private User currentUser = new User();
 	private ArrayAdapter<Station> stationsArrayAdapter;
 	private Button btnValidate;
+	   long userLogId;
 	
 	public ChooseStationFragment(){
 		
@@ -110,7 +112,7 @@ public class ChooseStationFragment extends Fragment {
 				   userLog.setUser(currentUser);
 				   userLog.setStation((Station)selectStation.getSelectedItem());
 				   userLog.setDateEntree(new Date());
-				   long userLogId = u_LogAdapter.insert(userLog);
+				   userLogId = u_LogAdapter.insert(userLog);
 
 				   SharedPreferences preferences = getActivity().
 							getSharedPreferences("DEFAULT", Activity.MODE_PRIVATE);
@@ -122,12 +124,16 @@ public class ChooseStationFragment extends Fragment {
 					
 					if(!currentUserString.equals("")){
 						try {
+							Station currentStation = 
+									(Station)selectStation.getSelectedItem();
 							currentUser.setWithSerializableString(
 									currentUserString);
-							currentUser.setCurrentStation(
-									(Station)selectStation.getSelectedItem());
+							currentUser.setCurrentStation(currentStation);									
 							editor.putString("CURRENT_USER", 
 									currentUser.getSerializableString());
+							Toast.makeText(getActivity(), "Station " + 
+									currentStation.getName() + " sélectionnée",
+									Toast.LENGTH_SHORT).show();
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
@@ -189,8 +195,12 @@ public class ChooseStationFragment extends Fragment {
 	
 	private void updateMenuList(){
 		HomeActivity activity = (HomeActivity) getActivity();
-		activity.getItems().remove(activity.getStationSelect());
-		activity.getItems().add(0, activity.getStationChange());
+		activity.getItems().remove(0);
+		
+		activity.getItems().add(0, activity.getProductScan());
+		activity.getItems().add(1, activity.getStationChange());
+		activity.getStationChange().setFragment(new ChooseStationFragment(activity, true, (int) userLogId));
+		activity.setItemCheck(1);
 		activity.getAdapter().notifyDataSetChanged();
 	}
  

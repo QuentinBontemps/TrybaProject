@@ -55,6 +55,21 @@ public class Station extends Zone{
 		this.tampon.setWithSerializableArray(array);
 	}
 	
+	public int getSerializableStringLength(){
+		int length = super.getSerializableStringLength();
+		length = length + 2;
+		
+		return length;
+	}
+	
+	public int getSerializableStringLengthWithTampon(){
+		if(getTampon() == null){
+			this.tampon = new Tampon();
+		}
+		return this.getSerializableStringLength() + 
+				getTampon().getSerializableStringLength();
+	}
+	
 	public String toString(){
 		return this.getName();
 		
@@ -65,7 +80,10 @@ public class Station extends Zone{
 		String separator = "~";
 		
 		sb.append(super.getSerializableString());
-		
+		sb.append(separator);
+		sb.append(getOrdre());
+		sb.append(separator);
+		sb.append(isVisible());
 		if(getTampon() != null){
 			sb.append(separator);
 			sb.append(getTampon().getSerializableString());
@@ -84,16 +102,28 @@ public class Station extends Zone{
 	
 	public void setWithSerializableString(String str) throws Exception{
 		String[] stationStr = str.split("~");
-		if(stationStr.length == 5){
-			super.setWithSerializableString(str);
-			StringBuilder strTampon = new StringBuilder();
-			strTampon.append(stationStr[2]);
-			strTampon.append(stationStr[3]);
-			strTampon.append(stationStr[4]);
-			setTamponWithSerializableString(strTampon.toString());
+		
+		if(stationStr.length >= this.getSerializableStringLength()){
+			if(stationStr.length >= this.getSerializableStringLength()){
+				super.setWithSerializableString(str);
+				setOrdre(Integer.parseInt(stationStr[2]));
+				setVisible(Boolean.parseBoolean(stationStr[3]));
+			}
 			
-		}else if(stationStr.length == 2){
-			super.setWithSerializableString(str);
+			if(stationStr.length >= this.getSerializableStringLengthWithTampon()){
+				StringBuilder strTampon = new StringBuilder();
+				String separator = "~";
+				strTampon.append(stationStr[4]);
+				strTampon.append(separator);
+				strTampon.append(stationStr[5]);
+				strTampon.append(separator);
+				strTampon.append(stationStr[6]);
+				setTamponWithSerializableString(strTampon.toString());
+			}
+			
+			
+			
+	
 		}else{
 			throw new Exception("Il manque des paramètre dans la chaine de " +
 					"la station");

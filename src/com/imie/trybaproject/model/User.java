@@ -8,7 +8,7 @@ public class User {
 	private String firstname;
 	private String lastname;
 	private String type;
-	private Zone currentStation;
+	private Station currentStation;
 
 	public User(){
 		
@@ -61,7 +61,7 @@ public class User {
 		this.type = type;
 	}
 	
-	public Zone getCurrentStation() {
+	public Station getCurrentStation() {
 		return currentStation;
 	}
 
@@ -84,28 +84,55 @@ public class User {
 		sb.append(getLastname());
 		sb.append(separator);
 		sb.append(getType());
-		sb.append(separator);
-		sb.append(currentStation.getSerializableString());
-		
+		if(currentStation != null){
+			sb.append(separator);
+			sb.append(currentStation.getSerializableString());
+		}
 		return sb.toString();
+	}
+	
+	public int getSerializableStringLength(){
+		return 6;
 	}
 	
 	public void setWithSerializableString(String str) throws Exception{
 		String[] userStr = str.split("~");
-		if(userStr.length == 8 ){
-			this.setId(Integer.parseInt(userStr[0]));
-			this.setLogin(userStr[1]);
-			this.setPassword(userStr[2]);
-			this.setFirstname(userStr[3]);
-			this.setLastname(userStr[4]);
-			this.setType(userStr[5]);
-			
-			
-			
-			
+	
+		if(userStr.length >= this.getSerializableStringLength()){
+			if(userStr.length >= this.getSerializableStringLength()){
+				this.setId(Integer.parseInt(userStr[0]));
+				this.setLogin(userStr[1]);
+				this.setPassword(userStr[2]);
+				this.setFirstname(userStr[3]);
+				this.setLastname(userStr[4]);
+				this.setType(userStr[5]);
+			}
+			this.currentStation = new Station();
+			if(userStr.length >= this.getSerializableStringLength() + getCurrentStation().getSerializableStringLength()){
+				StringBuilder sb = new StringBuilder();
+				String separator = "~";
+				sb.append(userStr[6]);
+				sb.append(separator);
+				sb.append(userStr[7]);
+				sb.append(separator);
+				sb.append(userStr[8]);
+				sb.append(separator);
+				sb.append(userStr[9]);
+				this.currentStation.setWithSerializableString(sb.toString());
+			}
+			if(userStr.length >= this.getSerializableStringLength() + getCurrentStation().getSerializableStringLengthWithTampon()){
+				StringBuilder sb = new StringBuilder();
+				String separator = "~";
+				sb.append(userStr[10]);
+				sb.append(separator);
+				sb.append(userStr[11]);
+				sb.append(separator);
+				sb.append(userStr[12]);
+				this.currentStation.setTamponWithSerializableString(sb.toString());
+			}
 		}else{
 			throw new Exception("Il manque des paramètre dans la chaine de " +
-					"l'utilisateur");
+					"l'utilisateur. Count :" + userStr.length);
 		}
 	}
 	

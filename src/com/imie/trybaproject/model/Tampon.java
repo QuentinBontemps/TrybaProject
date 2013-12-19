@@ -21,6 +21,10 @@ public class Tampon extends Zone{
 		this.quantity = quantity;
 	}
 	
+	public int getSerializableStringLength(){
+		return super.getSerializableStringLength() + 1;
+	}
+	
 	public String getSerializableString(){
 		StringBuilder sb = new StringBuilder();
 		String separator = "~";
@@ -42,7 +46,7 @@ public class Tampon extends Zone{
 	
 	public void setWithSerializableString(String str) throws Exception{
 		String[] tamponStr = str.split("~");
-		if(tamponStr.length == 3 ){			
+		if(tamponStr.length == this.getSerializableStringLength()){			
 			super.setWithSerializableString(str);
 			this.setQuantity(Integer.parseInt(tamponStr[2]));	
 		}else{
@@ -53,7 +57,7 @@ public class Tampon extends Zone{
 	
 	public void setWithSerializableArray(ArrayList<Object> str) throws Exception
 	{
-		if(str.size() == 3){
+		if(str.size() == this.getSerializableStringLength()){
 			super.setWithSerializableArray(str);
 			this.quantity = Integer.parseInt((String)str.get(2));
 			
