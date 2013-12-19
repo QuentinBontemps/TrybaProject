@@ -7,7 +7,9 @@ public class MenuItem {
 	private Fragment fragment;
 	private String title;
 	
-	
+	public MenuItem(String title){
+		this.title = title;
+	}
 	
 	public MenuItem(Fragment fragment, String title) {
 		super();
@@ -35,5 +37,14 @@ public class MenuItem {
 		return title;
 	}
 	
+	@Override
+	public boolean equals(Object o) {
+		MenuItem item = (MenuItem)o;
+		
+		if(item.getTitle().equals(getTitle()))
+			return true;
+		
+		return false;
+	}
 	
 }

@@ -37,8 +37,9 @@ public class HomeActivity extends FragmentActivity {
 	ArrayList<MenuItem> items = new ArrayList<MenuItem>();
 	User currentUser = new User();
 	int userLogId;
-	MenuItem itemStationChange;
-	MenuItem itemStationSelect;
+	MenuItem itemStationChange = new MenuItem();
+	MenuItem itemStationSelect = new MenuItem();
+	MenuItem itemLogout = new MenuItem();
 	SharedPreferences preferences;
 	
 	
@@ -59,15 +60,14 @@ public class HomeActivity extends FragmentActivity {
 			e.printStackTrace();
 		}
 		
-
+		itemStationChange = new MenuItem(getString(R.string.station_change));
+		itemStationSelect = new MenuItem(getString(R.string.station_selection));
+		
 		if(userLogId != 0){
-			itemStationChange = new MenuItem(
-					new ChooseStationFragment(this, true,userLogId),
-							getString(R.string.station_change));
+			itemStationChange.setFragment(new ChooseStationFragment(this, true,userLogId));
 			items.add(itemStationChange);
 		}else{
-			itemStationSelect = new MenuItem(new ChooseStationFragment(),
-					getString(R.string.station_selection));
+			itemStationSelect.setFragment(new ChooseStationFragment());
 			items.add(itemStationSelect);
 		}
 		MenuItem itemUsersManagement = new MenuItem(new ListUsersFragment(),
@@ -76,7 +76,7 @@ public class HomeActivity extends FragmentActivity {
 				getString(R.string.orders_management));
 		MenuItem itemProductScan = new MenuItem(null,
 				getString(R.string.product_scan));
-		MenuItem itemLogout = new MenuItem(null,getString(R.string.logout));
+		itemLogout = new MenuItem(new LogoutFragment(this),getString(R.string.logout));
 		
 		
 		
@@ -174,6 +174,21 @@ public class HomeActivity extends FragmentActivity {
 					getString(R.string.station_selection));
 			items.add(0, itemStationSelect);
 			Toast.makeText(getApplicationContext(), "Ok morray2", Toast.LENGTH_SHORT).show();
+	    }else if(item.equals(itemLogout)){
+			
+	    	SharedPreferences preferences =
+					getSharedPreferences("DEFAULT", Activity.MODE_PRIVATE);
+			SharedPreferences.Editor editor = preferences.edit();
+	    	if(!preferences.getString("CURRENT_USER", "").equals("")){
+				editor.remove("CURRENT_USER");
+			}
+	    	
+	    	if(!preferences.getString("CURRENT_USER_LOG_ID", "").equals("")){
+	    		editor.remove("CURRENT_USER_LOG_ID");
+	    	}
+	    	
+			editor.commit();
+			this.finish();
 	    }
 	    	    
 	    adapter.notifyDataSetChanged();
@@ -185,6 +200,22 @@ public class HomeActivity extends FragmentActivity {
 		getActionBar().setTitle(title);
 	}
 
+	public MenuItem getStationChange()
+	{
+		return itemStationChange;
+	}
+	
+	public MenuItem getStationSelect(){
+		return itemStationSelect;
+	}
+	
+	public ArrayList<MenuItem> getItems(){
+		return items;
+	}
+	
+	public ListMenuItemAdapter getAdapter(){
+		return this.adapter;
+	}
 	
 	
 	
