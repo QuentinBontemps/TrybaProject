@@ -4,13 +4,22 @@ public class Station extends Zone{
 
 	private Tampon tampon;
 	private boolean visible;
+	private int ordre;
 	
+	
+
 	public Station(){
 		
 	}
 	
 	public Station(String name) {
 		super(name);
+		this.visible = true;
+	}
+	
+	public Station(String name, int ordre) {
+		super(name);
+		this.ordre = ordre;
 		this.visible = true;
 	}
 
@@ -22,6 +31,14 @@ public class Station extends Zone{
 	}
 	public boolean isVisible() {
 		return visible;
+	}
+	
+	public int getOrdre() {
+		return ordre;
+	}
+
+	public void setOrdre(int ordre) {
+		this.ordre = ordre;
 	}
 
 	public void setVisible(boolean visible) {
