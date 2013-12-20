@@ -3,28 +3,13 @@ package com.imie.trybaproject.views.fragment;
 import java.util.ArrayList;
 import java.util.Date;
 
-import com.imie.trybaproject.R;
-import com.imie.trybaproject.db.ApplicationSQLiteOpenHelper;
-import com.imie.trybaproject.db.StationAdapter;
-import com.imie.trybaproject.db.UserAdapter;
-import com.imie.trybaproject.db.UserLogAdapter;
-import com.imie.trybaproject.model.MenuItem;
-import com.imie.trybaproject.model.Station;
-import com.imie.trybaproject.model.User;
-import com.imie.trybaproject.model.UserLog;
-import com.imie.trybaproject.model.UserType;
-import com.imie.trybaproject.views.activity.HomeActivity;
-
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -33,6 +18,15 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import com.imie.trybaproject.R;
+import com.imie.trybaproject.db.ApplicationSQLiteOpenHelper;
+import com.imie.trybaproject.db.StationAdapter;
+import com.imie.trybaproject.db.UserLogAdapter;
+import com.imie.trybaproject.model.Station;
+import com.imie.trybaproject.model.User;
+import com.imie.trybaproject.model.UserLog;
+import com.imie.trybaproject.views.activity.HomeActivity;
 
 public class ChooseStationFragment extends Fragment {
 
@@ -202,7 +196,6 @@ public class ChooseStationFragment extends Fragment {
 			activity.getItems().add(1, activity.getStationChange());
 			activity.getStationChange().setFragment(new ChooseStationFragment(
 					activity, true, (int) userLogId));
-			activity.setItemCheck(1);
 			activity.getAdapter().notifyDataSetChanged();
 		}
 		
