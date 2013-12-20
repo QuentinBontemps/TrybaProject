@@ -183,4 +183,5 @@
     <string name="at_date_time">Le %1$s à %2$s</string>
     <string name="goNextTampon">Envoyé dans la liste d\'attente de la prochaine station</string>
     <string name="userHelpScan">Cliquez sur le bouton pour scanner le QR Code du produit</string>
+    <string name="connexion">Connexion</string>
 </resources>

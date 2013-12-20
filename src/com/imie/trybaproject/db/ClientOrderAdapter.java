@@ -7,8 +7,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.imie.trybaproject.model.ClientOrder;
-import com.imie.trybaproject.model.OrderProduct;
-import com.imie.trybaproject.model.Product;
 
 public class ClientOrderAdapter implements Adapter<ClientOrder, Integer> {
 
@@ -85,9 +83,6 @@ public class ClientOrderAdapter implements Adapter<ClientOrder, Integer> {
 		if(this.db != null){
 			db.delete(TABLE, COL_ID + " = ? ",
 					new String[] {String.valueOf(item.getId())});
-			OrderProductAdapter orderProductAdapter = 
-											new OrderProductAdapter(db);
-			orderProductAdapter.deleteAllFromOrder(item.getId());
 			if(helper != null)			
 				db.close();
 		}
