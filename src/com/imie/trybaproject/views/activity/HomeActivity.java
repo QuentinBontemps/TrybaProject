@@ -5,6 +5,7 @@ import java.util.Currency;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.opengl.Visibility;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -13,6 +14,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
@@ -61,7 +63,7 @@ public class HomeActivity extends FragmentActivity {
 		userLogId = Integer.parseInt(preferences.getString("CURRENT_USER_LOG_ID", "0"));
 		
 		itemProductScan = new MenuItem(new ScanFragment(),
-				getString(R.string.product_scan));
+				getString(R.string.product_scan),R.drawable.ic_menu_archive);
 		
 		try {
 			if(userString != "")
@@ -70,11 +72,14 @@ public class HomeActivity extends FragmentActivity {
 			e.printStackTrace();
 		}
 		
-		itemStationChange = new MenuItem(getString(R.string.station_change));
-		itemStationSelect = new MenuItem(getString(R.string.station_selection));
+		itemStationChange = new MenuItem(getString(R.string.station_change),
+				R.drawable.ic_menu_mylocation);
+		itemStationSelect = new MenuItem(getString(R.string.station_selection),
+				R.drawable.ic_menu_mylocation);
 		
 		if(userLogId != 0){
-			itemStationChange.setFragment(new ChooseStationFragment(this, true,userLogId));
+			itemStationChange.setFragment(new ChooseStationFragment(this, true, 
+					userLogId));
 			items.add(itemProductScan);
 			items.add(itemStationChange);			
 		}else{
@@ -82,10 +87,14 @@ public class HomeActivity extends FragmentActivity {
 			items.add(itemStationSelect);
 		}
 		MenuItem itemUsersManagement = new MenuItem(new ListUsersFragment(),
-				getString(R.string.users_management));
+				getString(R.string.users_management),
+				R.drawable.ic_menu_cc_am);
 		MenuItem itemOrdersManagement = new MenuItem(new ListOrdersFragment(),
-				getString(R.string.orders_management));
-		itemLogout = new MenuItem(new LogoutFragment(this),getString(R.string.logout));
+				getString(R.string.orders_management),
+				R.drawable.ic_menu_archive);
+		itemLogout = new MenuItem(new LogoutFragment(this),
+				getString(R.string.logout),
+				R.drawable.ic_menu_set_as);
 			
 		if(currentUser.getType().equals(UserType.ADMINISTRATOR.name())){
 			items.add(itemUsersManagement);
@@ -102,10 +111,12 @@ public class HomeActivity extends FragmentActivity {
 		
 		
 		drawerList.setOnItemClickListener(new DrawerItemClickListener());
-		
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setHomeButtonEnabled(true);
+        getActionBar().setHomeAsUpIndicator(R.drawable.ic_navigation_drawer);
 	
 		 drawerToggle = new ActionBarDrawerToggle(this, drawerLayout,
-	                R.drawable.ic_drawer,
+	                R.drawable.ic_navigation_drawer,
 	                R.string.app_name,
 	                R.string.app_name
 	        ) {
@@ -126,6 +137,37 @@ public class HomeActivity extends FragmentActivity {
 		//getMenuInflater().inflate(R.menu.home, menu);
 		return false;
 	}
+
+	
+	
+	@Override
+	public boolean onOptionsItemSelected(android.view.MenuItem item) {
+		switch (item.getItemId()) {
+	    case android.R.id.home:
+	        if (this.drawerLayout.isDrawerOpen(Gravity.LEFT)) {
+	            this.drawerLayout.closeDrawer(Gravity.LEFT);
+	        } else {
+	            this.drawerLayout.openDrawer(Gravity.LEFT);
+	        }
+	        return true;
+	        
+	}
+    return super.onOptionsItemSelected(item);
+	}
+
+
+
+	@Override
+	protected void onPostCreate(Bundle savedInstanceState) {
+		super.onPostCreate(savedInstanceState);
+		this.drawerToggle.syncState();
+	}
+
+	@Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        drawerToggle.onConfigurationChanged(newConfig);
+    }
 
 	private class DrawerItemClickListener implements ListView.OnItemClickListener{
 		@Override
@@ -148,7 +190,7 @@ public class HomeActivity extends FragmentActivity {
 	                   .commit();
 	    
 	   
-	    drawerList.setItemChecked(position, true);
+	    //drawerList.setItemChecked(position, true);
 	    drawerLayout.closeDrawer(drawerList);
 	    
 	    if(item.equals(itemStationSelect)){

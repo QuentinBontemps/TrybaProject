@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,8 +37,8 @@ public class UsersCursorAdapter extends CursorAdapter{
 				(TextView) view.findViewById(R.id.row_user_login);
 		TextView user_password = 
 				(TextView) view.findViewById(R.id.row_user_password);
-		Button btn_suppression = 
-				(Button) view.findViewById(R.id.btn_suppression_user);
+		ImageButton btn_suppression = 
+				(ImageButton) view.findViewById(R.id.btn_suppression_user);
 		
 		u = new User(c.getString(
 				c.getColumnIndex(UserAdapter.COL_LOGIN)),
@@ -59,7 +60,7 @@ public class UsersCursorAdapter extends CursorAdapter{
 		user_lastname.setText(c.getString(
 				c.getColumnIndex(UserAdapter.COL_LASTNAME)));
 		
-		
+		btn_suppression.setTag(u.getId());
 		btn_suppression.setOnClickListener(new OnClickListener() {
 			
 			@Override
@@ -73,11 +74,14 @@ public class UsersCursorAdapter extends CursorAdapter{
 				UserAdapter userAdapter = new UserAdapter();
 				userAdapter.setDatabase(ASLOH.getDb());
 				
-				userAdapter.delete(u);
+				long id = (Long)v.getTag();
+				
+				User user = new User();
+				user.setId(id);
+				
+				userAdapter.delete(user);
 				Toast.makeText(context, "L'utilisateur à été supprimé", 
 						Toast.LENGTH_LONG).show();;
-				
-				
 				
 			}
 		});

@@ -12,6 +12,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class ListMenuItemAdapter extends BaseAdapter{
@@ -50,10 +51,11 @@ public class ListMenuItemAdapter extends BaseAdapter{
         }
         
 		TextView txtTitle = (TextView) convertView.findViewById(R.id.title);
-          
-  
-       txtTitle.setText(items.get(position).getTitle());
-         
+		txtTitle.setText(items.get(position).getTitle());
+
+        ImageView imgView = (ImageView)convertView.findViewById(R.id.imgView);
+        imgView.setImageResource(items.get(position).getIcon());
+		
         return convertView;
 	}
 

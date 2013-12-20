@@ -6,15 +6,22 @@ public class MenuItem {
 
 	private Fragment fragment;
 	private String title;
+	private int icon;
 	
 	public MenuItem(String title){
 		this.title = title;
 	}
 	
-	public MenuItem(Fragment fragment, String title) {
+	public MenuItem(String title, int icon){
+		this.title = title;
+		this.icon = icon;
+	}
+	
+	public MenuItem(Fragment fragment, String title, int icon) {
 		super();
 		this.fragment = fragment;
 		this.title = title;
+		this.icon = icon;
 	}
 	public MenuItem() {
 		
@@ -32,6 +39,14 @@ public class MenuItem {
 		this.title = title;
 	}
 	
+	public int getIcon() {
+		return icon;
+	}
+
+	public void setIcon(int icon) {
+		this.icon = icon;
+	}
+
 	@Override
 	public String toString() {
 		return title;

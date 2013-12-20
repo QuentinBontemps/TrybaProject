@@ -1,9 +1,5 @@
 package com.imie.trybaproject.db;
 
-import com.imie.trybaproject.R;
-import com.imie.trybaproject.model.Log;
-import com.imie.trybaproject.model.User;
-
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
@@ -11,6 +7,18 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class ApplicationSQLiteOpenHelper extends SQLiteOpenHelper {
 
+	private static ApplicationSQLiteOpenHelper _instance;
+	
+	public static ApplicationSQLiteOpenHelper getInstance(Context context){
+		if(_instance == null){
+			String name = "tryba_database";
+			int version = 1;
+			_instance = new ApplicationSQLiteOpenHelper(context, name, 
+					null, version);
+		}
+		return _instance;
+	}
+	
 	public ApplicationSQLiteOpenHelper(Context context, String name,
 			CursorFactory factory, int version) {
 		super(context, name, factory, version);

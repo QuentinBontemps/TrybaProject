@@ -5,6 +5,7 @@ import com.imie.trybaproject.R;
 import com.imie.trybaproject.db.ApplicationSQLiteOpenHelper;
 import com.imie.trybaproject.db.UserAdapter;
 import com.imie.trybaproject.db.UsersCursorAdapter;
+import com.imie.trybaproject.model.User;
 import com.imie.trybaproject.views.activity.AddUserActivity;
 
 import android.content.Intent;
@@ -37,11 +38,12 @@ public class ListUsersFragment extends Fragment{
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		
-		ApplicationSQLiteOpenHelper ASLOH = 
+		/*ApplicationSQLiteOpenHelper ASLOH = 
 				new ApplicationSQLiteOpenHelper(getActivity(), 
 						getString(R.string.database_name), null, 
-						Integer.parseInt(getString(R.string.database_version)));
-		userAdapt = new UserAdapter(ASLOH);
+						Integer.parseInt(getString(R.string.database_version)));*/
+		ApplicationSQLiteOpenHelper helper = ApplicationSQLiteOpenHelper.getInstance(getActivity());
+		userAdapt = new UserAdapter(helper);
 		
 		
 		View frag = inflater.inflate(R.layout.fragment_list_users, 
@@ -92,7 +94,9 @@ public class ListUsersFragment extends Fragment{
 	}
 	
 	
-	
+	public void deleteUser(User user){
+		
+	}
 	
 	
 	@Override
