@@ -43,7 +43,8 @@ public class ScanFragment extends Fragment {
 		View fragment = inflater.inflate(R.layout.
 				fragment_scan,container, false);
 		
-		preferences = getActivity().getSharedPreferences("DEFAULT", Activity.MODE_PRIVATE);
+		preferences = getActivity().getSharedPreferences("DEFAULT", 
+													Activity.MODE_PRIVATE);
 		currentUser = new User();
 		String userString = preferences.getString("CURRENT_USER","");
 		if(userString != "")
@@ -105,9 +106,7 @@ public class ScanFragment extends Fragment {
 		// si oui on passe dans la bonne station
 		
 		ApplicationSQLiteOpenHelper ASLOH = 
-				new ApplicationSQLiteOpenHelper(getActivity(), 
-				getString(R.string.database_name), null, Integer.valueOf(
-				getString(R.string.database_version)));
+				ApplicationSQLiteOpenHelper.getInstance(getActivity());
 		
 		ProductAdapter productAdapter = new ProductAdapter(null);
 		productAdapter.setDatabase(ASLOH.getDb());
@@ -121,13 +120,16 @@ public class ScanFragment extends Fragment {
 		product = productAdapter.get(idProductScan);
 		if (product != null) // On a bien récupèré le produit
 		{
-			// on test si le product est bien dans une station, et pas en attente dans un tampon
+			// on test si le product est bien dans une station, 
+			//et pas en attente dans un tampon
 			if (product.getCurrentTypeZone() == ZoneType.STATION)
 			{				
-				preferences = getActivity().getSharedPreferences("DEFAULT", Activity.MODE_PRIVATE);
+				preferences = getActivity().getSharedPreferences("DEFAULT", 
+														Activity.MODE_PRIVATE);
 				
 				 userId = 
-						Integer.parseInt(preferences.getString("CURRENT_USER_LOG_ID", "0"));
+						Integer.parseInt(preferences.getString(
+												"CURRENT_USER_LOG_ID", "0"));
 				 User user = new User();
 				 String userString = preferences.getString("CURRENT_USER","");
 				 try {
@@ -135,7 +137,8 @@ public class ScanFragment extends Fragment {
 							user.setWithSerializableString(userString);			
 					
 					int resultatChangement = product.goToNextTampon(
-												user.getCurrentStation(),ASLOH, user);
+												user.getCurrentStation(),
+															ASLOH, user);
 					
 					switch (resultatChangement) {
 					case 0: 
@@ -190,9 +193,8 @@ public class ScanFragment extends Fragment {
 					int userId = 0;
 					
 					ApplicationSQLiteOpenHelper ASLOH = 
-							new ApplicationSQLiteOpenHelper(getActivity(), 
-							getString(R.string.database_name), null, Integer.valueOf(
-							getString(R.string.database_version)));
+							ApplicationSQLiteOpenHelper.getInstance(
+																getActivity());
 					
 					
 					SharedPreferences preferences = 
@@ -203,12 +205,7 @@ public class ScanFragment extends Fragment {
 					{
 						
 						et_idProduct.setText(String.valueOf(idValueScan));
-						
-						
-						Toast.makeText(getActivity(), "Le qr a été scanné id : " + idValueScan, 
-								Toast.LENGTH_LONG).show();
-						
-						
+									
 						
 						ProductAdapter productAdapter = new ProductAdapter(null);
 						productAdapter.setDatabase(ASLOH.getDb());
@@ -216,41 +213,50 @@ public class ScanFragment extends Fragment {
 						
 						if (product != null)
 						{
-							// on test si le product est bien dans un tampon, et pas déjà dans une station
+							// on test si le product est bien dans un tampon, 
+							//et pas déjà dans une station
 							if (product.getCurrentTypeZone() == ZoneType.TAMPON)
 							{				
-								preferences = getActivity().getSharedPreferences("DEFAULT", Activity.MODE_PRIVATE);
+								preferences = getActivity().getSharedPreferences(
+											"DEFAULT", Activity.MODE_PRIVATE);
 								
 								 userId = 
-										Integer.parseInt(preferences.getString("CURRENT_USER_LOG_ID", "0"));
+										Integer.parseInt(preferences.getString(
+												"CURRENT_USER_LOG_ID", "0"));
 								 User user = new User();
-								 String userString = preferences.getString("CURRENT_USER","");
+								 String userString = preferences.getString(
+										 					"CURRENT_USER","");
 								 try {
 										if(userString != "")
-											user.setWithSerializableString(userString);			
+											user.setWithSerializableString(
+																	userString);			
 									
-										int resultatChangement = product.goToNextStation(
-																	user.getCurrentStation(),ASLOH, user);
+										int resultatChangement = 
+														product.goToNextStation(
+										user.getCurrentStation(),ASLOH, user);
 										
 										switch (resultatChangement) {
-										case 0: 
-											Toast.makeText(getActivity(), 
-											"Le produit n'est pas dans la station correspondante", 
-																		Toast.LENGTH_LONG).show();
-											break;
-										case 1:
-											
-											Toast.makeText(getActivity(), 
-											"Le produit est passé dans le prochain tampon", 
-																	Toast.LENGTH_LONG).show();						
-											break;
-										case 2:
-											Toast.makeText(getActivity(), 
-													"Le produit n'est pas dans le bon tampon", 
+											case 0: 
+												Toast.makeText(getActivity(), 
+												"Le produit n'est pas dans " +
+												"la station correspondante", 
 													Toast.LENGTH_LONG).show();
-											break;
-										default:
-											break;
+												break;
+											case 1:
+												
+												Toast.makeText(getActivity(), 
+												"Le produit est passé dans le " +
+												"prochain tampon", 
+													Toast.LENGTH_LONG).show();						
+												break;
+											case 2:
+												Toast.makeText(getActivity(), 
+														"Le produit n'est pas " +
+														"dans le bon tampon", 
+													Toast.LENGTH_LONG).show();
+												break;
+											default:
+												break;
 										}
 								 }catch (Exception e) {
 									android.util.Log.e("", e.getMessage());
@@ -262,7 +268,8 @@ public class ScanFragment extends Fragment {
 										Toast.LENGTH_LONG).show();
 							}
 						}else{
-							Toast.makeText(getActivity(), "Aucun produit ne correspond à cet ID", 
+							Toast.makeText(getActivity(), "Aucun produit ne " +
+									"correspond à cet ID", 
 									Toast.LENGTH_LONG).show();
 						}
 					}else{
@@ -293,12 +300,11 @@ public class ScanFragment extends Fragment {
 		ProductAdapter productAdapter;
 		
 		ApplicationSQLiteOpenHelper helper = 
-				new ApplicationSQLiteOpenHelper(getActivity(), 
-						getString(R.string.database_name), null, Integer.valueOf(
-						getString(R.string.database_version)));
+				ApplicationSQLiteOpenHelper.getInstance(getActivity());
 		
 		productAdapter = new ProductAdapter(helper);
-		productOnStation = productAdapter.getByZoneTypeAndZone(ZoneType.STATION, s);
+		productOnStation = productAdapter.getByZoneTypeAndZone(
+													ZoneType.STATION, s);
 		
 		return productOnStation;
 	}

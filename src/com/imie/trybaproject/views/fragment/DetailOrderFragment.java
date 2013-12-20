@@ -16,15 +16,20 @@ public class DetailOrderFragment extends Fragment{
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
-		View fragment = inflater.inflate(R.layout.fragment_detail_order, container, false);
+		View fragment = inflater.inflate(R.layout.fragment_detail_order, 
+															container, false);
 
 		Intent intent = getActivity().getIntent();
 		ClientOrder order = (ClientOrder)intent.getSerializableExtra("order");
 		
-		TextView txtCustomer = (TextView) fragment.findViewById(R.id.txtCustomer);
-		TextView txtProductType = (TextView) fragment.findViewById(R.id.txtProductType);
-		TextView txtMaterialType = (TextView) fragment.findViewById(R.id.txtMaterialType);
-		TextView txtQuantity = (TextView) fragment.findViewById(R.id.txtQuantity);
+		TextView txtCustomer = (TextView) fragment.findViewById(
+															R.id.txtCustomer);
+		TextView txtProductType = (TextView) fragment.findViewById(
+														R.id.txtProductType);
+		TextView txtMaterialType = (TextView) fragment.findViewById(
+														R.id.txtMaterialType);
+		TextView txtQuantity = (TextView) fragment.findViewById(
+															R.id.txtQuantity);
 		
 		txtCustomer.setText(order.getCustomer());
 		txtProductType.setText(order.getTypeProduct());

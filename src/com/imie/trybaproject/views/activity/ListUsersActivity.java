@@ -59,10 +59,12 @@ public class ListUsersActivity extends FragmentActivity {
 		
 		switch (arg1) {
 		case Activity.RESULT_CANCELED:
-			Toast.makeText(this, "L'utilisateur n'a pas été créé", Toast.LENGTH_LONG).show();
+			Toast.makeText(this, "L'utilisateur n'a pas été créé", 
+													Toast.LENGTH_LONG).show();
 			break;
 		case Activity.RESULT_OK:
-			Toast.makeText(this, "L'utilisateur à été ajouté", Toast.LENGTH_LONG).show();
+			Toast.makeText(this, "L'utilisateur à été ajouté", 
+													Toast.LENGTH_LONG).show();
 			break;
 		default:
 			break;

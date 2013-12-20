@@ -73,7 +73,8 @@ public class Product implements Serializable {
 	}
 	
 	
-	public int goToNextTampon(Station station, ApplicationSQLiteOpenHelper helper, User user)
+	public int goToNextTampon(Station station, 
+								ApplicationSQLiteOpenHelper helper, User user)
 	{
 		int result = 0;
 		Station myStation;
@@ -98,8 +99,10 @@ public class Product implements Serializable {
 			{
 				Boolean freeSpace = false;
 				Tampon nextTampon = nextStation.getTampon();
-				Integer tamponAllocatedSpace = productAdapter.getAllocatedSpace(this);
-				int tamponFreeSpace = nextTampon.getQuantity() -  tamponAllocatedSpace;
+				Integer tamponAllocatedSpace = 
+										productAdapter.getAllocatedSpace(this);
+				int tamponFreeSpace = 
+							nextTampon.getQuantity() -  tamponAllocatedSpace;
 				// Il reste a vérifier si le tampon à de la place de libre
 				
 				if (tamponFreeSpace > 0)
@@ -140,7 +143,8 @@ public class Product implements Serializable {
 		
 	}
 	
-	public int goToNextStation(Station station, ApplicationSQLiteOpenHelper helper, User user)
+	public int goToNextStation(Station station, 
+							ApplicationSQLiteOpenHelper helper, User user)
 	{
 		int result = 0;
 		Station myStation;

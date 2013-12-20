@@ -108,7 +108,8 @@ public class User {
 				this.setType(userStr[5]);
 			}
 			this.currentStation = new Station();
-			if(userStr.length >= this.getSerializableStringLength() + getCurrentStation().getSerializableStringLength()){
+			if(userStr.length >= this.getSerializableStringLength() + 
+						getCurrentStation().getSerializableStringLength()){
 				StringBuilder sb = new StringBuilder();
 				String separator = "~";
 				sb.append(userStr[6]);
@@ -120,7 +121,8 @@ public class User {
 				sb.append(userStr[9]);
 				this.currentStation.setWithSerializableString(sb.toString());
 			}
-			if(userStr.length >= this.getSerializableStringLength() + getCurrentStation().getSerializableStringLengthWithTampon()){
+			if(userStr.length >= this.getSerializableStringLength() + 
+				getCurrentStation().getSerializableStringLengthWithTampon()){
 				StringBuilder sb = new StringBuilder();
 				String separator = "~";
 				sb.append(userStr[10]);

@@ -94,8 +94,7 @@ public class AddUserFragment extends Fragment {
 		user.setType(ut.name());
 		
 		ApplicationSQLiteOpenHelper ASLOH = 
-				new ApplicationSQLiteOpenHelper(getActivity(), 
-						"tryba_database", null, 1);
+				ApplicationSQLiteOpenHelper.getInstance(getActivity());
 		UserAdapter userAdapt = new UserAdapter(ASLOH);
 		
 		long idResultatInsertion = userAdapt.insert(user);

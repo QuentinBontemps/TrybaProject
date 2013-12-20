@@ -51,9 +51,7 @@ public class LoginFragment extends Fragment{
 		{
 
 			ApplicationSQLiteOpenHelper ASLOH = 
-					new ApplicationSQLiteOpenHelper(getActivity(), 
-							getString(R.string.database_name), null, 
-							Integer.parseInt(getString(R.string.database_version)));
+					ApplicationSQLiteOpenHelper.getInstance(getActivity());
 			Datasets.initData(ASLOH.getDb());
 			
 			SharedPreferences.Editor editor = preferences.edit();
@@ -96,8 +94,7 @@ public class LoginFragment extends Fragment{
 		// On cherche dans la base de données le client
 		User user; 
 		ApplicationSQLiteOpenHelper ASLOH = 
-				new ApplicationSQLiteOpenHelper(getActivity(), 
-						this.getString(R.string.database_name), null, 1);
+				ApplicationSQLiteOpenHelper.getInstance(getActivity());
 		UserAdapter userAdapt = new UserAdapter(ASLOH);
 		
 		user = userAdapt.getWithLogin(ET_login.getText().toString());
