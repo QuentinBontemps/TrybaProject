@@ -45,7 +45,7 @@ public class ProductAdapter implements Adapter<Product, Integer> {
 	@Override
 	public long insert(Product item) {
 		long i = -1;
-		if(this.db != null){
+		if(this.db != null && db.isOpen()){
 			ContentValues values = new ContentValues();
 			values.put(COL_NAME, item.getName());
 			values.put(COL_ORDER_ID,item.getOrder().getId());
@@ -62,7 +62,7 @@ public class ProductAdapter implements Adapter<Product, Integer> {
 	@Override
 	public long update(Product item) {
 		long i = -1;
-		if(this.db != null){
+		if(this.db != null && db.isOpen()){
 			ContentValues values = new ContentValues();
 			values.put(COL_NAME, item.getName());
 			values.put(COL_ORDER_ID,item.getOrder().getId());
