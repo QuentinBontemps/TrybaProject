@@ -89,8 +89,8 @@ public class ScanFragment extends Fragment {
 				getString(R.string.database_name), null, Integer.valueOf(
 				getString(R.string.database_version)));
 		
-		ProductAdapter productAdapter = new ProductAdapter(ASLOH);
-		
+		ProductAdapter productAdapter = new ProductAdapter(null);
+		productAdapter.setDatabase(ASLOH.getDb());
 		
 		Product product = new Product();
 		int userId;
@@ -152,6 +152,7 @@ public class ScanFragment extends Fragment {
 			Toast.makeText(getActivity(), "Cet id n'existe pas ", 
 					Toast.LENGTH_LONG).show();
 		}
+		ASLOH.getDb().close();
 		
 		return result;
 	}

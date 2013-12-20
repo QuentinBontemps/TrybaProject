@@ -38,6 +38,7 @@ public final class Datasets {
 		Station stationFaconnage = new Station();
 		Station stationPeinture = new Station();
 		Station stationAssemblage = new Station();
+		Station stationProduction = new Station();
 		
 		
 		// init station data
@@ -60,13 +61,19 @@ public final class Datasets {
 		stationAssemblage.setOrder(4);
 		stationAssemblage.setTampon(tamponAssemblage);
 		stationAssemblage.setVisible(true);
-				
+			
+		stationProduction.setName("Station non utilisée");
+		stationProduction.setOrder(5);
+		stationProduction.setTampon(tamponProduction);
+		stationProduction.setVisible(true);
+		
 		
 		// Insertion
 		stationAdapter.insert(stationDecoupe);
 		stationAdapter.insert(stationFaconnage);
 		stationAdapter.insert(stationPeinture);
 		stationAdapter.insert(stationAssemblage);
+		stationAdapter.insert(stationProduction);
 	}
 	
 	public static void initTampon(SQLiteDatabase db)
