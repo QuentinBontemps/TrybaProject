@@ -6,13 +6,13 @@
     android:weightSum="10">
 
     <fragment 
-        android:name="com.imie.trybaproject.activity.DetailOrderFragment"
+        android:name="com.imie.trybaproject.views.fragment.DetailOrderFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="7"/>
     
     <fragment 
-        android:name="com.imie.trybaproject.activity.ListProductsFragment"
+        android:name="com.imie.trybaproject.views.fragment.ListProductsFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="3"/>

@@ -10,7 +10,7 @@
 
     <fragment
         android:id="@+id/fragment_list_users"
-        android:name="com.imie.trybaproject.activity.ListUsersFragment"
+        android:name="com.imie.trybaproject.views.fragment.ListUsersFragment"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
     ></fragment>

@@ -10,7 +10,7 @@
     android:orientation="vertical">
     <fragment
         android:id="@+id/fragment_add_order"
-        android:name="com.imie.trybaproject.activity.AddOrderFragment"
+        android:name="com.imie.trybaproject.views.fragment.AddOrderFragment"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
     ></fragment>

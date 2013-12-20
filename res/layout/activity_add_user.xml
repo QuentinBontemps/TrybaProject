@@ -11,7 +11,7 @@
     
     <fragment
         android:id="@+id/fragment_add_user"
-        android:name="com.imie.trybaproject.activity.AddUserFragment"
+        android:name="com.imie.trybaproject.views.fragment.AddUserFragment"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
     ></fragment>
