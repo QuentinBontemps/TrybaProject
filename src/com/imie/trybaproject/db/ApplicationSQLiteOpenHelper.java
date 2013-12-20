@@ -19,7 +19,7 @@ public class ApplicationSQLiteOpenHelper extends SQLiteOpenHelper {
 		return _instance;
 	}
 	
-	public ApplicationSQLiteOpenHelper(Context context, String name,
+	private ApplicationSQLiteOpenHelper(Context context, String name,
 			CursorFactory factory, int version) {
 		super(context, name, factory, version);
 	}
