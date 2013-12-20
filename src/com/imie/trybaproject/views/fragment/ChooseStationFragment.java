@@ -181,7 +181,7 @@ public class ChooseStationFragment extends Fragment {
 			
 			StationAdapter stationAdapter = new StationAdapter(helper);
 			
-			ArrayList<Station> stations = stationAdapter.getAll();	
+			ArrayList<Station> stations = stationAdapter.getStationVisible();	
 			
 			return stations;
 		}

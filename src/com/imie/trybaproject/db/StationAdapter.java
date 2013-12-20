@@ -201,6 +201,38 @@ public class StationAdapter implements Adapter<Station, Integer>{
 		}
 		return cursor;
 	}
+	
+	public ArrayList<Station> getStationVisible(){
+		ArrayList<Station> stations = new ArrayList<Station>();
+		if(this.db != null){
+			Cursor cursor = db.query(TABLE,
+					new String[]{COL_ID, COL_NAME, 
+					COL_ORDER, COL_VISIBLE, COL_TAMPON_ID},
+					COL_VISIBLE + " = 1 ", null, null, null, null);
+			
+			if(cursor.getCount() > 0){
+				cursor.moveToFirst();
+				do {
+					Station station = new Station();
+					station.setId(cursor.getInt(
+										cursor.getColumnIndex(COL_ID)));
+					station.setName(cursor.getString(
+										cursor.getColumnIndex(COL_NAME)));
+					station.setOrder(cursor.getInt(
+										cursor.getColumnIndex(COL_ORDER)));
+					TamponAdapter tamponAdapter = new TamponAdapter(null);
+					tamponAdapter.setDatabase(db);
+					station.setTampon(tamponAdapter.get(cursor.getInt(
+										cursor.getColumnIndex(COL_TAMPON_ID))));
+					stations.add(station);
+				} while (cursor.moveToNext());
+			}
+			if(helper != null)			
+				db.close();
+		}
+		
+		return stations;
+	}
 
 	@Override
 	public void setDatabase(SQLiteDatabase db) {

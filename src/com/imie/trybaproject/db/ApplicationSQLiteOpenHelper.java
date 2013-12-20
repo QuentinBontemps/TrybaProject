@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 public class ApplicationSQLiteOpenHelper extends SQLiteOpenHelper {
 
-	private static ApplicationSQLiteOpenHelper _instance;
+	private static volatile ApplicationSQLiteOpenHelper _instance;
 	
 	public static ApplicationSQLiteOpenHelper getInstance(Context context){
 		if(_instance == null){
