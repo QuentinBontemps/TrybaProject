@@ -10,6 +10,7 @@ import com.imie.trybaproject.R.menu;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -28,6 +29,7 @@ public class ScanActivity extends Activity  implements View.OnClickListener{
 		btnScan = (Button) findViewById(R.id.btnScan);
 		btnScan.setOnClickListener(this);
 		txtResult = (TextView) findViewById(R.id.txtResult);
+		this.setResult(RESULT_CANCELED);
 	}
 
 	@Override
@@ -55,7 +57,16 @@ public class ScanActivity extends Activity  implements View.OnClickListener{
 		IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
 		if(result != null){
 			txtResult.setText(result.getContents());
-			Toast.makeText(this, "Good guy", Toast.LENGTH_SHORT).show();
+			SharedPreferences preferences = 
+					this.getSharedPreferences("DEFAULT", 
+							Activity.MODE_PRIVATE);
+			SharedPreferences.Editor editor = preferences.edit();
+			Integer idScan = Integer.parseInt(result.getContents());
+			editor.putInt("ID_SCAN_VALUE", idScan);
+			editor.commit();
+			
+			this.setResult(RESULT_OK);
+			this.finish();
 		}else{
 			Toast.makeText(this, "Dommage ca marche pas", Toast.LENGTH_SHORT).show();
 		}

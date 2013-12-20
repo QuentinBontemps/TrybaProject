@@ -32,6 +32,7 @@ public class ScanFragment extends Fragment {
 	EditText et_idProduct;
 	Button btn_validate;
 	SharedPreferences preferences;
+	final int CONST_REQUEST3 = 5003; // Code réponse du scan
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,8 +50,10 @@ public class ScanFragment extends Fragment {
 			
 			@Override
 			public void onClick(View v) {
+				/*Intent intent = new Intent(getActivity(), ScanActivity.class);
+				getActivity().startActivity(intent);*/
 				Intent intent = new Intent(getActivity(), ScanActivity.class);
-				getActivity().startActivity(intent);
+				startActivityForResult(intent, CONST_REQUEST3);
 				
 			}
 		});
@@ -150,6 +153,35 @@ public class ScanFragment extends Fragment {
 		}
 		
 		return result;
+	}
+	
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+		super.onActivityResult(requestCode, resultCode, data);
+		
+		switch (requestCode) {
+		case CONST_REQUEST3: if (resultCode == Activity.RESULT_OK)
+		{
+			SharedPreferences preferences = 
+					getActivity().getSharedPreferences("DEFAULT", 
+							Activity.MODE_PRIVATE);
+			Integer idValueScan = preferences.getInt("ID_SCAN_VALUE", 0);
+			Toast.makeText(getActivity(), "Le qr a été scanné id : " + idValueScan, 
+					Toast.LENGTH_LONG).show();
+			et_idProduct.setText(String.valueOf(idValueScan));
+		}else{
+			Toast.makeText(getActivity(), "Aucun code n'a été scanné", 
+					Toast.LENGTH_LONG).show();
+		}
+			
+			break;
+
+		default:
+			break;
+		}
+
+		
 	}
 	
 }
