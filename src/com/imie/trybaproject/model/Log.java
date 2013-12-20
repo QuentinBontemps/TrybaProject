@@ -6,17 +6,17 @@ public class Log {
 	
 	private long id;
 	private User user;
-	private Zone zone;
+	private String zoneName;
 	private Product product;
 	private Date date;
 	
 	public Log(){
 	}
 	
-	public Log(User user, Zone zone, Date date) {
+	public Log(User user, String zoneName, Date date) {
 		super();
 		this.user = user;
-		this.zone = zone;
+		this.zoneName = zoneName;
 		this.date = date;
 	}
 		
@@ -32,11 +32,11 @@ public class Log {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	public Zone getZone() {
-		return zone;
+	public String getZoneName() {
+		return zoneName;
 	}
-	public void setZone(Zone zone) {
-		this.zone = zone;
+	public void setZoneName(String zoneName) {
+		this.zoneName = zoneName;
 	}
 	public Product getProduct() {
 		return product;

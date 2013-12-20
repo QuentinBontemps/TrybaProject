@@ -1,5 +1,8 @@
 package com.imie.trybaproject.db;
 
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+
 import com.imie.trybaproject.R;
 import com.imie.trybaproject.model.Log;
 
@@ -14,6 +17,13 @@ import android.widget.TextView;
 
 public class LogsCursorsAdapter extends CursorAdapter{
 
+	private String dateFormatDay = "dd/MM/yyyy";
+	private String dateFormatHour = "HH:mm";
+	private SimpleDateFormat sdfDay = 
+			new SimpleDateFormat(dateFormatDay, Locale.FRANCE);
+	private SimpleDateFormat sdfHours = 
+			new SimpleDateFormat(dateFormatHour, Locale.FRANCE);
+	
 	public LogsCursorsAdapter(Context context, Cursor c) {
 		super(context, c);
 	}
@@ -32,8 +42,8 @@ public class LogsCursorsAdapter extends CursorAdapter{
 		Log log = logAdapter.get(c.getInt(c.getColumnIndex(LogAdapter.COL_ID)));
 		
 		operator.setText(log.getUser().getFirstname() + " " + log.getUser().getLastname());
-		zone.setText(log.getZone().getName());
-		date.setText(LogAdapter.sdf.format(log.getDate()));
+		zone.setText(log.getZoneName());
+		date.setText(String.format(ctx.getString(R.string.at_date_time), sdfDay.format(log.getDate()),sdfHours.format(log.getDate())));
 		
 	}
 

@@ -22,12 +22,12 @@ public class LogAdapter implements Adapter<Log, Integer> {
 	public static final String TABLE = "log";
 	public static final String COL_ID = "_id";
 	public static final String COL_USER_ID = "userId";
-	public static final String COL_ZONE_ID = "zoneId";
+	public static final String COL_ZONE_NAME = "zoneName";
 	public static final String COL_PRODUCT_ID = "productId";
 	public static final String COL_DATE = "date";
 	
-	private static final String dateFormat = "yyyy-MM-dd'T'HH:mm";
-	public static final SimpleDateFormat sdf = 
+	private String dateFormat = "yyyy-MM-dd'T'HH:mm";
+	private SimpleDateFormat sdf = 
 								new SimpleDateFormat(dateFormat, Locale.FRANCE);
 	
 	private ApplicationSQLiteOpenHelper helper;
@@ -48,7 +48,7 @@ public class LogAdapter implements Adapter<Log, Integer> {
 		return "CREATE TABLE " 	+ TABLE + "("
 				+ COL_ID 		+ " INTEGER PRIMARY KEY AUTOINCREMENT, "
 				+ COL_USER_ID 	+ " INTEGER NOT NULL, "
-				+ COL_ZONE_ID+ " INTEGER NOT NULL, " 
+				+ COL_ZONE_NAME + " VARCHAR(50) NOT NULL, " 
 				+ COL_PRODUCT_ID+ " INTEGER NOT NULL, " 
 				+ COL_DATE	+ " DATETIME); ";
 	}
@@ -59,7 +59,7 @@ public class LogAdapter implements Adapter<Log, Integer> {
 		if(this.db != null){
 			ContentValues values = new ContentValues();
 			values.put(COL_USER_ID, item.getUser().getId());
-			values.put(COL_ZONE_ID, item.getZone().getId());
+			values.put(COL_ZONE_NAME, item.getZoneName());
 			values.put(COL_PRODUCT_ID, item.getProduct().getId());
 			if(item.getDate() != null)
 				values.put(COL_DATE, sdf.format(item.getDate()));
@@ -78,7 +78,7 @@ public class LogAdapter implements Adapter<Log, Integer> {
 		if(this.db != null){
 			ContentValues values = new ContentValues();
 			values.put(COL_USER_ID, item.getUser().getId());
-			values.put(COL_ZONE_ID, item.getZone().getId());
+			values.put(COL_ZONE_NAME, item.getZoneName());
 			values.put(COL_PRODUCT_ID, item.getProduct().getId());
 			if(item.getDate() != null)
 				values.put(COL_DATE, sdf.format(item.getDate()));
@@ -106,7 +106,7 @@ public class LogAdapter implements Adapter<Log, Integer> {
 		if(db != null){
 			Cursor cursor = db.query(TABLE,
 					new String[]{COL_ID, COL_USER_ID, COL_PRODUCT_ID, 
-					COL_ZONE_ID, COL_DATE},
+					COL_ZONE_NAME, COL_DATE},
 					COL_ID + " = ? ",
 					new String[]{String.valueOf(id)}, null, null, null);
 			
@@ -114,10 +114,9 @@ public class LogAdapter implements Adapter<Log, Integer> {
 				cursor.moveToFirst();
 				log = new Log();
 				log.setId(cursor.getInt(cursor.getColumnIndex(COL_ID)));
-				StationAdapter stationAdapter = new StationAdapter(null);
-				stationAdapter.setDatabase(db);
-				log.setZone(stationAdapter.get(cursor.getInt(
-									cursor.getColumnIndex(COL_ZONE_ID))));
+				log.setZoneName(cursor.getString(
+						cursor.getColumnIndex(COL_ZONE_NAME)));
+
 				UserAdapter userAdapter = new UserAdapter(null);
 				userAdapter.setDatabase(db);
 				log.setUser(userAdapter.get(cursor.getInt(
@@ -128,8 +127,9 @@ public class LogAdapter implements Adapter<Log, Integer> {
 									cursor.getColumnIndex(COL_PRODUCT_ID))));
 				try {
 					Date date = null;
-					if(!cursor.getString(cursor.getColumnIndex(COL_DATE)).equals("")){
-						date = new SimpleDateFormat(
+					if(!cursor.getString(
+							cursor.getColumnIndex(COL_DATE)).equals("")){
+								date = new SimpleDateFormat(
 								dateFormat, Locale.FRANCE).
 								parse(cursor.getString(
 										cursor.getColumnIndex(COL_DATE)));
@@ -157,10 +157,9 @@ public class LogAdapter implements Adapter<Log, Integer> {
 				do {
 					Log log = new Log();
 					log.setId(cursor.getInt(cursor.getColumnIndex(COL_ID)));
-					StationAdapter stationAdapter = new StationAdapter(null);
-					stationAdapter.setDatabase(db);
-					log.setZone(stationAdapter.get(cursor.getInt(
-										cursor.getColumnIndex(COL_ZONE_ID))));
+					log.setZoneName(cursor.getString(
+							cursor.getColumnIndex(COL_ZONE_NAME)));
+					
 					UserAdapter userAdapter = new UserAdapter(null);
 					userAdapter.setDatabase(db);
 					log.setUser(userAdapter.get(cursor.getInt(
@@ -197,7 +196,7 @@ public class LogAdapter implements Adapter<Log, Integer> {
 		if(db != null){
 			cursor = db.query(TABLE,
 					new String[]{COL_ID, COL_USER_ID, COL_PRODUCT_ID, 
-												COL_ZONE_ID, COL_DATE},
+												COL_ZONE_NAME, COL_DATE},
 					null,null, null, null, null);
 		}
 		return cursor;
@@ -208,7 +207,7 @@ public class LogAdapter implements Adapter<Log, Integer> {
 		if(db != null){
 			cursor = db.query(TABLE,
 					new String[]{COL_ID, COL_USER_ID, COL_PRODUCT_ID, 
-												COL_ZONE_ID, COL_DATE},
+					COL_ZONE_NAME, COL_DATE},
 					COL_PRODUCT_ID + " = ?",
 					new String[]{String.valueOf(productId)}, null, null, null);
 		}

@@ -180,4 +180,5 @@
     <string name="operator">Opérateur :</string>
     <string name="zone">Zone :</string>
     <string name="date">Date :</string>
+    <string name="at_date_time">Le %1$s à %2$s</string>
 </resources>

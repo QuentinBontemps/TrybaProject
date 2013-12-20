@@ -117,7 +117,7 @@ public class Product implements Serializable {
 					Log log = new Log();
 					log.setProduct(this);
 					log.setUser(user);
-					log.setZone(nextTampon);
+					log.setZoneName(nextTampon.getName());
 					log.setDate(new Date());
 					
 					logAdapter.insert(log);
@@ -179,7 +179,7 @@ public class Product implements Serializable {
 				Log log = new Log();
 				log.setProduct(this);
 				log.setUser(user);
-				log.setZone(nextStation);
+				log.setZoneName(nextStation.getName());
 				log.setDate(new Date());
 				
 				logAdapter.insert(log);
