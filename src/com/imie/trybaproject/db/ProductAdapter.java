@@ -122,7 +122,7 @@ public class ProductAdapter implements Adapter<Product, Integer> {
 						stationAdapter.setDatabase(db);
 						product.setCurrentZone(stationAdapter.get(
 								cursor.getInt(
-								cursor.getColumnIndex(COL_CURRENT_ZONE_ID)))); // récupère 0
+								cursor.getColumnIndex(COL_CURRENT_ZONE_ID))));
 						break;
 					case TAMPON : // On recherche le tampon
 						TamponAdapter tamponAdapter = new TamponAdapter(null);
@@ -336,7 +336,7 @@ public class ProductAdapter implements Adapter<Product, Integer> {
 						stationAdapter.setDatabase(db);
 						product.setCurrentZone(stationAdapter.get(
 								cursor.getInt(
-								cursor.getColumnIndex(COL_CURRENT_ZONE_ID)))); // récupère 0
+								cursor.getColumnIndex(COL_CURRENT_ZONE_ID)))); 
 						break;
 					case TAMPON : // On recherche le tampon
 						TamponAdapter tamponAdapter = new TamponAdapter(null);

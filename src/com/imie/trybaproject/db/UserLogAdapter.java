@@ -121,14 +121,18 @@ public class UserLogAdapter implements Adapter<UserLog, Integer>{
 				try {
 					Date startDate = null;
 					Date endDate = null;
-					if(!cursor.getString(cursor.getColumnIndex(COL_START_DATE)).equals("")){
-						startDate = new SimpleDateFormat(
+					if(!cursor.getString(
+							cursor.getColumnIndex(COL_START_DATE)).equals("")){
+								startDate = new SimpleDateFormat(
 								dateFormat, Locale.FRANCE).
 								parse(cursor.getString(
 										cursor.getColumnIndex(COL_START_DATE)));
 					}
 										
-					if(cursor.getString(cursor.getColumnIndex(COL_END_DATE)) != null && !cursor.getString(cursor.getColumnIndex(COL_END_DATE)).equals("")){
+					if(cursor.getString(
+						cursor.getColumnIndex(COL_END_DATE)) != null && 
+						!cursor.getString(
+							cursor.getColumnIndex(COL_END_DATE)).equals("")){
 						endDate = new SimpleDateFormat(
 								dateFormat,Locale.FRANCE).
 								parse(cursor.getString(

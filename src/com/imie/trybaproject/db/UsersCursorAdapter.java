@@ -65,14 +65,10 @@ public class UsersCursorAdapter extends CursorAdapter{
 			
 			@Override
 			public void onClick(View v) {
-				ApplicationSQLiteOpenHelper ASLOH = 
-						new ApplicationSQLiteOpenHelper(context, 
-								context.getString(R.string.database_name), null, 
-								Integer.parseInt(
-										context.getString(
-												R.string.database_version)));
+				ApplicationSQLiteOpenHelper helper = 
+						ApplicationSQLiteOpenHelper.getInstance(context);
 				UserAdapter userAdapter = new UserAdapter();
-				userAdapter.setDatabase(ASLOH.getDb());
+				userAdapter.setDatabase(helper.getDb());
 				
 				long id = (Long)v.getTag();
 				

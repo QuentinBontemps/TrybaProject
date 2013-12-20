@@ -35,15 +35,17 @@ public class LogsCursorsAdapter extends CursorAdapter{
 		TextView zone = (TextView)view.findViewById(R.id.txtZone);
 		TextView date = (TextView)view.findViewById(R.id.txtDate);
 
-		ApplicationSQLiteOpenHelper helper = new ApplicationSQLiteOpenHelper(
-				ctx, ctx.getString(R.string.database_name), null,
-				Integer.parseInt(ctx.getString(R.string.database_version)));
+		ApplicationSQLiteOpenHelper helper = 
+				ApplicationSQLiteOpenHelper.getInstance(ctx);
+		
 		LogAdapter logAdapter = new LogAdapter(helper);
 		Log log = logAdapter.get(c.getInt(c.getColumnIndex(LogAdapter.COL_ID)));
 		
-		operator.setText(log.getUser().getFirstname() + " " + log.getUser().getLastname());
+		operator.setText(log.getUser().getFirstname() + " " + 
+												log.getUser().getLastname());
 		zone.setText(log.getZoneName());
-		date.setText(String.format(ctx.getString(R.string.at_date_time), sdfDay.format(log.getDate()),sdfHours.format(log.getDate())));
+		date.setText(String.format(ctx.getString(R.string.at_date_time), 
+				sdfDay.format(log.getDate()),sdfHours.format(log.getDate())));
 		
 	}
 

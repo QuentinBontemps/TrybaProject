@@ -203,7 +203,8 @@ public class ChooseStationFragment extends Fragment {
 			activity.getItems().remove(0);
 			activity.getItems().add(0, activity.getProductScan());
 			activity.getItems().add(1, activity.getStationChange());
-			activity.getStationChange().setFragment(new ChooseStationFragment(activity, true, (int) userLogId));
+			activity.getStationChange().setFragment(new ChooseStationFragment(
+					activity, true, (int) userLogId));
 			activity.setItemCheck(1);
 			activity.getAdapter().notifyDataSetChanged();
 		}

@@ -22,9 +22,8 @@ public class ProductsCursorAdapter extends CursorAdapter {
 		TextView txtName = (TextView) view.findViewById(R.id.txtName);
 		TextView txtStatus = (TextView) view.findViewById(R.id.txtStatus);
 		
-		ApplicationSQLiteOpenHelper helper = new ApplicationSQLiteOpenHelper(
-				ctx, ctx.getString(R.string.database_name), null,
-				Integer.parseInt(ctx.getString(R.string.database_version)));
+		ApplicationSQLiteOpenHelper helper = 
+				ApplicationSQLiteOpenHelper.getInstance(ctx);
 		ProductAdapter productAdapter = new ProductAdapter(helper);
 
 		Product p = productAdapter.get(c.getInt(c

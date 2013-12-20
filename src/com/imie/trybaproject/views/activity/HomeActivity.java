@@ -260,10 +260,5 @@ public class HomeActivity extends FragmentActivity {
 	
 	public MenuItem getProductScan(){
 		return this.itemProductScan;
-	}
-	
-	public void setItemCheck(int position){
-		this.drawerList.setItemChecked(position, true);
-	}
-	
+	}	
 }

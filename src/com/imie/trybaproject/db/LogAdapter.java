@@ -170,8 +170,9 @@ public class LogAdapter implements Adapter<Log, Integer> {
 										cursor.getColumnIndex(COL_PRODUCT_ID))));
 					try {
 						Date date = null;
-						if(!cursor.getString(cursor.getColumnIndex(COL_DATE)).equals("")){
-							date = new SimpleDateFormat(
+						if(!cursor.getString(
+								cursor.getColumnIndex(COL_DATE)).equals("")){
+									date = new SimpleDateFormat(
 									dateFormat, Locale.FRANCE).
 									parse(cursor.getString(
 											cursor.getColumnIndex(COL_DATE)));
