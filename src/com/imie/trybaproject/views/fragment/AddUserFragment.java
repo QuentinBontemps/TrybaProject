@@ -1,4 +1,4 @@
-package com.imie.trybaproject.activity;
+package com.imie.trybaproject.views.fragment;
 
 import java.util.ArrayList;
 import java.util.List;

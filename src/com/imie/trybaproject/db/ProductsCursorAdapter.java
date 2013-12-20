@@ -1,8 +1,6 @@
-package com.imie.trybaproject.activity;
+package com.imie.trybaproject.db;
 
 import com.imie.trybaproject.R;
-import com.imie.trybaproject.db.ApplicationSQLiteOpenHelper;
-import com.imie.trybaproject.db.ProductAdapter;
 import com.imie.trybaproject.model.Product;
 
 import android.content.Context;
@@ -34,7 +32,6 @@ public class ProductsCursorAdapter extends CursorAdapter {
 
 		txtName.setText(p.getName() + "   REF : " + p.getId());
 		txtStatus.setText("Emplacement : " + p.getCurrentZone().getName());
-
 	}
 
 	@Override

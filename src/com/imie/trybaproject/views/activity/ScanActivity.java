@@ -1,4 +1,4 @@
-package com.imie.trybaproject.activity;
+package com.imie.trybaproject.views.activity;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentIntegratorSupportV4;

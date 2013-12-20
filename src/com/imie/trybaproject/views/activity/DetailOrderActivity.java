@@ -1,4 +1,4 @@
-package com.imie.trybaproject.activity;
+package com.imie.trybaproject.views.activity;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;

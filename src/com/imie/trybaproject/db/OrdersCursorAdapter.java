@@ -1,9 +1,6 @@
-package com.imie.trybaproject.activity;
+package com.imie.trybaproject.db;
 
 import com.imie.trybaproject.R;
-import com.imie.trybaproject.db.ClientOrderAdapter;
-import com.imie.trybaproject.db.OrderProductAdapter;
-import com.imie.trybaproject.db.UserAdapter;
 import com.imie.trybaproject.model.OrderProduct;
 import com.imie.trybaproject.model.User;
 

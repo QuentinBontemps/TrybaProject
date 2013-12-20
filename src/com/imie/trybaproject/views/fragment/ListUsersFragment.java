@@ -1,9 +1,11 @@
-package com.imie.trybaproject.activity;
+package com.imie.trybaproject.views.fragment;
 
 
 import com.imie.trybaproject.R;
 import com.imie.trybaproject.db.ApplicationSQLiteOpenHelper;
 import com.imie.trybaproject.db.UserAdapter;
+import com.imie.trybaproject.db.UsersCursorAdapter;
+import com.imie.trybaproject.views.activity.AddUserActivity;
 
 import android.content.Intent;
 import android.database.Cursor;

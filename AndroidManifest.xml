@@ -18,11 +18,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.imie.trybaproject.activity.MainActivity"
-            android:label="@string/app_name" >
-        </activity>
-        <activity
-            android:name="com.imie.trybaproject.activity.LoginActivity"
+            android:name ="com.imie.trybaproject.views.activity.LoginActivity"
             android:label="@string/title_activity_login" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,51 +27,28 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.imie.trybaproject.activity.ListUsersActivity"
-            android:label="@string/title_activity_user" >
+            android:name="com.imie.trybaproject.views.activity.ListUsersActivity">
         </activity>
         <activity
-            android:name="com.imie.trybaproject.activity.AddUserActivity"
-            android:label="@string/title_activity_add_user" >
+            android:name= "com.imie.trybaproject.views.activity.AddUserActivity" >
         </activity>
         <activity
-            android:name="com.imie.trybaproject.activity.AddOrderActivity"
-            android:label="@string/title_activity_add_order" >
+            android:name="com.imie.trybaproject.views.activity.AddOrderActivity" >
         </activity>
         <activity
-            android:name="com.imie.trybaproject.activity.HomeActivity"
-            android:label="@string/title_activity_home" >
+            android:name="com.imie.trybaproject.views.activity.HomeActivity" >
         </activity>
         <activity
-            android:name="com.imie.trybaproject.activity.ScanActivity"
-            android:label="@string/title_activity_scan" >
+             android:name= "com.imie.trybaproject.views.activity.ScanActivity" >
         </activity>
         <activity
-            android:name="com.imie.trybaproject.activity.ListOrdersActivity"
-            android:label="@string/title_activity_list_orders" >
+             android:name= "com.imie.trybaproject.views.activity.ListOrdersActivity" >
+        </activity>
+       <activity
+            android:name= "com.imie.trybaproject.views.activity.DetailOrderActivity" >
         </activity>
         <activity
-            android:name="com.google.zxing.client.android.CaptureActivity"
-            android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="landscape"
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
-            android:windowSoftInputMode="stateAlwaysHidden" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="com.google.zxing.client.android.SCAN" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity android:name="com.google.zxing.client.android.HelpActivity" >
-        </activity>
-        <activity
-            android:name="com.imie.trybaproject.activity.DetailOrderActivity"
-            android:label="@string/title_activity_detail_order" >
+            android:name="com.imie.trybaproject.views.activity.DetailProductActivity">
         </activity>
     </application>
 

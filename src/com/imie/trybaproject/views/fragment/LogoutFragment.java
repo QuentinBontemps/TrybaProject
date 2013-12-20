@@ -1,4 +1,4 @@
-package com.imie.trybaproject.activity;
+package com.imie.trybaproject.views.fragment;
 
 import android.app.Activity;
 import android.content.Context;

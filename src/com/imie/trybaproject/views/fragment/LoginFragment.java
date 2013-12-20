@@ -1,4 +1,4 @@
-package com.imie.trybaproject.activity;
+package com.imie.trybaproject.views.fragment;
 
 
 
@@ -29,6 +29,7 @@ import com.imie.trybaproject.model.Station;
 import com.imie.trybaproject.model.Tampon;
 import com.imie.trybaproject.model.User;
 import com.imie.trybaproject.model.UserType;
+import com.imie.trybaproject.views.activity.HomeActivity;
 
 public class LoginFragment extends Fragment{
 	

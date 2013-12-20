@@ -1,7 +1,8 @@
-package com.imie.trybaproject.activity;
+package com.imie.trybaproject.views.activity;
 
 
 import com.imie.trybaproject.R;
+import com.imie.trybaproject.views.fragment.ListUsersFragment;
 
 import android.app.Activity;
 import android.support.v4.app.FragmentManager;

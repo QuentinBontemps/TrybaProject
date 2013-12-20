@@ -1,4 +1,4 @@
-package com.imie.trybaproject.activity;
+package com.imie.trybaproject.views.fragment;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -13,6 +13,7 @@ import com.imie.trybaproject.model.Station;
 import com.imie.trybaproject.model.User;
 import com.imie.trybaproject.model.UserLog;
 import com.imie.trybaproject.model.UserType;
+import com.imie.trybaproject.views.activity.HomeActivity;
 
 import android.app.Activity;
 import android.app.ProgressDialog;

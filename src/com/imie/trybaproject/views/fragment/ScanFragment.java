@@ -1,4 +1,4 @@
-package com.imie.trybaproject.activity;
+package com.imie.trybaproject.views.fragment;
 
 import com.imie.trybaproject.R;
 import com.imie.trybaproject.R.layout;
@@ -13,6 +13,7 @@ import com.imie.trybaproject.model.Station;
 import com.imie.trybaproject.model.User;
 import com.imie.trybaproject.model.UserLog;
 import com.imie.trybaproject.model.ZoneType;
+import com.imie.trybaproject.views.activity.ScanActivity;
 
 import android.app.Activity;
 import android.content.Intent;

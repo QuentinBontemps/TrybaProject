@@ -1,10 +1,13 @@
-package com.imie.trybaproject.activity;
+package com.imie.trybaproject.views.fragment;
 
 import com.imie.trybaproject.R;
 import com.imie.trybaproject.db.ApplicationSQLiteOpenHelper;
 import com.imie.trybaproject.db.ClientOrderAdapter;
+import com.imie.trybaproject.db.OrdersCursorAdapter;
 import com.imie.trybaproject.db.UserAdapter;
 import com.imie.trybaproject.model.ClientOrder;
+import com.imie.trybaproject.views.activity.AddOrderActivity;
+import com.imie.trybaproject.views.activity.DetailOrderActivity;
 
 import android.content.Intent;
 import android.database.Cursor;

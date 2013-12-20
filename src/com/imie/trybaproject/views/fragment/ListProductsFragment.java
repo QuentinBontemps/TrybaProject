@@ -1,8 +1,9 @@
-package com.imie.trybaproject.activity;
+package com.imie.trybaproject.views.fragment;
 
 import com.imie.trybaproject.R;
 import com.imie.trybaproject.db.ApplicationSQLiteOpenHelper;
 import com.imie.trybaproject.db.ProductAdapter;
+import com.imie.trybaproject.db.ProductsCursorAdapter;
 import com.imie.trybaproject.model.ClientOrder;
 
 import android.content.Intent;
@@ -36,7 +37,17 @@ public class ListProductsFragment extends Fragment{
 		
 		Cursor products = productAdapter.getByOrderIdWithCursor((int)order.getId());
 		lv.setAdapter(new ProductsCursorAdapter(getActivity(), products));
+		lv.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+					long arg3) {
 				
+			}
+		});		
+		
+		
+		
 		return fragment;
 	}
 

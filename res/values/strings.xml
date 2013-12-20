@@ -174,4 +174,6 @@
     <string name="wifi_type_label">Type</string>
     <string name="title_activity_detail_order">DetailOrderActivity</string>
     <string name="products">Produits :</string>
+    <string name="title_activity_detail_product">DetailProductActivity</string>
+
 </resources>

@@ -1,4 +1,4 @@
-package com.imie.trybaproject.activity;
+package com.imie.trybaproject.views.activity;
 
 import java.util.ArrayList;
 import java.util.Currency;
@@ -22,10 +22,16 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.imie.trybaproject.R;
+import com.imie.trybaproject.db.ListMenuItemAdapter;
 import com.imie.trybaproject.model.MenuItem;
 import com.imie.trybaproject.model.Station;
 import com.imie.trybaproject.model.User;
 import com.imie.trybaproject.model.UserType;
+import com.imie.trybaproject.views.fragment.ChooseStationFragment;
+import com.imie.trybaproject.views.fragment.ListOrdersFragment;
+import com.imie.trybaproject.views.fragment.ListUsersFragment;
+import com.imie.trybaproject.views.fragment.LogoutFragment;
+import com.imie.trybaproject.views.fragment.ScanFragment;
 
 public class HomeActivity extends FragmentActivity {
 
