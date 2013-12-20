@@ -4,7 +4,9 @@ import java.io.Serializable;
 import java.util.Date;
 
 import android.app.Application;
+import android.widget.Toast;
 
+import com.imie.trybaproject.R;
 import com.imie.trybaproject.db.ApplicationSQLiteOpenHelper;
 import com.imie.trybaproject.db.LogAdapter;
 import com.imie.trybaproject.db.ProductAdapter;
@@ -125,9 +127,16 @@ public class Product implements Serializable {
 		int result = 0;
 		Station myStation;
 		Station nextStation;
-		StationAdapter stationAdapter = new StationAdapter(helper);
-		ProductAdapter productAdapter = new ProductAdapter(helper);
-		LogAdapter logAdapter = new LogAdapter(helper);
+		StationAdapter stationAdapter = new StationAdapter(null);
+		ProductAdapter productAdapter = new ProductAdapter(null);
+		LogAdapter logAdapter = new LogAdapter(null);
+		stationAdapter.setDatabase(helper.getDb());
+		productAdapter.setDatabase(helper.getDb());
+		logAdapter.setDatabase(helper.getDb());
+		
+		
+		
+		
 		
 		if (this.currentTypeZone == ZoneType.TAMPON)
 		{
@@ -140,11 +149,13 @@ public class Product implements Serializable {
 			
 			if (myStation.getOrder() == station.getOrder())
 			{
-				
+
 				// On peut passer la station dans le prochain tampon
 				this.setCurrentZone(nextStation);
 				// il reste a mettre en BDD les modifications
-				productAdapter.update(this);
+				long id = productAdapter.update(this);
+				
+				android.util.Log.v("MonAppli",String.valueOf(id));
 				
 				Log log = new Log();
 				log.setProduct(this);
