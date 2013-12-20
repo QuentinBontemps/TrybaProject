@@ -140,7 +140,7 @@ public class ScanFragment extends Fragment {
 						break;
 					}
 				 } catch (Exception e) {
-					e.printStackTrace();
+					android.util.Log.e("monAppli", e.getMessage());
 				}
 					
 			}else{

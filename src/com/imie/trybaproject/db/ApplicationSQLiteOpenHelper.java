@@ -1,6 +1,8 @@
 package com.imie.trybaproject.db;
 
 import com.imie.trybaproject.R;
+import com.imie.trybaproject.model.Log;
+import com.imie.trybaproject.model.User;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -22,6 +24,7 @@ public class ApplicationSQLiteOpenHelper extends SQLiteOpenHelper {
 		db.execSQL(new TamponAdapter().createTable());
 		db.execSQL(new StationAdapter().createTable());
 		db.execSQL(new UserLogAdapter().createTable());
+		db.execSQL(new LogAdapter().createTable());
 		
 		
 	}

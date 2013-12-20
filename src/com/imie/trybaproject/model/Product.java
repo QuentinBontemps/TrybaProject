@@ -91,22 +91,36 @@ public class Product {
 			
 			if (myStation.getOrder() == station.getOrder())
 			{
+				Boolean freeSpace = false;
 				Tampon nextTampon = nextStation.getTampon();
+				Integer tamponAllocatedSpace = productAdapter.getAllocatedSpace(this);
+				int tamponFreeSpace = nextTampon.getQuantity() -  tamponAllocatedSpace;
+				// Il reste a vérifier si le tampon à de la place de libre
 				
-				// On peut passer la station dans le prochain tampon
-				this.setCurrentZone(nextTampon);
-				this.setCurrentTypeZone(ZoneType.TAMPON);
-				// il reste a mettre en BDD les modifications
-				productAdapter.update(this);
+				if (tamponFreeSpace > 0)
+				{
+					freeSpace = true;
+				}
+				if (freeSpace == true)
+				{
+					// On peut passer la station dans le prochain tampon
+					this.setCurrentZone(nextTampon);
+					this.setCurrentTypeZone(ZoneType.TAMPON);
+					// il reste a mettre en BDD les modifications
+					productAdapter.update(this);
+					
+					Log log = new Log();
+					log.setProduct(this);
+					log.setUser(user);
+					log.setZone(nextTampon);
+					log.setDate(new Date());
+					
+					logAdapter.insert(log);
+					return 1;
+				}else{
+					return 3;
+				}
 				
-				Log log = new Log();
-				log.setProduct(this);
-				log.setUser(user);
-				log.setZone(nextTampon);
-				log.setDate(new Date());
-				
-				logAdapter.insert(log);
-				return 1;
 			}else{
 				return 2;
 			}
