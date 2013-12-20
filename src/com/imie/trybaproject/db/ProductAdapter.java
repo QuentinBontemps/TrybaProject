@@ -92,7 +92,8 @@ public class ProductAdapter implements Adapter<Product, Integer> {
 		Product product = null;
 		if(this.db != null){
 			Cursor cursor = db.query(TABLE,
-					new String[] {COL_ID, COL_NAME, COL_CURRENT_TYPE_ZONE, COL_CURRENT_ZONE_ID,COL_ORDER_ID}, 
+					new String[] {COL_ID, COL_NAME, COL_CURRENT_TYPE_ZONE, 
+											COL_CURRENT_ZONE_ID,COL_ORDER_ID}, 
 					COL_ID + " = ? ",
 					new String[] {String.valueOf(id)},null,null,null,null);
 						
@@ -276,6 +277,26 @@ public class ProductAdapter implements Adapter<Product, Integer> {
 	public void closeDatabase()
 	{
 		this.db.close();
+	}
+	
+	public int getAllocatedSpace(Product product)
+	{
+		Integer result = 0;
+		if(this.db != null){
+			Cursor cursor = db.query(TABLE,
+					new String[] {COL_ID, COL_NAME, COL_CURRENT_TYPE_ZONE, 
+											COL_CURRENT_ZONE_ID,COL_ORDER_ID}, 
+					COL_CURRENT_TYPE_ZONE + " = ? AND " + 
+											COL_CURRENT_ZONE_ID + " = ? ",
+					new String[] {product.getCurrentTypeZone().toString(), 
+					String.valueOf(product.getCurrentZone().getId())},
+													null,null,null,null);
+					
+			result = cursor.getCount();
+			if(helper != null)
+				db.close();
+		}
+		return result;
 	}
 
 }
