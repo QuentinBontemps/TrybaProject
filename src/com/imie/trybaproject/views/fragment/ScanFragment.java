@@ -162,24 +162,99 @@ public class ScanFragment extends Fragment {
 		super.onActivityResult(requestCode, resultCode, data);
 		
 		switch (requestCode) {
-		case CONST_REQUEST3: if (resultCode == Activity.RESULT_OK)
-		{
-			SharedPreferences preferences = 
-					getActivity().getSharedPreferences("DEFAULT", 
-							Activity.MODE_PRIVATE);
-			Integer idValueScan = preferences.getInt("ID_SCAN_VALUE", 0);
-			Toast.makeText(getActivity(), "Le qr a été scanné id : " + idValueScan, 
-					Toast.LENGTH_LONG).show();
-			et_idProduct.setText(String.valueOf(idValueScan));
-		}else{
-			Toast.makeText(getActivity(), "Aucun code n'a été scanné", 
-					Toast.LENGTH_LONG).show();
-		}
-			
-			break;
-
-		default:
-			break;
+			case CONST_REQUEST3: 
+				if (resultCode == Activity.RESULT_OK)
+				{
+					Product product = new Product();
+					int userId = 0;
+					
+					ApplicationSQLiteOpenHelper ASLOH = 
+							new ApplicationSQLiteOpenHelper(getActivity(), 
+							getString(R.string.database_name), null, Integer.valueOf(
+							getString(R.string.database_version)));
+					
+					
+					SharedPreferences preferences = 
+							getActivity().getSharedPreferences("DEFAULT", 
+									Activity.MODE_PRIVATE);
+					Integer idValueScan = preferences.getInt("ID_SCAN_VALUE", 0);
+					if (idValueScan != 0)
+					{
+						
+						et_idProduct.setText(String.valueOf(idValueScan));
+						
+						
+						Toast.makeText(getActivity(), "Le qr a été scanné id : " + idValueScan, 
+								Toast.LENGTH_LONG).show();
+						
+						
+						
+						ProductAdapter productAdapter = new ProductAdapter(null);
+						productAdapter.setDatabase(ASLOH.getDb());
+						product = productAdapter.get(idValueScan);
+						
+						if (product != null)
+						{
+							// on test si le product est bien dans un tampon, et pas déjà dans une station
+							if (product.getCurrentTypeZone() == ZoneType.TAMPON)
+							{				
+								preferences = getActivity().getSharedPreferences("DEFAULT", Activity.MODE_PRIVATE);
+								
+								 userId = 
+										Integer.parseInt(preferences.getString("CURRENT_USER_LOG_ID", "0"));
+								 User user = new User();
+								 String userString = preferences.getString("CURRENT_USER","");
+								 try {
+										if(userString != "")
+											user.setWithSerializableString(userString);			
+									
+										int resultatChangement = product.goToNextStation(
+																	user.getCurrentStation(),ASLOH, user);
+										
+										switch (resultatChangement) {
+										case 0: 
+											Toast.makeText(getActivity(), 
+											"Le produit n'est pas dans la station correspondante", 
+																		Toast.LENGTH_LONG).show();
+											break;
+										case 1:
+											
+											Toast.makeText(getActivity(), 
+											"Le produit est passé dans le prochain tampon", 
+																	Toast.LENGTH_LONG).show();						
+											break;
+										case 2:
+											Toast.makeText(getActivity(), 
+													"Le produit n'est pas dans le bon tampon", 
+													Toast.LENGTH_LONG).show();
+											break;
+										default:
+											break;
+										}
+								 }catch (Exception e) {
+									android.util.Log.e("", e.getMessage());
+								}
+									
+							}else{
+								Toast.makeText(getActivity(), 
+										"Le produit est dans une station", 
+										Toast.LENGTH_LONG).show();
+							}
+						}else{
+							Toast.makeText(getActivity(), "Aucun produit ne correspond à cet ID", 
+									Toast.LENGTH_LONG).show();
+						}
+					}else{
+						Toast.makeText(getActivity(), "Aucun code n'a été scanné", 
+								Toast.LENGTH_LONG).show();
+					}
+					
+					ASLOH.getDb().close();
+				}
+				break;
+				
+				default :
+					break;
 		}
 
 		
