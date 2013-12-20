@@ -33,6 +33,7 @@ public class ScanFragment extends Fragment {
 	EditText et_idProduct;
 	Button btn_validate;
 	SharedPreferences preferences;
+	User currentUser;
 	final int CONST_REQUEST3 = 5003; // Code réponse du scan
 	
 	@Override
@@ -42,22 +43,24 @@ public class ScanFragment extends Fragment {
 		View fragment = inflater.inflate(R.layout.
 				fragment_scan,container, false);
 		
+		preferences = getActivity().getSharedPreferences("DEFAULT", Activity.MODE_PRIVATE);
+		currentUser = new User();
+		String userString = preferences.getString("CURRENT_USER","");
+		if(userString != "")
+		{
+			 try {
+				currentUser.setWithSerializableString(userString);
+			 } catch (Exception e) {
+				android.util.Log.e("monAppli", e.getMessage());
+			}
+		 }
+		
+		
 		// View objects
 		et_idProduct = (EditText) fragment.findViewById(R.id.scan_ET_idProduit);
 		btn_validate = (Button) fragment.findViewById(R.id.scan_btn_validate);
 		
-		Button btnScan = (Button) fragment.findViewById(R.id.to_scan_activity);
-		btnScan.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				/*Intent intent = new Intent(getActivity(), ScanActivity.class);
-				getActivity().startActivity(intent);*/
-				Intent intent = new Intent(getActivity(), ScanActivity.class);
-				startActivityForResult(intent, CONST_REQUEST3);
-				
-			}
-		});
+		
 		
 		// Binding action
 		btn_validate.setOnClickListener(new OnClickListener() {
@@ -69,6 +72,23 @@ public class ScanFragment extends Fragment {
 			}
 		});
 		
+		
+		// On regarde si un item est déjà en cours sur la station, 
+		// Sinon on lance le scanView
+		Boolean itemOnStation = false;
+		Product productOnStation = null;
+		
+		productOnStation = getProductOnStation(currentUser.getCurrentStation());
+		
+		if (productOnStation == null)
+		{
+			openScanView();
+		}else
+		{
+			et_idProduct.setText(String.valueOf(productOnStation.getId()));
+		}
+				
+				
 		return fragment;
 	}
 	
@@ -261,4 +281,25 @@ public class ScanFragment extends Fragment {
 		
 	}
 	
+	private void openScanView()
+	{
+		Intent intent = new Intent(getActivity(), ScanActivity.class);
+		startActivityForResult(intent, CONST_REQUEST3);
+	}
+	
+	private Product getProductOnStation(Station s)
+	{
+		Product productOnStation = null;
+		ProductAdapter productAdapter;
+		
+		ApplicationSQLiteOpenHelper helper = 
+				new ApplicationSQLiteOpenHelper(getActivity(), 
+						getString(R.string.database_name), null, Integer.valueOf(
+						getString(R.string.database_version)));
+		
+		productAdapter = new ProductAdapter(helper);
+		productOnStation = productAdapter.getByZoneTypeAndZone(ZoneType.STATION, s);
+		
+		return productOnStation;
+	}
 }
