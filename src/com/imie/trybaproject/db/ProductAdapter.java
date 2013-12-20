@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.imie.trybaproject.model.Product;
 import com.imie.trybaproject.model.User;
+import com.imie.trybaproject.model.Zone;
 import com.imie.trybaproject.model.ZoneType;
 
 public class ProductAdapter implements Adapter<Product, Integer> {
@@ -298,5 +299,65 @@ public class ProductAdapter implements Adapter<Product, Integer> {
 		}
 		return result;
 	}
+	
+	public Product getByZoneTypeAndZone(ZoneType zt, Zone z) {
+		Product product = null;
+		if(this.db != null){
+			Cursor cursor = db.query(TABLE,
+					new String[] {COL_ID, COL_NAME, COL_CURRENT_TYPE_ZONE, 
+											COL_CURRENT_ZONE_ID,COL_ORDER_ID}, 
+					COL_CURRENT_TYPE_ZONE + " = ? AND " + 
+													COL_CURRENT_ZONE_ID + " = ? ",
+					new String[] {zt.toString(), 
+					String.valueOf(z.getId())},
+													null,null,null,null);
+						
+			if(cursor.getCount() > 0)
+			{
+				cursor.moveToFirst();
+				product = new Product();
+				
+				product.setId(cursor.getInt(cursor.getColumnIndex(COL_ID)));
+				product.setName(cursor.getString(
+											cursor.getColumnIndex(COL_NAME)));
+				ClientOrderAdapter orderAdapter = new ClientOrderAdapter(null);
+				orderAdapter.setDatabase(db);
+				
+				product.setOrder(orderAdapter.get(cursor.getInt(
+										cursor.getColumnIndex(COL_ORDER_ID))));
+				product.setCurrentTypeZone(
+						ZoneType.initProductTypeByString(cursor.getString(
+						cursor.getColumnIndex(COL_CURRENT_TYPE_ZONE))));
+				
+				switch (product.getCurrentTypeZone()) {
+					case STATION : // On recherche la station
+						StationAdapter stationAdapter = 
+													new StationAdapter(null);
+						stationAdapter.setDatabase(db);
+						product.setCurrentZone(stationAdapter.get(
+								cursor.getInt(
+								cursor.getColumnIndex(COL_CURRENT_ZONE_ID)))); // récupère 0
+						break;
+					case TAMPON : // On recherche le tampon
+						TamponAdapter tamponAdapter = new TamponAdapter(null);
+						tamponAdapter.setDatabase(db);
+						product.setCurrentZone(tamponAdapter.get(
+								cursor.getInt(
+								cursor.getColumnIndex(COL_CURRENT_ZONE_ID))));
+						break;
+					default:
+						break;
+					
+				}
+					
+						
+				
+			}
+			if(helper != null)			
+				db.close();
+		}
+		return product;
+	}
+	
 
 }

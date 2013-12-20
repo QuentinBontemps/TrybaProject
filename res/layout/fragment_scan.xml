@@ -18,13 +18,7 @@
         android:id="@+id/scan_btn_validate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Changer station" />
-    
-     <Button
-        android:id="@+id/to_scan_activity"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="ScanActivity" />
+        android:text="@string/goNextTampon" />
     
 
 </LinearLayout>

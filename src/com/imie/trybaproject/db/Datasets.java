@@ -65,7 +65,7 @@ public final class Datasets {
 		stationProduction.setName("Station non utilisée");
 		stationProduction.setOrder(5);
 		stationProduction.setTampon(tamponProduction);
-		stationProduction.setVisible(true);
+		stationProduction.setVisible(false);
 		
 		
 		// Insertion
