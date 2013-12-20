@@ -27,7 +27,8 @@ public class ListProductsFragment extends Fragment{
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		
-		View fragment = inflater.inflate(R.layout.fragment_products_list, container, false);
+		View fragment = inflater.inflate(R.layout.fragment_products_list, 
+															container, false);
 		
 		ListView lv = (ListView)fragment.findViewById(R.id.listView);
 		
@@ -35,9 +36,7 @@ public class ListProductsFragment extends Fragment{
 		ClientOrder order = (ClientOrder)intent.getSerializableExtra("order");
 		
 		
-		helper =new ApplicationSQLiteOpenHelper(getActivity(),
-				getString(R.string.database_name), null, 
-				Integer.parseInt(getString(R.string.database_version)));
+		helper = ApplicationSQLiteOpenHelper.getInstance(getActivity());
 		ProductAdapter productAdapter = new ProductAdapter(helper);
 		
 		products = productAdapter.getByOrderIdWithCursor((int)order.getId());
@@ -55,7 +54,8 @@ public class ListProductsFragment extends Fragment{
 				product = adapter.get(products.getInt(
 						products.getColumnIndex(ProductAdapter.COL_ID)));
 				
-				Intent intent = new Intent(getActivity(), DetailProductActivity.class);
+				Intent intent = new Intent(getActivity(), 
+												DetailProductActivity.class);
 				
 				Bundle b = new Bundle();
 				b.putSerializable("product", product);

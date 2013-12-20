@@ -51,7 +51,8 @@ public class Station extends Zone{
 		this.tampon.setWithSerializableString(str);
 	}
 	
-	public void setTamponWithSerializableArray(ArrayList<Object> array) throws Exception{
+	public void setTamponWithSerializableArray(ArrayList<Object> array) 
+															throws Exception{
 		this.tampon.setWithSerializableArray(array);
 	}
 	

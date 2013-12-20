@@ -53,8 +53,10 @@ public class AddOrderFragment extends Fragment {
 		// View object
 		customer = (EditText) frag.findViewById(R.id.add_order_ET_customer);
 		quantity = (EditText) frag.findViewById(R.id.add_order_ET_Quantity);
-		typeProduct = (Spinner) frag.findViewById(R.id.add_order_SPIN_typeProduct);
-		typeMaterial = (Spinner) frag.findViewById(R.id.add_order_SPIN_typeMaterial);
+		typeProduct = (Spinner) frag.findViewById(
+											R.id.add_order_SPIN_typeProduct);
+		typeMaterial = (Spinner) frag.findViewById(
+											R.id.add_order_SPIN_typeMaterial);
 		validate = (Button) frag.findViewById(R.id.add_order_BTN_validate);
 		
 		// Action
@@ -78,14 +80,18 @@ public class AddOrderFragment extends Fragment {
 		listTypeMaterial.add(MaterialType.ALUMINIUM.toString());
 		listTypeMaterial.add(MaterialType.BOIS.toString());		
 		
-		ArrayAdapter<String> dataAdapterProduct = new ArrayAdapter<String>(getActivity(),
+		ArrayAdapter<String> dataAdapterProduct = 
+							new ArrayAdapter<String>(getActivity(),
 			android.R.layout.simple_spinner_item, listTypeProduct);
-		dataAdapterProduct.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		dataAdapterProduct.setDropDownViewResource(
+						android.R.layout.simple_spinner_dropdown_item);
 		typeProduct.setAdapter(dataAdapterProduct);
 		
-		ArrayAdapter<String> dataAdapterMaterial = new ArrayAdapter<String>(getActivity(),
+		ArrayAdapter<String> dataAdapterMaterial = 
+								new ArrayAdapter<String>(getActivity(),
 				android.R.layout.simple_spinner_item, listTypeMaterial);
-			dataAdapterMaterial.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+			dataAdapterMaterial.setDropDownViewResource(
+							android.R.layout.simple_spinner_dropdown_item);
 			typeMaterial.setAdapter(dataAdapterMaterial);
 			
 		
@@ -106,19 +112,18 @@ public class AddOrderFragment extends Fragment {
 		// On remplit les champs de la commande
 		clientOrder.setCustomer(customer.getText().toString());
 		clientOrder.setQuantity(Integer.valueOf(quantity.getText().toString()));
-		/*mt = MaterialType.initMaterialTypeByValue(typeMaterial.getSelectedItemPosition()+1);*/
 		
-		pt = ProductType.initProductTypeByString(typeProduct.getSelectedItem().toString());
-		mt = MaterialType.initMaterialTypeByString(typeMaterial.getSelectedItem().toString());
+		pt = ProductType.initProductTypeByString(
+									typeProduct.getSelectedItem().toString());
+		mt = MaterialType.initMaterialTypeByString(
+									typeMaterial.getSelectedItem().toString());
 		
 		
 		clientOrder.setTypeMaterial(mt.name());		
 		clientOrder.setTypeProduct(pt.name());
 
 		ApplicationSQLiteOpenHelper ASLOH = 
-				new ApplicationSQLiteOpenHelper(getActivity(), 
-						getString(R.string.database_name), null, 
-						Integer.parseInt(getString(R.string.database_version)));
+				ApplicationSQLiteOpenHelper.getInstance(getActivity());
 		ClientOrderAdapter clientOrderAdapt = new ClientOrderAdapter();
 		ProductAdapter productAdapt = new ProductAdapter();
 		StationAdapter stationAdapter = new StationAdapter();

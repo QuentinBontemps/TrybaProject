@@ -38,9 +38,7 @@ public class DetailProductFragment extends Fragment {
 		txtEmplacement.setText(product.getCurrentZone().getName());
 		
 		ApplicationSQLiteOpenHelper helper = 
-				new ApplicationSQLiteOpenHelper(getActivity(), 
-						getString(R.string.database_name), null, 
-						Integer.parseInt(getString(R.string.database_version)));
+				ApplicationSQLiteOpenHelper.getInstance(getActivity());
 		
 		LogAdapter logAdapter = new LogAdapter(helper);
 		Cursor logs = logAdapter.getCursorWithProductId(product.getId());

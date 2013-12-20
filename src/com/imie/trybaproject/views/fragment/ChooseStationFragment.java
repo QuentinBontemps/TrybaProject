@@ -46,13 +46,12 @@ public class ChooseStationFragment extends Fragment {
 		
 	}
 	
-	public ChooseStationFragment(Context ctx,Boolean changeStation, int userLogId){
+	public ChooseStationFragment(Context ctx,Boolean changeStation, 
+															int userLogId){
 		if(changeStation){
 				
 			ApplicationSQLiteOpenHelper helper = 
-					new ApplicationSQLiteOpenHelper(ctx,
-					ctx.getString(R.string.database_name), null,
-					Integer.parseInt(ctx.getString(R.string.database_version)));
+					ApplicationSQLiteOpenHelper.getInstance(getActivity());
 			
 			UserLogAdapter userLogAdapter = new UserLogAdapter(helper);
 			
@@ -99,9 +98,7 @@ public class ChooseStationFragment extends Fragment {
 			@Override
 			public void onClick(View v) {
 				ApplicationSQLiteOpenHelper helper = 
-						new ApplicationSQLiteOpenHelper(getActivity(),
-						getString(R.string.database_name), null,
-						Integer.parseInt(getString(R.string.database_version)));
+						ApplicationSQLiteOpenHelper.getInstance(getActivity());
 				
 				UserLogAdapter userLogAdapter = new UserLogAdapter(helper);
 				
@@ -116,7 +113,8 @@ public class ChooseStationFragment extends Fragment {
 				   userLogId = u_LogAdapter.insert(userLog);
 
 				   SharedPreferences preferences = getActivity().
-							getSharedPreferences("DEFAULT", Activity.MODE_PRIVATE);
+							getSharedPreferences("DEFAULT", 
+													Activity.MODE_PRIVATE);
 					SharedPreferences.Editor editor = preferences.edit();
 					
 					
@@ -175,9 +173,8 @@ public class ChooseStationFragment extends Fragment {
 
 		@Override
 		protected ArrayList<Station> doInBackground(Void... params) {
-		   ApplicationSQLiteOpenHelper helper = new ApplicationSQLiteOpenHelper(
-					getActivity(), getString(R.string.database_name), null, 
-					Integer.parseInt(getString(R.string.database_version)));
+		   ApplicationSQLiteOpenHelper helper = 
+					ApplicationSQLiteOpenHelper.getInstance(getActivity());
 			
 			StationAdapter stationAdapter = new StationAdapter(helper);
 			
@@ -203,7 +200,8 @@ public class ChooseStationFragment extends Fragment {
 			activity.getItems().remove(0);
 			activity.getItems().add(0, activity.getProductScan());
 			activity.getItems().add(1, activity.getStationChange());
-			activity.getStationChange().setFragment(new ChooseStationFragment(activity, true, (int) userLogId));
+			activity.getStationChange().setFragment(
+					new ChooseStationFragment(activity, true, (int) userLogId));
 			activity.setItemCheck(1);
 			activity.getAdapter().notifyDataSetChanged();
 		}

@@ -44,9 +44,6 @@ public class ScanActivity extends Activity  implements View.OnClickListener{
 		if(v.getId() == R.id.btnScan){
 			IntentIntegrator intent = new IntentIntegrator(this);
 			intent.initiateScan();
-			/*intent = new Intent("com.google.zxing.client.android.SCAN");
-			intent.putExtra("com.google.zxing.client.android.SCAN.SCAN_MODE", "ONE_D_MODE");
-			startActivityForResult(intent, 0);*/
 		}
 	}
 
@@ -72,17 +69,6 @@ public class ScanActivity extends Activity  implements View.OnClickListener{
 		}
 		
 		
-		/*if (requestCode == 0) {
-		      if (resultCode == RESULT_OK) {
-		         String contents = intent.getStringExtra("SCAN_RESULT");
-		         String format = intent.getStringExtra("SCAN_RESULT_FORMAT");
-		         // Handle successful scan
-		         Toast.makeText(this, "Good guy", Toast.LENGTH_SHORT).show();
-		      } else if (resultCode == RESULT_CANCELED) {
-		         // Handle cancel
-		    	  Toast.makeText(this, "Dommage ca marche pas", Toast.LENGTH_SHORT).show();
-		      }
-		   }*/
 	}
 	
 	

@@ -20,7 +20,8 @@ public class ClientOrder implements Serializable {
 	}
 	
 	
-	public ClientOrder(String customer, String typeProduct, String typeMaterial, int quantity) {
+	public ClientOrder(String customer, String typeProduct, 
+										String typeMaterial, int quantity) {
 		super();
 		this.customer = customer;
 		this.typeProduct = typeProduct;

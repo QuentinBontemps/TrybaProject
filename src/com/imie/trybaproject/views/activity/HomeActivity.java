@@ -60,7 +60,8 @@ public class HomeActivity extends FragmentActivity {
 		preferences = getSharedPreferences("DEFAULT", Activity.MODE_PRIVATE);
 		
 		String userString = preferences.getString("CURRENT_USER", "");
-		userLogId = Integer.parseInt(preferences.getString("CURRENT_USER_LOG_ID", "0"));
+		userLogId = Integer.parseInt(preferences.getString("CURRENT_USER_LOG_ID"
+																		, "0"));
 		
 		itemProductScan = new MenuItem(new ScanFragment(),
 				getString(R.string.product_scan),R.drawable.ic_menu_archive);
@@ -195,12 +196,15 @@ public class HomeActivity extends FragmentActivity {
 	    
 	    if(item.equals(itemStationSelect)){
 	    	if(items.contains(itemStationSelect)){
-		    	preferences = getSharedPreferences("DEFAULT", Activity.MODE_PRIVATE);
-		    	userLogId = Integer.parseInt(preferences.getString("CURRENT_USER_LOG_ID", "0"));
+		    	preferences = getSharedPreferences("DEFAULT", 
+		    											Activity.MODE_PRIVATE);
+		    	userLogId = Integer.parseInt(preferences.getString(
+		    										"CURRENT_USER_LOG_ID", "0"));
 		    	
 		    	if(userLogId != 0){
 		    		items.remove(itemStationSelect);
-		    		itemStationChange.setFragment(new ChooseStationFragment(this, true,userLogId));
+		    		itemStationChange.setFragment(new ChooseStationFragment(this, 
+		    													true,userLogId));
 		    		
 					items.add(0, itemProductScan);
 					items.add(1, itemStationChange);

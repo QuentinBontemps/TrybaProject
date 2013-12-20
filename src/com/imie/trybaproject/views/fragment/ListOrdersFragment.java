@@ -42,9 +42,7 @@ public class ListOrdersFragment extends Fragment{
 				container, false);
 		
 		ApplicationSQLiteOpenHelper ASLOH = 
-				new ApplicationSQLiteOpenHelper(getActivity(), 
-						getString(R.string.database_name), null, 
-						Integer.parseInt(getString(R.string.database_version)));
+				ApplicationSQLiteOpenHelper.getInstance(getActivity());
 		clientOrderAdapt = new ClientOrderAdapter(ASLOH);
 		
 		lv = (ListView) fragment.findViewById(R.id.list_orders);
