@@ -1,9 +1,14 @@
 package com.imie.trybaproject.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public abstract class Zone {
+public abstract class Zone implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5824435140387389689L;
 	private long id;
 	private String name;
 		

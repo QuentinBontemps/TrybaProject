@@ -1,5 +1,6 @@
 package com.imie.trybaproject.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import android.app.Application;
@@ -9,8 +10,12 @@ import com.imie.trybaproject.db.LogAdapter;
 import com.imie.trybaproject.db.ProductAdapter;
 import com.imie.trybaproject.db.StationAdapter;
 
-public class Product {
+public class Product implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8703658069660893464L;
 	private long id;
 	private String name;
 	private ClientOrder order;

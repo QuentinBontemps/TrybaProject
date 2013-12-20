@@ -175,5 +175,9 @@
     <string name="title_activity_detail_order">DetailOrderActivity</string>
     <string name="products">Produits :</string>
     <string name="title_activity_detail_product">DetailProductActivity</string>
-
+    <string name="history">Historique :</string>
+    <string name="emplacement">Emplacement :</string>
+    <string name="operator">Opérateur :</string>
+    <string name="zone">Zone :</string>
+    <string name="date">Date :</string>
 </resources>

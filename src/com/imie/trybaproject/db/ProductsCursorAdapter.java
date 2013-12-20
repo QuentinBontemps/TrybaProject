@@ -31,7 +31,7 @@ public class ProductsCursorAdapter extends CursorAdapter {
 				.getColumnIndex(ProductAdapter.COL_ID)));
 
 		txtName.setText(p.getName() + "   REF : " + p.getId());
-		txtStatus.setText("Emplacement : " + p.getCurrentZone().getName());
+		txtStatus.setText(p.getCurrentZone().getName());
 	}
 
 	@Override

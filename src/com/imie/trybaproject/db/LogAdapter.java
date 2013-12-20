@@ -26,8 +26,8 @@ public class LogAdapter implements Adapter<Log, Integer> {
 	public static final String COL_PRODUCT_ID = "productId";
 	public static final String COL_DATE = "date";
 	
-	private String dateFormat = "yyyy-MM-dd'T'HH:mm";
-	private SimpleDateFormat sdf = 
+	private static final String dateFormat = "yyyy-MM-dd'T'HH:mm";
+	public static final SimpleDateFormat sdf = 
 								new SimpleDateFormat(dateFormat, Locale.FRANCE);
 	
 	private ApplicationSQLiteOpenHelper helper;
@@ -203,6 +203,18 @@ public class LogAdapter implements Adapter<Log, Integer> {
 		return cursor;
 	}
 
+	public Cursor getCursorWithProductId(long productId){
+		Cursor cursor = null;
+		if(db != null){
+			cursor = db.query(TABLE,
+					new String[]{COL_ID, COL_USER_ID, COL_PRODUCT_ID, 
+												COL_ZONE_ID, COL_DATE},
+					COL_PRODUCT_ID + " = ?",
+					new String[]{String.valueOf(productId)}, null, null, null);
+		}
+		return cursor;
+	}
+	
 	@Override
 	public void setDatabase(SQLiteDatabase db) {
 		this.db = db;

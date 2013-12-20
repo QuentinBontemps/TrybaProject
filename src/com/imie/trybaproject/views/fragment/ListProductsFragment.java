@@ -5,6 +5,8 @@ import com.imie.trybaproject.db.ApplicationSQLiteOpenHelper;
 import com.imie.trybaproject.db.ProductAdapter;
 import com.imie.trybaproject.db.ProductsCursorAdapter;
 import com.imie.trybaproject.model.ClientOrder;
+import com.imie.trybaproject.model.Product;
+import com.imie.trybaproject.views.activity.DetailProductActivity;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -18,7 +20,9 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
 public class ListProductsFragment extends Fragment{
-
+	Cursor products;
+	ApplicationSQLiteOpenHelper helper; 
+			
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
@@ -30,19 +34,33 @@ public class ListProductsFragment extends Fragment{
 		Intent intent = getActivity().getIntent();
 		ClientOrder order = (ClientOrder)intent.getSerializableExtra("order");
 		
-		ApplicationSQLiteOpenHelper helper = new ApplicationSQLiteOpenHelper(
-				getActivity(), getString(R.string.database_name), null, 
+		
+		helper =new ApplicationSQLiteOpenHelper(getActivity(),
+				getString(R.string.database_name), null, 
 				Integer.parseInt(getString(R.string.database_version)));
 		ProductAdapter productAdapter = new ProductAdapter(helper);
 		
-		Cursor products = productAdapter.getByOrderIdWithCursor((int)order.getId());
+		products = productAdapter.getByOrderIdWithCursor((int)order.getId());
 		lv.setAdapter(new ProductsCursorAdapter(getActivity(), products));
 		lv.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-					long arg3) {
+			public void onItemClick(AdapterView<?> adapterView, View view, 
+					int position, long id) {
 				
+				Product product = new Product();
+				products.moveToPosition(position);
+				
+				ProductAdapter adapter = new ProductAdapter(helper);
+				product = adapter.get(products.getInt(
+						products.getColumnIndex(ProductAdapter.COL_ID)));
+				
+				Intent intent = new Intent(getActivity(), DetailProductActivity.class);
+				
+				Bundle b = new Bundle();
+				b.putSerializable("product", product);
+				intent.putExtras(b);
+				getActivity().startActivity(intent);
 			}
 		});		
 		
