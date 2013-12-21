@@ -30,6 +30,7 @@ import com.imie.trybaproject.model.Station;
 import com.imie.trybaproject.model.User;
 import com.imie.trybaproject.model.UserType;
 import com.imie.trybaproject.views.fragment.ChooseStationFragment;
+import com.imie.trybaproject.views.fragment.HomeFragment;
 import com.imie.trybaproject.views.fragment.ListOrdersFragment;
 import com.imie.trybaproject.views.fragment.ListUsersFragment;
 import com.imie.trybaproject.views.fragment.LogoutFragment;
@@ -45,6 +46,7 @@ public class HomeActivity extends FragmentActivity {
 	ArrayList<MenuItem> items = new ArrayList<MenuItem>();
 	User currentUser = new User();
 	int userLogId;
+	MenuItem itemHome = new MenuItem();
 	MenuItem itemStationChange = new MenuItem();
 	MenuItem itemStationSelect = new MenuItem();
 	MenuItem itemLogout = new MenuItem();
@@ -62,7 +64,9 @@ public class HomeActivity extends FragmentActivity {
 		String userString = preferences.getString("CURRENT_USER", "");
 		userLogId = Integer.parseInt(preferences.getString("CURRENT_USER_LOG_ID"
 																		, "0"));
-		
+		itemHome = new MenuItem(new HomeFragment(), getString(R.string.home),
+													R.drawable.ic_menu_home);
+		items.add(itemHome);
 		itemProductScan = new MenuItem(new ScanFragment(),
 				getString(R.string.product_scan),R.drawable.ic_menu_archive);
 		
@@ -130,6 +134,8 @@ public class HomeActivity extends FragmentActivity {
 	            }
 	        };
 	        drawerLayout.setDrawerListener(drawerToggle);
+	        
+	        SelectItem(itemHome, 0);
 	}
 
 	@Override
@@ -152,7 +158,7 @@ public class HomeActivity extends FragmentActivity {
 	        }
 	        return true;
 	        
-	}
+		}
     return super.onOptionsItemSelected(item);
 	}
 
@@ -206,8 +212,8 @@ public class HomeActivity extends FragmentActivity {
 		    		itemStationChange.setFragment(new ChooseStationFragment(this, 
 		    													true,userLogId));
 		    		
-					items.add(0, itemProductScan);
-					items.add(1, itemStationChange);
+					items.add(1, itemProductScan);
+					items.add(2, itemStationChange);
 					drawerList.setItemChecked(1, true);
 		    	}
 	    	}
@@ -216,8 +222,8 @@ public class HomeActivity extends FragmentActivity {
 		    	items.remove(itemProductScan);
 	    		items.remove(itemStationChange);
 		    	itemStationSelect.setFragment(new ChooseStationFragment());
-				items.add(0, itemStationSelect);
-				drawerList.setItemChecked(0, true);
+				items.add(1, itemStationSelect);
+				drawerList.setItemChecked(1, true);
 	    	}
 	    }else if(item.equals(itemLogout)){
 			

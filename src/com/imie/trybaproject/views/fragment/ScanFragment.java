@@ -20,6 +20,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -314,9 +315,11 @@ public class ScanFragment extends Fragment {
 	
 	private void goToHome()
 	{
-		// Change le fragment en cours par le fragment Home
-		
-		
-		//getActivity().setFragment(homeFragment)
+
+		FragmentManager fragmentManager = 
+									getActivity().getSupportFragmentManager();
+	    fragmentManager.beginTransaction()
+	                  .replace(R.id.choose_station_fragment, new HomeFragment())
+	                  .commit();
 	}
 }

@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -30,13 +31,16 @@ public class ScanActivity extends Activity  implements View.OnClickListener{
 		btnScan.setOnClickListener(this);
 		txtResult = (TextView) findViewById(R.id.txtResult);
 		this.setResult(RESULT_CANCELED);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setHomeButtonEnabled(true);
+		
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.scan, menu);
-		return true;
+		return false;
 	}
 
 	@Override
@@ -78,6 +82,15 @@ public class ScanActivity extends Activity  implements View.OnClickListener{
 		
 	}
 	
-	
+	@Override
+	public boolean onOptionsItemSelected(android.view.MenuItem item) {
+		switch (item.getItemId()) {
+	    case android.R.id.home:
+	        this.finish();
+	        return true;
+	        
+		}
+    return super.onOptionsItemSelected(item);
+	}
 
 }
