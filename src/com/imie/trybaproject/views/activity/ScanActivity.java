@@ -58,11 +58,18 @@ public class ScanActivity extends Activity  implements View.OnClickListener{
 					this.getSharedPreferences("DEFAULT", 
 							Activity.MODE_PRIVATE);
 			SharedPreferences.Editor editor = preferences.edit();
-			Integer idScan = Integer.parseInt(result.getContents());
-			editor.putInt("ID_SCAN_VALUE", idScan);
-			editor.commit();
+			if (result.getContents() != null)
+			{
+				Integer idScan = Integer.parseInt(result.getContents());
+				editor.putInt("ID_SCAN_VALUE", idScan);
+				editor.commit();
+				this.setResult(RESULT_OK);
+			}else
+			{
+				this.setResult(RESULT_CANCELED);
+			}
 			
-			this.setResult(RESULT_OK);
+			
 			this.finish();
 		}else{
 			Toast.makeText(this, "Dommage ca marche pas", Toast.LENGTH_SHORT).show();
