@@ -5,6 +5,8 @@ import java.util.Currency;
 import java.util.Date;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.opengl.Visibility;
@@ -295,4 +297,23 @@ public class HomeActivity extends FragmentActivity {
 	public void setItemChecked(int position){
 		drawerList.setItemChecked(position, true);
 	}
+
+	@Override
+	public void onBackPressed() {
+		new AlertDialog.Builder(this)
+        .setIcon(android.R.drawable.ic_dialog_alert)
+        .setTitle(R.string.quit)
+        .setMessage(R.string.really_quit)
+        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                HomeActivity.this.finish();    
+            }
+
+        })
+        .setNegativeButton(R.string.no, null)
+        .show();
+	}
+	
 }
