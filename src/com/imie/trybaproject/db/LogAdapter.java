@@ -26,7 +26,7 @@ public class LogAdapter implements Adapter<Log, Integer> {
 	public static final String COL_PRODUCT_ID = "productId";
 	public static final String COL_DATE = "date";
 	
-	private String dateFormat = "yyyy-MM-dd'T'HH:mm";
+	private String dateFormat = "yyyy-MM-dd HH:mm";
 	private SimpleDateFormat sdf = 
 								new SimpleDateFormat(dateFormat, Locale.FRANCE);
 	

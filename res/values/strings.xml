@@ -181,8 +181,12 @@
     <string name="zone">Zone :</string>
     <string name="date">Date :</string>
     <string name="at_date_time">Le %1$s à %2$s</string>
-    <string name="goNextTampon">Envoyé dans la liste d\'attente de la prochaine station</string>
+    <string name="goNextTampon">Envoyer dans la liste d\'attente de la prochaine station</string>
     <string name="userHelpScan">Cliquez sur le bouton pour scanner le QR Code du produit</string>
     <string name="connexion">Connexion</string>
     <string name="home">Accueil</string>
+    <string name="quit">Quitter l\'application</string>
+    <string name="really_quit">Souhaitez-vous vraiment quitter l\'application ?</string>
+    <string name="yes">Oui</string>
+    <string name="no">Non</string>
 </resources>
