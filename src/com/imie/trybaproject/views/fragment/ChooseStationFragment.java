@@ -74,8 +74,16 @@ public class ChooseStationFragment extends Fragment {
 		stationsArrayAdapter.setDropDownViewResource(
 				android.R.layout.simple_spinner_dropdown_item);
 		selectStation.setAdapter(stationsArrayAdapter);
-						
-		new LoadStation(getActivity()).execute();
+				
+		ApplicationSQLiteOpenHelper helper = 
+				ApplicationSQLiteOpenHelper.getInstance(getActivity());
+		
+		StationAdapter stationAdapter = new StationAdapter(helper);
+		
+		ArrayList<Station> stations = stationAdapter.getStationVisible();	
+		stationsArrayAdapter.addAll(stations);
+		
+		//new LoadStation(getActivity()).execute();
 		
 		btnValidate = (Button)fragment.findViewById(R.id.btnValidate);
 		btnValidate.setOnClickListener(new OnClickListener() {
@@ -114,7 +122,7 @@ public class ChooseStationFragment extends Fragment {
 							currentUser.setCurrentStation(currentStation);									
 							editor.putString("CURRENT_USER", 
 									currentUser.getSerializableString());
-							Toast.makeText(getActivity(), "Station " + 
+							Toast.makeText(getActivity(),
 									currentStation.getName() + " sélectionnée",
 									Toast.LENGTH_SHORT).show();
 						} catch (Exception e) {
@@ -157,7 +165,7 @@ public class ChooseStationFragment extends Fragment {
 
 		@Override
 		protected ArrayList<Station> doInBackground(Void... params) {
-		   ApplicationSQLiteOpenHelper helper = 
+			ApplicationSQLiteOpenHelper helper = 
 					ApplicationSQLiteOpenHelper.getInstance(getActivity());
 			
 			StationAdapter stationAdapter = new StationAdapter(helper);
