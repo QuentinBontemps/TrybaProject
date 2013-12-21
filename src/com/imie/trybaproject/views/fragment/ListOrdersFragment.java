@@ -123,6 +123,9 @@ public class ListOrdersFragment extends Fragment{
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
+		ApplicationSQLiteOpenHelper ASLOH = 
+				ApplicationSQLiteOpenHelper.getInstance(getActivity());
+		clientOrderAdapt = new ClientOrderAdapter(ASLOH);
 		orders = clientOrderAdapt.getAllWithCursor();
 		listCursor = new OrdersCursorAdapter(getActivity(), orders);
 		lv.setAdapter(listCursor);
