@@ -278,7 +278,10 @@ public class ScanFragment extends Fragment {
 					}
 					
 					ASLOH.getDb().close();
+				}else{
+					goToHome();
 				}
+					
 				break;
 				
 				default :
@@ -307,5 +310,13 @@ public class ScanFragment extends Fragment {
 													ZoneType.STATION, s);
 		
 		return productOnStation;
+	}
+	
+	private void goToHome()
+	{
+		// Change le fragment en cours par le fragment Home
+		
+		
+		//getActivity().setFragment(homeFragment)
 	}
 }
