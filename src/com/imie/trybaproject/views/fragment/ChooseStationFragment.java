@@ -34,7 +34,8 @@ public class ChooseStationFragment extends Fragment {
 	private User currentUser = new User();
 	private ArrayAdapter<Station> stationsArrayAdapter;
 	private Button btnValidate;
-	   long userLogId;
+	long userLogId;
+	Boolean changeStation = false;
 	
 	public ChooseStationFragment(){
 		
@@ -42,19 +43,8 @@ public class ChooseStationFragment extends Fragment {
 	
 	public ChooseStationFragment(Context ctx,Boolean changeStation, 
 															int userLogId){
-		if(changeStation){
-				
-			ApplicationSQLiteOpenHelper helper = 
-					ApplicationSQLiteOpenHelper.getInstance(getActivity());
-			
-			UserLogAdapter userLogAdapter = new UserLogAdapter(helper);
-			
-			UserLog userLog = userLogAdapter.get(userLogId);
-			
-			UserLogAdapter userLogAdapter2 = new UserLogAdapter(helper);
-			userLogAdapter2.addEndDate(userLog, new Date());
-				
-		}
+		this.userLogId = userLogId;
+		this.changeStation = changeStation;
 	}
 	
 	@Override
@@ -192,12 +182,31 @@ public class ChooseStationFragment extends Fragment {
 			activity.getItems().remove(1);
 			activity.getItems().add(1, activity.getProductScan());
 			activity.getItems().add(2, activity.getStationChange());
+			activity.setItemChecked(2);
 			activity.getStationChange().setFragment(new ChooseStationFragment(
 					activity, true, (int) userLogId));
 			activity.getAdapter().notifyDataSetChanged();
-		}
-		
+		}		
 	}
+
+	@Override
+	public void onStart() {
+		super.onStart();
+		if(changeStation){
+			ApplicationSQLiteOpenHelper helper = 
+					ApplicationSQLiteOpenHelper.getInstance(getActivity());
+			
+			UserLogAdapter userLogAdapter = new UserLogAdapter(helper);
+			
+			UserLog userLog = userLogAdapter.get((int)userLogId);
+			
+			UserLogAdapter userLogAdapter2 = new UserLogAdapter(helper);
+			userLogAdapter2.addEndDate(userLog, new Date());
+		}
+	}
+
+	
+	
  
     
 }

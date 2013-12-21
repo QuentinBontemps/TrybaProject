@@ -23,7 +23,7 @@ public class UserLogAdapter implements Adapter<UserLog, Integer>{
 	public static final String COL_START_DATE = "startDate";
 	public static final String COL_END_DATE = "endDate";
 	
-	private String dateFormat = "yyyy-MM-dd'T'HH:mm";
+	private String dateFormat = "yyyy-MM-dd HH:mm";
 	private SimpleDateFormat sdf = 
 								new SimpleDateFormat(dateFormat, Locale.FRANCE);
 	

@@ -2,6 +2,7 @@ package com.imie.trybaproject.views.activity;
 
 import java.util.ArrayList;
 import java.util.Currency;
+import java.util.Date;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
@@ -14,6 +15,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.View;
@@ -24,10 +26,13 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.imie.trybaproject.R;
+import com.imie.trybaproject.db.ApplicationSQLiteOpenHelper;
 import com.imie.trybaproject.db.ListMenuItemAdapter;
+import com.imie.trybaproject.db.UserLogAdapter;
 import com.imie.trybaproject.model.MenuItem;
 import com.imie.trybaproject.model.Station;
 import com.imie.trybaproject.model.User;
+import com.imie.trybaproject.model.UserLog;
 import com.imie.trybaproject.model.UserType;
 import com.imie.trybaproject.views.fragment.ChooseStationFragment;
 import com.imie.trybaproject.views.fragment.HomeFragment;
@@ -68,7 +73,7 @@ public class HomeActivity extends FragmentActivity {
 													R.drawable.ic_menu_home);
 		items.add(itemHome);
 		itemProductScan = new MenuItem(new ScanFragment(),
-				getString(R.string.product_scan),R.drawable.ic_menu_archive);
+				getString(R.string.product_scan),R.drawable.ic_menu_camera);
 		
 		try {
 			if(userString != "")
@@ -230,12 +235,27 @@ public class HomeActivity extends FragmentActivity {
 	    	SharedPreferences preferences =
 					getSharedPreferences("DEFAULT", Activity.MODE_PRIVATE);
 			SharedPreferences.Editor editor = preferences.edit();
-	    	if(!preferences.getString("CURRENT_USER", "").equals("")){
-				editor.remove("CURRENT_USER");
+	    	
+			if(!preferences.getString("CURRENT_USER", "").equals("")){
+				editor.remove("CURRENT_USER");		
 			}
 	    	
-	    	if(!preferences.getString("CURRENT_USER_LOG_ID", "").equals("")){
+			int currentUserLogId = Integer.parseInt(
+							preferences.getString("CURRENT_USER_LOG_ID", "0"));
+			
+	    	if(currentUserLogId != 0){
 	    		editor.remove("CURRENT_USER_LOG_ID");
+	    		
+	    		try {
+	    			ApplicationSQLiteOpenHelper helper = 
+							ApplicationSQLiteOpenHelper.getInstance(this);
+					UserLogAdapter adapter = new UserLogAdapter(helper);
+					UserLog userLog = adapter.get(currentUserLogId);
+					UserLogAdapter adapter2 = new UserLogAdapter(helper);
+					adapter2.addEndDate(userLog, new Date());
+				} catch (Exception e) {
+					Log.e("TrybaProject", e.getMessage());
+				}		
 	    	}
 	    	
 			editor.commit();
@@ -271,4 +291,8 @@ public class HomeActivity extends FragmentActivity {
 	public MenuItem getProductScan(){
 		return this.itemProductScan;
 	}	
+	
+	public void setItemChecked(int position){
+		drawerList.setItemChecked(position, true);
+	}
 }
