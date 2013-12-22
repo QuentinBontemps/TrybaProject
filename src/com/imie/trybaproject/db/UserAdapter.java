@@ -242,6 +242,24 @@ public class UserAdapter implements Adapter<User, Integer>{
 		return user;		
 	}
 
+	public Cursor getWithKeyword(String keyword){
+		Cursor cursor = null;
+		if(db != null){
+			
+			
+			String where = COL_LOGIN 		+ " LIKE '%" + keyword + "%' OR " +
+							COL_FIRSTNAME 	+ " LIKE '%" + keyword + "%' OR " +
+							COL_LASTNAME 	+ " LIKE '%" + keyword + "%'";
+			
+			cursor = db.query(TABLE,
+				new String[] {COL_ID, COL_LOGIN, COL_PASSWORD, COL_FIRSTNAME, 
+				COL_LASTNAME, COL_TYPE, COL_CURRENT_STATION_ID},
+				where,
+				null, null, null, null);
+		}
+		return cursor;
+	}
+	
 	@Override
 	public void setDatabase(SQLiteDatabase db) {
 		this.db = db;
