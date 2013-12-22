@@ -143,6 +143,7 @@ public class HomeActivity extends FragmentActivity {
 	        drawerLayout.setDrawerListener(drawerToggle);
 	        
 	        SelectItem(itemHome, 0);
+	        drawerList.setItemChecked(0, true);
 	}
 
 	@Override
