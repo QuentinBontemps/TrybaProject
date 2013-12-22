@@ -153,7 +153,8 @@ public class ScanFragment extends Fragment {
 						
 						Toast.makeText(getActivity(), 
 						"Le produit est passé dans le prochain tampon", 
-												Toast.LENGTH_LONG).show();						
+												Toast.LENGTH_LONG).show();	
+						openScanView();
 						break;
 					case 2:
 						Toast.makeText(getActivity(), 
