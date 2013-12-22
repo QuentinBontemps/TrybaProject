@@ -203,10 +203,7 @@ public class HomeActivity extends FragmentActivity {
 	                   .replace(R.id.choose_station_fragment, fragment)
 	                   .commit();
 	    
-	   
-	    //drawerList.setItemChecked(position, true);
 	    drawerLayout.closeDrawer(drawerList);
-	    
 	    if(item.equals(itemStationSelect)){
 	    	if(items.contains(itemStationSelect)){
 		    	preferences = getSharedPreferences("DEFAULT", 
@@ -263,7 +260,7 @@ public class HomeActivity extends FragmentActivity {
 			editor.commit();
 			this.finish();
 	    }
-	    	    
+	    
 	    adapter.notifyDataSetChanged();
 	}
 	
