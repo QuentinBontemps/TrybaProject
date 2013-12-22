@@ -31,34 +31,29 @@ public class ListUsersFragment extends Fragment{
 	ListView lv;
 	UsersCursorAdapter listCursor;
 	UserAdapter userAdapt;
-	
+	ApplicationSQLiteOpenHelper helper;
 	
 	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		
-		/*ApplicationSQLiteOpenHelper ASLOH = 
-				new ApplicationSQLiteOpenHelper(getActivity(), 
-						getString(R.string.database_name), null, 
-						Integer.parseInt(getString(R.string.database_version)));*/
-		ApplicationSQLiteOpenHelper helper = 
-						ApplicationSQLiteOpenHelper.getInstance(getActivity());
+		View frag = inflater.inflate(R.layout.fragment_list_users, 
+															container, false);
+
+		setHasOptionsMenu(true);
+		
+		helper = ApplicationSQLiteOpenHelper.getInstance(getActivity());
 		userAdapt = new UserAdapter(helper);
 		
 		
-		View frag = inflater.inflate(R.layout.fragment_list_users, 
-															container, false);
-		
-		setHasOptionsMenu(true);
 		this.lv = (ListView) frag.findViewById(R.id.list);
 		
 		//getLoaderManager().restartLoader(0, null, getActivity());
 		
 		// Associated context menu
 		registerForContextMenu(lv);
-		
-		
+				
 		listCursor = new UsersCursorAdapter(getActivity(), 
 				userAdapt.getAllWithCursor());
 		lv.setAdapter(listCursor); // Need user adapter
@@ -86,6 +81,7 @@ public class ListUsersFragment extends Fragment{
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
 		
+		userAdapt = new UserAdapter(helper);
 		listCursor = new UsersCursorAdapter(getActivity(), 
 				userAdapt.getAllWithCursor());
 		lv.setAdapter(listCursor); // Need user adapter
