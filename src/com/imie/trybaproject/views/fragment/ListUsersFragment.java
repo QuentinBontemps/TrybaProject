@@ -1,19 +1,10 @@
 package com.imie.trybaproject.views.fragment;
 
 
-import com.imie.trybaproject.R;
-import com.imie.trybaproject.db.ApplicationSQLiteOpenHelper;
-import com.imie.trybaproject.db.UserAdapter;
-import com.imie.trybaproject.db.UsersCursorAdapter;
-import com.imie.trybaproject.model.User;
-import com.imie.trybaproject.views.activity.AddUserActivity;
-
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,9 +12,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.imie.trybaproject.R;
+import com.imie.trybaproject.db.ApplicationSQLiteOpenHelper;
+import com.imie.trybaproject.db.UserAdapter;
+import com.imie.trybaproject.db.UsersCursorAdapter;
+import com.imie.trybaproject.model.User;
+import com.imie.trybaproject.views.activity.AddUserActivity;
 
 public class ListUsersFragment extends Fragment{
 	final int CONST_REQUEST1 = 5001; // Code réponse pour la création
@@ -42,26 +39,27 @@ public class ListUsersFragment extends Fragment{
 				new ApplicationSQLiteOpenHelper(getActivity(), 
 						getString(R.string.database_name), null, 
 						Integer.parseInt(getString(R.string.database_version)));*/
-		ApplicationSQLiteOpenHelper helper = 
-						ApplicationSQLiteOpenHelper.getInstance(getActivity());
-		userAdapt = new UserAdapter(helper);
+		
 		
 		
 		View frag = inflater.inflate(R.layout.fragment_list_users, 
 															container, false);
 		
 		setHasOptionsMenu(true);
+		
+		
+
 		this.lv = (ListView) frag.findViewById(R.id.list);
 		
-		//getLoaderManager().restartLoader(0, null, getActivity());
 		
-		// Associated context menu
-		registerForContextMenu(lv);
-		
-		
+		refreshListView();
+		/*
+		 * ApplicationSQLiteOpenHelper helper = 
+				ApplicationSQLiteOpenHelper.getInstance(getActivity());
+		userAdapt = new UserAdapter(helper);
 		listCursor = new UsersCursorAdapter(getActivity(), 
 				userAdapt.getAllWithCursor());
-		lv.setAdapter(listCursor); // Need user adapter
+		lv.setAdapter(listCursor); */
 		
 		// UI Actions		
 		lv.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
@@ -128,6 +126,18 @@ public class ListUsersFragment extends Fragment{
         default:
             return super.onOptionsItemSelected(item);
 		}
+	}
+	
+	public void refreshListView()
+	{
+		ApplicationSQLiteOpenHelper helper = 
+				ApplicationSQLiteOpenHelper.getInstance(getActivity());
+		userAdapt = new UserAdapter(helper);
+
+		listCursor = new UsersCursorAdapter(getActivity(), 
+				userAdapt.getAllWithCursor());
+		lv.setAdapter(listCursor);
+		
 	}
 	
 	

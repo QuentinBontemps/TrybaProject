@@ -18,7 +18,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name ="com.imie.trybaproject.views.activity.LoginActivity"
+            android:name="com.imie.trybaproject.views.activity.LoginActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,29 +26,25 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="com.imie.trybaproject.views.activity.ListUsersActivity">
+        <activity android:name="com.imie.trybaproject.views.activity.ListUsersActivity" >
+        </activity>
+        <activity android:name="com.imie.trybaproject.views.activity.AddUserActivity" >
+        </activity>
+        <activity android:name="com.imie.trybaproject.views.activity.AddOrderActivity" >
+        </activity>
+        <activity android:name="com.imie.trybaproject.views.activity.HomeActivity" >
+        </activity>
+        <activity android:name="com.imie.trybaproject.views.activity.ScanActivity" >
+        </activity>
+        <activity android:name="com.imie.trybaproject.views.activity.ListOrdersActivity" >
+        </activity>
+        <activity android:name="com.imie.trybaproject.views.activity.DetailOrderActivity" >
+        </activity>
+        <activity android:name="com.imie.trybaproject.views.activity.DetailProductActivity" >
         </activity>
         <activity
-            android:name= "com.imie.trybaproject.views.activity.AddUserActivity" >
-        </activity>
-        <activity
-            android:name="com.imie.trybaproject.views.activity.AddOrderActivity" >
-        </activity>
-        <activity
-            android:name="com.imie.trybaproject.views.activity.HomeActivity" >
-        </activity>
-        <activity
-             android:name= "com.imie.trybaproject.views.activity.ScanActivity" >
-        </activity>
-        <activity
-             android:name= "com.imie.trybaproject.views.activity.ListOrdersActivity" >
-        </activity>
-       <activity
-            android:name= "com.imie.trybaproject.views.activity.DetailOrderActivity" >
-        </activity>
-        <activity
-            android:name="com.imie.trybaproject.views.activity.DetailProductActivity">
+            android:name="com.imie.trybaproject.ListUsersLoaderActivity"
+            android:label="@string/title_activity_list_users_loader" >
         </activity>
     </application>
 

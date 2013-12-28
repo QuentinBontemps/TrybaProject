@@ -2,6 +2,7 @@ package com.imie.trybaproject.db;
 
 import com.imie.trybaproject.R;
 import com.imie.trybaproject.model.User;
+import com.imie.trybaproject.views.fragment.ListUsersFragment;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -77,8 +78,7 @@ public class UsersCursorAdapter extends CursorAdapter{
 				
 				userAdapter.delete(user);
 				Toast.makeText(context, "L'utilisateur à été supprimé", 
-						Toast.LENGTH_LONG).show();;
-				
+						Toast.LENGTH_LONG).show();
 			}
 		});
 	}
