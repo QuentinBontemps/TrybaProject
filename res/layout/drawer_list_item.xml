@@ -3,7 +3,8 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:gravity="center_horizontal|center_vertical"
-    android:orientation="horizontal" >
+    android:orientation="horizontal" 
+    android:background="@drawable/drawer_list_item_selector">
 
 	<ImageView 
 	    android:id="@+id/imgView"
@@ -14,12 +15,12 @@
 	<TextView
 	    android:id="@+id/title"
 	    android:layout_width="match_parent"
-	    android:layout_height="wrap_content"
+	    android:layout_height="match_parent"
 	    android:paddingLeft="16dp"
 	    android:paddingRight="16dp"
 	    android:textColor="#fff"
 	    android:textAppearance="?android:attr/textAppearanceSmall"
-	    android:background="?android:attr/activatedBackgroundIndicator"
+	    android:gravity="center_vertical"
 	    android:text="menuItem"
 	/>
 </LinearLayout>

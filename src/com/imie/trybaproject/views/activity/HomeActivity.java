@@ -143,6 +143,7 @@ public class HomeActivity extends FragmentActivity {
 	        drawerLayout.setDrawerListener(drawerToggle);
 	        
 	        SelectItem(itemHome, 0);
+	        drawerList.setItemChecked(0, true);
 	}
 
 	@Override
@@ -203,10 +204,7 @@ public class HomeActivity extends FragmentActivity {
 	                   .replace(R.id.choose_station_fragment, fragment)
 	                   .commit();
 	    
-	   
-	    //drawerList.setItemChecked(position, true);
 	    drawerLayout.closeDrawer(drawerList);
-	    
 	    if(item.equals(itemStationSelect)){
 	    	if(items.contains(itemStationSelect)){
 		    	preferences = getSharedPreferences("DEFAULT", 
@@ -263,7 +261,7 @@ public class HomeActivity extends FragmentActivity {
 			editor.commit();
 			this.finish();
 	    }
-	    	    
+	    
 	    adapter.notifyDataSetChanged();
 	}
 	

@@ -1,9 +1,15 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
+    <item 
+        android:id="@+id/action_search"
+        android:icon="@android:drawable/ic_menu_search"
+        android:actionViewClass="android.widget.SearchView"        
+        android:showAsAction="ifRoom|collapseActionView"
+        android:title="@string/action_search_user"/>
+   
     <item
         android:id="@+id/action_add_user"
-        android:orderInCategory="100"
-        android:showAsAction="never"
+        android:showAsAction="ifRoom|withText"
         android:title="@string/action_add_user"
         android:icon="@drawable/ic_menu_invite"/>
 
