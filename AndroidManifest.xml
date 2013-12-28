@@ -42,10 +42,6 @@
         </activity>
         <activity android:name="com.imie.trybaproject.views.activity.DetailProductActivity" >
         </activity>
-        <activity
-            android:name="com.imie.trybaproject.ListUsersLoaderActivity"
-            android:label="@string/title_activity_list_users_loader" >
-        </activity>
     </application>
 
 </manifest>
