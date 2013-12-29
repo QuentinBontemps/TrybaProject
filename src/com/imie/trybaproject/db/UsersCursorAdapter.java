@@ -2,10 +2,13 @@ package com.imie.trybaproject.db;
 
 import com.imie.trybaproject.R;
 import com.imie.trybaproject.model.User;
+import com.imie.trybaproject.model.UserType;
 import com.imie.trybaproject.views.fragment.ListUsersFragment;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.support.v4.widget.CursorAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +16,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,8 +42,12 @@ public class UsersCursorAdapter extends CursorAdapter{
 				(TextView) view.findViewById(R.id.row_user_login);
 		TextView user_password = 
 				(TextView) view.findViewById(R.id.row_user_password);
+		TextView user_type = 
+				(TextView) view.findViewById(R.id.row_user_type);
 		ImageButton btn_suppression = 
 				(ImageButton) view.findViewById(R.id.btn_suppression_user);
+		LinearLayout linear_layout = 
+				(LinearLayout) view.findViewById(R.id.row_layout_global);
 		
 		u = new User(c.getString(
 				c.getColumnIndex(UserAdapter.COL_LOGIN)),
@@ -61,6 +69,20 @@ public class UsersCursorAdapter extends CursorAdapter{
 		user_lastname.setText(c.getString(
 				c.getColumnIndex(UserAdapter.COL_LASTNAME)));
 		
+		String userTypeString = c.getString(
+				c.getColumnIndex(UserAdapter.COL_TYPE));
+		UserType user_type_row = UserType.initUserTypeByString(userTypeString);
+		user_type.setText(user_type_row.toString());
+		if (user_type_row == UserType.ADMINISTRATOR)
+		{
+			user_type.setTextColor(Color.RED);
+			linear_layout.setBackgroundResource(
+										R.drawable.background_user_list_admin);			
+		}else{
+			user_type.setTextColor(Color.parseColor("#909090"));
+			linear_layout.setBackgroundResource(
+					R.drawable.background_user_list_operator);
+		}
 		btn_suppression.setTag(u.getId());
 		btn_suppression.setOnClickListener(new OnClickListener() {
 			

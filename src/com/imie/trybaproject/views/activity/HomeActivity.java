@@ -108,7 +108,7 @@ public class HomeActivity extends FragmentActivity {
 				getString(R.string.logout),
 				R.drawable.ic_menu_set_as);
 			
-		if(currentUser.getType().equals(UserType.ADMINISTRATOR.name())){
+		if(currentUser.getType().equals(UserType.ADMINISTRATOR.toString())){
 			items.add(itemUsersManagement);
 			items.add(itemOrdersManagement);
 		}

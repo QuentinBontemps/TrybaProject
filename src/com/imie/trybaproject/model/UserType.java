@@ -1,8 +1,8 @@
 package com.imie.trybaproject.model;
 
 public enum UserType {
-	OPERATOR ("operator",1),
-	ADMINISTRATOR ("administrator",2);
+	OPERATOR ("Opérateur",1),
+	ADMINISTRATOR ("Administrateur",2);
 	
 	  private String name = "";
 	  private int value = 0;
@@ -43,7 +43,7 @@ public enum UserType {
 		  
 		  
 		  for(UserType mt : UserType.values()){
-			  	if (mt.toString().equals(s))
+			  	if (mt.name.equals(s))
 			  		userType = mt;
 		    }
 		  

@@ -106,9 +106,9 @@ public final class Datasets {
 		UserAdapter userAdapter = new UserAdapter();
 		userAdapter.setDatabase(db);
 		userAdapter.insert(new User("momo","yo","Quentin","Bontemps",
-				UserType.ADMINISTRATOR.name())); 
+				UserType.ADMINISTRATOR.toString())); 
 		userAdapter.insert(new User("toto","yo","Antonin","Auffray",
-				UserType.OPERATOR.name())); 
+				UserType.OPERATOR.toString())); 
 	}
 	
 	
