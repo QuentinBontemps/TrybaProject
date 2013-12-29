@@ -91,7 +91,7 @@ public class AddUserFragment extends Fragment {
 		
 		ut = UserType.initUserTypeByString(typeUser.getSelectedItem().toString());
 		
-		user.setType(ut.name());
+		user.setType(ut.toString());
 		
 		ApplicationSQLiteOpenHelper ASLOH = 
 				ApplicationSQLiteOpenHelper.getInstance(getActivity());
