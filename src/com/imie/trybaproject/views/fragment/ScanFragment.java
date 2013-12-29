@@ -247,8 +247,8 @@ public class ScanFragment extends Fragment {
 											case 1:
 												
 												Toast.makeText(getActivity(), 
-												"Le produit est passé dans le " +
-												"prochain tampon", 
+												"Le produit est passé dans la " +
+												"station courrante", 
 													Toast.LENGTH_LONG).show();						
 												break;
 											case 2:

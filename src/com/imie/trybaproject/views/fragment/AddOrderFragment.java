@@ -101,69 +101,84 @@ public class AddOrderFragment extends Fragment {
 	
 	private void validateCommande()
 	{
+		// On commence par vérifier si la commande à bien 
+		// une quantité et un nom
 		
+		if (customer.getText().toString().equals(""))
+		{
+			// Message d'erreur pour le nom du client
+			Toast.makeText(getActivity(), "Le nom du client est obligatoire",
+					Toast.LENGTH_LONG).show();
+		}else if (quantity.getText().toString().equals(""))
+		{
+			// Message d'erreur pour la quantité
+			Toast.makeText(getActivity(), "La quantité est obligatoire pour " +
+					"valider la commande",
+					Toast.LENGTH_LONG).show();
+		}else{
 		
-		Log.v("monAppli","j'enregistre le user");
-		// On ajoute l'utilisateur dans la base de données
-		ClientOrder clientOrder = new ClientOrder();
-		ProductType pt = ProductType.FENETRE;
-		MaterialType mt = MaterialType.ALUMINIUM;
-		
-		// On remplit les champs de la commande
-		clientOrder.setCustomer(customer.getText().toString());
-		clientOrder.setQuantity(Integer.valueOf(quantity.getText().toString()));
-		
-		pt = ProductType.initProductTypeByString(
-									typeProduct.getSelectedItem().toString());
-		mt = MaterialType.initMaterialTypeByString(
-									typeMaterial.getSelectedItem().toString());
-		
-		
-		clientOrder.setTypeMaterial(mt.name());		
-		clientOrder.setTypeProduct(pt.name());
-
-		ApplicationSQLiteOpenHelper ASLOH = 
-				ApplicationSQLiteOpenHelper.getInstance(getActivity());
-		ClientOrderAdapter clientOrderAdapt = new ClientOrderAdapter();
-		ProductAdapter productAdapt = new ProductAdapter();
-		StationAdapter stationAdapter = new StationAdapter();
-		stationAdapter.setDatabase(ASLOH.getDb());
-		clientOrderAdapt.setDatabase(ASLOH.getDb());
-		productAdapt.setDatabase(ASLOH.getDb());
-		
-		long idResultatInsertion = clientOrderAdapt.insert(clientOrder);
-		clientOrder.setId(idResultatInsertion);
-		
-		
-		
-		// Une fois la commande créé on peut créé les produits associés
-		
-		Product product = new Product();
-		for (int i = 0; i < clientOrder.getQuantity(); i++) {
-			// On créé autant de produit que nécessaire
-			product.setName(clientOrder.getTypeProduct() + " - " + 
-					clientOrder.getTypeMaterial());
+			Log.v("monAppli","j'enregistre le user");
+			// On ajoute l'utilisateur dans la base de données
+			ClientOrder clientOrder = new ClientOrder();
+			ProductType pt = ProductType.FENETRE;
+			MaterialType mt = MaterialType.ALUMINIUM;
 			
-			product.setOrder(clientOrder);
-			product.setCurrentTypeZone(ZoneType.TAMPON);
+			// On remplit les champs de la commande
+			clientOrder.setCustomer(customer.getText().toString());
+			clientOrder.setQuantity(Integer.valueOf(quantity.getText().toString()));
 			
-			Zone z = stationAdapter.getByOrder(1).getTampon();
-			product.setCurrentZone(z);
+			pt = ProductType.initProductTypeByString(
+										typeProduct.getSelectedItem().toString());
+			mt = MaterialType.initMaterialTypeByString(
+										typeMaterial.getSelectedItem().toString());
 			
-
-			idResultatInsertion = productAdapt.insert(product);
-			Log.v("MonAppli","id produit ajouté : " + 
-						String.valueOf(idResultatInsertion));
+			
+			clientOrder.setTypeMaterial(mt.name());		
+			clientOrder.setTypeProduct(pt.name());
+	
+			ApplicationSQLiteOpenHelper ASLOH = 
+					ApplicationSQLiteOpenHelper.getInstance(getActivity());
+			ClientOrderAdapter clientOrderAdapt = new ClientOrderAdapter();
+			ProductAdapter productAdapt = new ProductAdapter();
+			StationAdapter stationAdapter = new StationAdapter();
+			stationAdapter.setDatabase(ASLOH.getDb());
+			clientOrderAdapt.setDatabase(ASLOH.getDb());
+			productAdapt.setDatabase(ASLOH.getDb());
+			
+			long idResultatInsertion = clientOrderAdapt.insert(clientOrder);
+			clientOrder.setId(idResultatInsertion);
+			
+			
+			
+			// Une fois la commande créé on peut créé les produits associés
+			
+			Product product = new Product();
+			for (int i = 0; i < clientOrder.getQuantity(); i++) {
+				// On créé autant de produit que nécessaire
+				product.setName(clientOrder.getTypeProduct() + " - " + 
+						clientOrder.getTypeMaterial());
+				
+				product.setOrder(clientOrder);
+				product.setCurrentTypeZone(ZoneType.TAMPON);
+				
+				Zone z = stationAdapter.getByOrder(1).getTampon();
+				product.setCurrentZone(z);
+				
+	
+				idResultatInsertion = productAdapt.insert(product);
+				Log.v("MonAppli","id produit ajouté : " + 
+							String.valueOf(idResultatInsertion));
+			}
+			
+			productAdapt.closeDatabase();
+			
+			
+			
+			Toast.makeText(getActivity(), "Commande créée",
+												Toast.LENGTH_LONG).show();
+			
+			getActivity().finish();
 		}
-		
-		productAdapt.closeDatabase();
-		
-		
-		
-		Toast.makeText(getActivity(), "Commande créée",
-											Toast.LENGTH_LONG).show();
-		
-		getActivity().finish();
 		
 	}
 	
